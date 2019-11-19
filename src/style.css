@@ -1,0 +1,108 @@
+body {
+  text-align: center;
+  font-family: 'Staatliches';
+  background-image:url('/src/images/kitchen-background.jpg');
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  height: 80%; /* change these for mobile aka media queries */
+}
+
+html {
+  height: 100%;
+}
+
+form.search-form input[type=text] {
+  padding: 10px;
+  font-size: 20pt;
+  border:3px solid gray;
+  float: left;
+  width: 80%;
+  background: #ffffff;
+  height:60px;
+}
+
+form.search-form button {
+  float: left;
+  width: 20%;
+  height: 9%;
+  padding: 10px;
+  background: darkorange;
+  color: white;
+  font-size: 24px;
+  border: 3px solid gray;
+  cursor: pointer;
+}
+
+form.search-form button:hover {
+  background: orange;
+}
+
+form.search-form::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+img.avatar {
+  width: 20%;
+  text-align: center;
+
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 150%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  padding-top: 150px;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto; /* 5% from the top, 15% from the bottom and centered */
+  padding:0;
+  border: 1px solid #888;
+  width: 30%; /* Could be more or less, depending on screen size */
+}
+
+.modal-body {padding: 2px 16px;}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  color: black;
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.close:hover, .close:focus {
+  color: orange;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background: darkorange;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  width: 75%;
+}
+
+.confirm-btn:hover {
+  background-color: orange;
+}

@@ -1,12 +1,12 @@
+<!DOCTYPE html>
 <html>
-
 <head lang="en">
   <title>Ingredientory - Home</title>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="bootstrap.min.css"> -->
+  <link rel="stylesheet" href="bootstrap.min.css">
   <link rel="stylesheet" href="/src/style.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -36,7 +36,7 @@
 
     <div class="collapse navbar-collapse"  style=" background-color: rgba(255,255,255,0); border-width: 0;">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="document.getElementById('modal').style.display='block'" style="font-size: 20px; color: black;">TEST</a></li>
+        <li><a href="#" onclick="document.getElementById('modal').style.display='block'" style="font-size: 20px; color: black;">SIGN IN</a></li>
       </ul>
 
 
@@ -46,37 +46,33 @@
           <div class="imgcontainer">
             <span onclick="document.getElementById('modal').style.display='none'" class="close" title="Close Modal" > X </span>
             <br><br>
-            <img src="/src/images/avatar.svg" alt="Avatar" class="avatar">
+            <img src="/src/avatar.svg" alt="Avatar" class="avatar">
           </div>
 
         <div class="modal-body">
-          <h1>Sign up for Ingredientory</h1>
-          <p>Email: </p>
-          <input type="text" id="email-input-field" /> <br />
-          <p>Password: </p>
-          <input type="text" id="password-input-field" /> <br />
-          <button id="sign-up-button">Sign up</button>
-          <button id="sign-in-button">Sign in</button>
-          <button id="sign-out-button">Sign out</button>
-          <br />
+          <form method="post" class="text-center">
 
-          <section id="react"></section>
+            </div>
 
-          <br />
+          <label for="username" style="margin-right: 1%;"><h2><b>Email : </b></h2></label>
+          <input type="username" name="username" required>
 
-          <button id="add-database">Add Database</button>
+          <br>
 
-          <div id="user-profile">
-            You are not logged in
-          </div>
+          <label for="pass" style="margin-right: 1%"><h2><b>Password : </b></h2></label>
+          <input type="password" name="pass"required>
 
           <br>
           <br>
 
+          <button type="submit" name='sign-in' class="confirm-btn"> SIGN IN </button>
 
+          <br>
+          <br>
 
         </div>
 
+        </form>
       </div>
       </div>
 
@@ -106,5 +102,15 @@
 
   </div>
 
+  <script type="text/javascript">
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+  }
+  </script>
+
 </body>
+
 </html>

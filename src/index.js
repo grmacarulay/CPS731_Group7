@@ -28,6 +28,7 @@ auth.onAuthStateChanged(function (user) {
   } else {
     console.log('user logged out')
   }
+
 });
 
 // React code
@@ -71,7 +72,7 @@ function handleSignUp() {
     }
     console.log(error);
   });
-} 
+}
 
 function handleSignIn() {
   var email  = document.querySelector("#email-input-field").value;
@@ -121,7 +122,7 @@ function addDatabase() {
 // button.addEventListener("click", function () {
 //   const s = textField.value;
 //   console.log("Sent " + s);
-  
+
 //   doc.set({
 //     text: s
 //   }).then(function () {
@@ -129,5 +130,5 @@ function addDatabase() {
 //   }).catch(function (error) {
 //     console.log("Error");
 //   });
-  
+
 // })
