@@ -106,8 +106,8 @@ function handleSignOut() {
 
 function addDatabase() {
   db.collection("users").add({
-    first: "Alan",
-    middle: "Mathison",
+    first: "Eric",
+    middle: "Nam",
     last: "Turing",
     born: 1912
   })
