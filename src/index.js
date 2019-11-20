@@ -105,11 +105,14 @@ function handleSignOut() {
 }
 
 function addDatabase() {
+  var getuid = window.localStorage.getItem("UID")
   db.collection("users").add({
-    first: "Alan",
-    middle: "Mathison",
+    id: getuid,
+    first_name: "Alan",
+    last_name: "Mathison",
     last: "Turing",
     born: 1912
+
   })
     .then(function (docRef) {
       console.log("Document written with ID: ", docRef.id);
