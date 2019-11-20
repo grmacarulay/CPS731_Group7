@@ -110,7 +110,7 @@ function addDatabase() {
   var getuid = window.localStorage.getItem("UID")
   db.collection("users").add({
     id: getuid,
-   first_name: "Alan",
+   first_name: "Eric",
    last_name: "Mathison"
   })
     .then(function (docRef) {
