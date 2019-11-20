@@ -108,7 +108,7 @@ function addDatabase() {
   var currentUser;
   currentUser = user.uid;
   window.localStorage.setItem("UID",currentUser);
-  var getuid = window.localStorage.getItem("UID")
+  var getuid = window.localStorage.getItem("UID");
   db.collection("users").add({
     first: "Eric",
     middle: "Nam",
