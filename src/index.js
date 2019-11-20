@@ -105,6 +105,8 @@ function handleSignOut() {
 }
 
 function addDatabase() {
+  currentUser = user.uid;
+  window.localStorage.setItem("UID",currentUser);
   var getuid = window.localStorage.getItem("UID")
   db.collection("users").add({
     id: getuid,
