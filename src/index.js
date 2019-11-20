@@ -105,6 +105,7 @@ function handleSignOut() {
 }
 
 function addDatabase() {
+<<<<<<< HEAD
   currentUser = user.uid;
   window.localStorage.setItem("UID",currentUser);
   var getuid = window.localStorage.getItem("UID")
@@ -112,6 +113,13 @@ function addDatabase() {
     id: getuid,
    first_name: "Eric",
    last_name: "Mathison"
+=======
+  db.collection("users").add({
+    first: "Alan",
+    middle: "Mathison",
+    last: "Turing",
+    born: 1912
+>>>>>>> parent of c48b8a3... Update index.js
   })
     .then(function (docRef) {
       console.log("Document written with ID: ", docRef.id);
