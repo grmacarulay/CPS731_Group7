@@ -53,9 +53,13 @@ function testing() {
   alert('click')
 }
 
+//Initialize user and password.
+var email;
+var password;
+
 function handleSignUp() {
-  var email = document.querySelector("#email-input-field").value;
-  var password = document.querySelector("#password-input-field").value;
+  email = document.querySelector("#email-input-field").value;
+  password = document.querySelector("#password-input-field").value;
 
   auth.createUserWithEmailAndPassword(email, password)
     .then(function () {
@@ -75,8 +79,8 @@ function handleSignUp() {
 }
 
 function handleSignIn() {
-  var email  = document.querySelector("#email-input-field").value;
-  var password = document.querySelector("#password-input-field").value;
+  email  = document.querySelector("#email-input-field").value;
+  password = document.querySelector("#password-input-field").value;
 
   auth.signInWithEmailAndPassword(email, password).catch(function (error) {
     // Handle Errors here.
@@ -103,18 +107,31 @@ function handleSignOut() {
     console.log(error);
   })
 }
+var userid;
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    // User logged in already or has just logged in.
+    userid = user.uid;
+  } else {
+    // User not logged in or has just logged out.
+  }
+});
 
+//Add Database Text.
 function addDatabase() {
-  var currentUser;
-  currentUser = user.uid;
-  window.localStorage.setItem("UID",currentUser);
-  var getuid = window.localStorage.getItem("UID");
+
+  email  = document.querySelector("#email-input-field").value;
+  password = document.querySelector("#password-input-field").value;
+  var d= new Date();
+
   db.collection("users").add({
-    first: "Eric",
-    middle: "Nam",
-    last: "Turing",
-    id: getuid,
-    born: 1912
+    first_name: "Eric",
+    middle_name: "Nam",
+    last_name: "Turing",
+    user_id: userid,
+    date_created: d,
+    email:email,
+    password:password
   })
     .then(function (docRef) {
       console.log("Document written with ID: ", docRef.id);
