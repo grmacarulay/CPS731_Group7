@@ -52,9 +52,9 @@
           <div class="modal-body">
             <h1>Sign up for Ingredientory</h1>
             <p>Email: </p>
-            <input type="text" id="email-input-field" /> <br />
+            <input type="text" id="email1-input-field" /> <br />
             <p>Password: </p>
-            <input type="text" id="password-input-field" /> <br />
+            <input type="text" id="password1-input-field" /> <br />
             <button id="sign-up-button">Sign up</button>
             <button id="sign-in-button">Sign in</button>
             <button id="sign-out-button">Sign out</button>
@@ -64,7 +64,9 @@
 
             <br />
 
-            <button id="add-database">Add Database</button>
+            <button id="add-adatabase">Add Database</button>
+            <button onclick="document.getElementById('modal2').style.display='block'; document.getElementById('modal').style.display='none'">Open Signup</button>
+
 
             <div id="user-profile">
               You are not logged in
@@ -73,7 +75,45 @@
             <br>
             <br>
 
+          </div>
 
+        </div>
+      </div>
+
+    </div>
+
+    <div class="collapse navbar-collapse"  style=" background-color: rgba(255,255,255,0); border-width: 0;">
+
+      <!-- MODAL2 SIGN IN -->
+      <div id="modal2" class="modal2">
+        <div class="modal-content animate">
+          <div class="imgcontainer">
+            <span onclick="document.getElementById('modal2').style.display='none'" class="close" title="Close Modal" > X </span>
+            <br><br>
+            <img src="/src/images/avatar.svg" alt="Avatar" class="avatar">
+          </div>
+
+          <div class="modal-body">
+            <h1>Sign up for Ingredientory</h1>
+            <label for="username" style="margin-right: 1%;"><h2 style="font-size:15px;">Email : </h2></label>
+              <input type="text" id="email-input-field" name="username" required> <br />
+
+            <label for="password" style="margin-right: 1%;"><h2 style="font-size:15px;">Password : </h2></label>
+              <input type="text" id="password-input-field" name="username" required> <br />
+
+            <label for="confirm_password" style="margin-right: 1%;"><h2 style="font-size:15px;">Confirm Password: </h2></label>
+              <input type="text" id="confirmPassword-input-field" name="username" required> <br />
+
+            <label for="first_name" style="margin-right: 1%;"><h2 style="font-size:15px;">First Name: </h2></label>
+              <input type="text" id="firstName-input-field" name="username" required> <br />
+
+            <label for="last_name" style="margin-right: 1%;"><h2 style="font-size:15px;">Last Name: </h2></label>
+              <input type="text" id="lastName-input-field" name="username" required>  <br />
+
+            <button id="add-database">Sign Up!</button>
+
+            <br>
+            <br>
 
           </div>
 

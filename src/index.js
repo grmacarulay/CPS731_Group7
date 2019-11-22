@@ -49,6 +49,7 @@ const signOutButton = document.querySelector('#sign-out-button')
 const addDatabaseButton = document.querySelector("#add-database")
   .addEventListener("click", addDatabase);
 
+
 function testing() {
   alert('click')
 }
@@ -56,6 +57,8 @@ function testing() {
 //Initialize user and password.
 var email;
 var password;
+var first_name;
+var last_name;
 
 function handleSignUp() {
   email = document.querySelector("#email-input-field").value;
@@ -122,12 +125,13 @@ function addDatabase() {
 
   email  = document.querySelector("#email-input-field").value;
   password = document.querySelector("#password-input-field").value;
+  first_name= document.querySelector("#firstName-input-field").value;
+  last_name = document.querySelector("#lastName-input-field").value;
   var d= new Date();
 
   db.collection("users").add({
-    first_name: "Eric",
-    middle_name: "Nam",
-    last_name: "Turing",
+    first_name: first_name,
+    last_name: last_name,
     user_id: userid,
     date_created: d,
     email:email,

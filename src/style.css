@@ -51,7 +51,7 @@ img.avatar {
 
 }
 
-.modal {
+.modal, .modal2 {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -64,6 +64,8 @@ img.avatar {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   padding-top: 150px;
 }
+
+
 
 .modal-content {
   position: relative;
