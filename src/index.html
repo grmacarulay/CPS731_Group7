@@ -5,106 +5,11 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-  <!-- <link rel="stylesheet" href="bootstrap.min.css"> -->
-  <link rel="stylesheet" href="/src/style.css">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
-  <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> <!-- has the magnifying glass icon -->
 
 </head>
 
-<body data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
-
-  <div class="navbar navbar-default navbar-static-top" role="navigation" style=" background-color: rgba(255,255,255,0); border-width: 0;">
-  <div class="container">
-
-    <div class="navbar-header">
-
-      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="icon icon-bar"></span>
-        <span class="icon icon-bar"></span>
-        <span class="icon icon-bar"></span>
-      </button>
-
-
-    </div>
-
-
-    <div class="collapse navbar-collapse"  style=" background-color: rgba(255,255,255,0); border-width: 0;">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="document.getElementById('modal').style.display='block'" style="font-size: 20px; color: black;">TEST</a></li>
-      </ul>
-
-
-      <!-- MODAL SIGN IN -->
-      <div id="modal" class="modal">
-        <div class="modal-content animate">
-          <div class="imgcontainer">
-            <span onclick="document.getElementById('modal').style.display='none'" class="close" title="Close Modal" > X </span>
-            <br><br>
-            <img src="/src/images/avatar.svg" alt="Avatar" class="avatar">
-          </div>
-
-        <div class="modal-body">
-          <h1>Sign up for Ingredientory</h1>
-          <p>Email: </p>
-          <input type="text" id="email-input-field" /> <br />
-          <p>Password: </p>
-          <input type="text" id="password-input-field" /> <br />
-          <button id="sign-up-button">Sign up</button>
-          <button id="sign-in-button">Sign in</button>
-          <button id="sign-out-button">Sign out</button>
-          <br />
-
-          <section id="react"></section>
-
-          <br />
-
-          <button id="add-database">Add Database</button>
-
-          <div id="user-profile">
-            You are not logged in
-          </div>
-
-          <br>
-          <br>
-
-
-
-        </div>
-
-      </div>
-      </div>
-
-    </div>
-
-  </div>
-  </div>
-
-  <div style="margin-top: 170px"> </div>
-
-  <div class="text-center">
-    <h1 style="font-size: 100px">Ingredientory</h1>
-  </div>
-
-  <div class="container align-items-center">
-
-    <br>
-
-    <!-- Search form -->
-    <form action="#" method='' class="form-inline md-form form-sm text-center search-form">
-      <input type="text" name="search" size="30" autocomplete="off" class="searchbar form-control form-control-sm mr-3 w-75"
-      placeholder="Search ingredients ..." aria-label="Search" required>
-      <button type="submit" name="submit">
-        <i class="fa fa-search"></i>
-      </button>
-    </form>
-
-  </div>
-
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
 </body>
 </html>

@@ -1,9 +1,23 @@
+// Firebase Imports
 import * as firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore"
-import React from "react";
+
+// React Imports
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import Button from "react-bootstrap/Button";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+
+import './style.css';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCQiJIXDWoPw9Uc4tpophAapgq7G2am-V0",
@@ -21,22 +35,130 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// Listen for auth changes
-auth.onAuthStateChanged(function (user) {
-  if (user) {
-    console.log('user logged in: ', user)
-  } else {
-    console.log('user logged out')
+// React code
+const MyNavBar = () => {
+
+  const [isLoggedIn, setLoggedIn] = useState(false)
+
+  // CHANGE (ugly right now but it works)
+
+  /* email: test@test.com pass: test123 */
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      setLoggedIn(true);
+      console.log('user logged in: ', user.email)
+    } else {
+      setLoggedIn(false);
+      console.log('user logged out')
+    }
+  });
+  
+  return (
+    <Navbar bg="light" expand="lg">
+
+      <Navbar.Brand href="#home">Ingredientory</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        {isLoggedIn ? <SignOutButton /> : <SignInButton />}
+      </Navbar.Collapse>
+
+    </Navbar>
+  )
+};
+
+const SignInButton = () => {
+
+  // ----- Declare ids ------ //
+  const emailId = 'email';
+  const passwordId = 'password';
+  // ------
+
+  // ----- Set up state hooks ------
+
+  // For showing/hiding modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  // For email
+  const [email, setEmail] = useState('');
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
+  }
+  // For password
+  const [password, setPassword] = useState('');
+  const handlePasswordChange = event => {
+    setPassword(event.target.value);
   }
 
-});
+  // ------
 
-// React code
-const hello = <div> Hello React, Webpack 4 & Babel 7!</div>;
-ReactDOM.render(hello, document.querySelector("#react"));
+  // Submission
+  const submitForm = event => {
+    alert('A form was submitted');
+    handleSignIn(email, password);
+    console.log(email, ' ', password);
+    event.preventDefault();
+  }
+
+  return (
+    <>
+      <Button variant="outline-success" onClick={handleShow}>Sign In</Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign in to Ingredientory</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Form onSubmit={submitForm}>
+            <Form.Group controlId={emailId}>
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+            </Form.Group>
+
+            <Form.Group controlId={passwordId}>
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+
+        </Modal.Body>
+      </Modal>
+
+    </>
+  )
+}
+
+const SignOutButton = () => {
+  return (
+    <>
+      <Button variant="outline-success" onClick={handleSignOut}>Sign Out</Button>
+    </>
+  )
+}
+    
+    
+const App = () => {
+  return (
+    <>
+      <MyNavBar />
+    </>
+  );
+}
+
+
+ReactDOM.render(<App />, document.getElementById('root'));
+
 // End React code
 
 // Add button listeners
+
+/*
 const signUpButton = document.querySelector("#sign-up-button")
   .addEventListener("click", handleSignUp);
 
@@ -49,6 +171,7 @@ const signOutButton = document.querySelector('#sign-out-button')
 const addDatabaseButton = document.querySelector("#add-database")
   .addEventListener("click", addDatabase);
 
+  */
 function testing() {
   alert('click')
 }
@@ -60,23 +183,23 @@ function handleSignUp() {
   auth.createUserWithEmailAndPassword(email, password)
     .then(function () {
       console.log("Saved");
-    }).catch (function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    }).catch(function (error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
 
-    if (errorCode == 'auth/weak-password') {
-      alert('The password is too weak.');
-    } else {
-      alert(errorMessage);
-    }
-    console.log(error);
-  });
+      if (errorCode == 'auth/weak-password') {
+        alert('The password is too weak.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    });
 }
 
-function handleSignIn() {
-  var email  = document.querySelector("#email-input-field").value;
-  var password = document.querySelector("#password-input-field").value;
+function handleSignIn(email, password) {
+  //var email = document.querySelector("#email-input-field").value;
+  //var password = document.querySelector("#password-input-field").value;
 
   auth.signInWithEmailAndPassword(email, password).catch(function (error) {
     // Handle Errors here.
@@ -94,7 +217,7 @@ function handleSignIn() {
 }
 
 function handleSignOut() {
-  auth.signOut().then(function() {
+  auth.signOut().then(function () {
     alert('Successfully Signed Out');
   }).catch(function (error) {
     var errorCode = error.code;
