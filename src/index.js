@@ -36,6 +36,11 @@ const hello = <div> Hello React, Webpack 4 & Babel 7!</div>;
 ReactDOM.render(hello, document.querySelector("#react"));
 // End React code
 
+
+
+
+
+
 // Add button listeners
 const signUpButton = document.querySelector("#sign-up-button")
   .addEventListener("click", handleSignUp);
@@ -61,8 +66,8 @@ var first_name;
 var last_name;
 
 function handleSignUp() {
-  email = document.querySelector("#email-input-field").value;
-  password = document.querySelector("#password-input-field").value;
+  email = document.querySelector("#email1-input-field").value;
+  password = document.querySelector("#password1-input-field").value;
 
   auth.createUserWithEmailAndPassword(email, password)
     .then(function () {
@@ -82,8 +87,8 @@ function handleSignUp() {
 }
 
 function handleSignIn() {
-  email  = document.querySelector("#email-input-field").value;
-  password = document.querySelector("#password-input-field").value;
+  email  = document.querySelector("#email1-input-field").value;
+  password = document.querySelector("#password1-input-field").value;
 
   auth.signInWithEmailAndPassword(email, password).catch(function (error) {
     // Handle Errors here.
@@ -110,6 +115,7 @@ function handleSignOut() {
     console.log(error);
   })
 }
+
 var userid;
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
