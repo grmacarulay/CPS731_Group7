@@ -59,14 +59,47 @@ const MyNavBar = props => {
   )
 };
 
+// Sign in button will show a modal
+// This modal contains a button to sign up, clicking this modal will cause the form to change
 const SignInButton = props => {
 
   // ----- Set up state hooks ------
 
-  // For showing/hiding sign in modal
+  // For showing/hiding the modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  // Keep track whether user is signing in or signing up
+  const [isSigningIn, setSigningIn] = useState(true);
+  const toggleForms = () => setSigningIn(!isSigningIn);
+
+  return (
+    <>
+      <Button variant="outline-success" onClick={handleShow}>Sign In</Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {isSigningIn ? <SignInForm /> : <SignUpForm />}
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={toggleForms}>
+            {isSigningIn ? 'Not a member? Sign Up' : 'Already a member? Sign in'}
+          </Button>
+        </Modal.Footer>
+
+      </Modal>
+
+    </>
+  )
+}
+
+const SignUpForm = props => {
 
   // For email text
   const [email, setEmail] = useState('');
@@ -80,9 +113,71 @@ const SignInButton = props => {
     setPassword(event.target.value);
   }
 
-  // ------ End set up state hooks -----
+  // For name text
+  const [name, setName] = useState('');
+  const handleNameChange = event => {
+    setName(event.target.value);
+  }
 
-  // Submission callback function
+  const submitForm = event => {
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        console.log("Created user:", userCredential.user.email);
+      }).catch(error => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+    event.preventDefault();
+  }
+
+
+  return (
+    <Form onSubmit={submitForm}>
+      <Form.Group controlId="email">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+      </Form.Group>
+
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+      </Form.Group>
+
+      <Form.Group controlId="name">
+        <Form.Label>Name</Form.Label>
+        <Form.Control type="text" placeholder="Name" onChange={handleNameChange} />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+
+    </Form>
+  )
+}
+
+const SignInForm = props => {
+
+  // For email text
+  const [email, setEmail] = useState('');
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
+  }
+
+  // For password text
+  const [password, setPassword] = useState('');
+  const handlePasswordChange = event => {
+    setPassword(event.target.value);
+  }
+
   const submitForm = event => {
     //alert('A form was submitted');
 
@@ -91,53 +186,40 @@ const SignInButton = props => {
         console.log("Logged in as: ", auth.currentUser.email)
       })
       .catch(error => {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      // [START_EXCLUDE]
-      if (errorCode === 'auth/wrong-password') {
-        alert('Wrong password.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
 
-    });
+      });
 
     //console.log(email, ' ', password);
     event.preventDefault();
   }
 
   return (
-    <>
-      <Button variant="outline-success" onClick={handleShow}>Sign In</Button>
+    <Form onSubmit={submitForm}>
+      <Form.Group controlId="email">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+      </Form.Group>
 
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Sign in to Ingredientory</Modal.Title>
-        </Modal.Header>
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+      </Form.Group>
 
-        <Modal.Body>
-          <Form onSubmit={submitForm}>
-            <Form.Group controlId="email">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
-            </Form.Group>
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
 
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
-            </Form.Group>
-
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-
-        </Modal.Body>
-      </Modal>
-
-    </>
+    </Form>
   )
 }
 
@@ -194,28 +276,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 //----- End React code ------
 
 function testing() {
-  alert('click')
-}
-
-function handleSignUp() {
-  var email = document.querySelector("#email-input-field").value;
-  var password = document.querySelector("#password-input-field").value;
-
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(function () {
-      console.log("Saved");
-    }).catch(function (error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-
-      if (errorCode == 'auth/weak-password') {
-        alert('The password is too weak.');
-      } else {
-        alert(errorMessage);
-      }
-      console.log(error);
-    });
+  alert('hi')
 }
 
 function addDatabase() {
@@ -232,17 +293,3 @@ function addDatabase() {
       console.error("Error adding document: ", error);
     });
 }
-
-// button.addEventListener("click", function () {
-//   const s = textField.value;
-//   console.log("Sent " + s);
-
-//   doc.set({
-//     text: s
-//   }).then(function () {
-//     console.log("Saved");
-//   }).catch(function (error) {
-//     console.log("Error");
-//   });
-
-// })
