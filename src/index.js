@@ -36,11 +36,10 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 // React code
-const MyNavBar = () => {
-
-  const [isLoggedIn, setLoggedIn] = useState(false)
+const MyNavBar = props => {
 
   // CHANGE (ugly right now but it works)
+  const [isLoggedIn, setLoggedIn] = useState(false)
 
   /* email: test@test.com pass: test123 */
   auth.onAuthStateChanged(function (user) {
@@ -66,7 +65,7 @@ const MyNavBar = () => {
   )
 };
 
-const SignInButton = () => {
+const SignInButton = props => {
 
   // ----- Declare ids ------ //
   const emailId = 'email';
@@ -75,17 +74,17 @@ const SignInButton = () => {
 
   // ----- Set up state hooks ------
 
-  // For showing/hiding modal
+  // For showing/hiding sign in modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // For email
+  // For email text
   const [email, setEmail] = useState('');
   const handleEmailChange = event => {
     setEmail(event.target.value);
   }
-  // For password
+  // For password text
   const [password, setPassword] = useState('');
   const handlePasswordChange = event => {
     setPassword(event.target.value);
@@ -134,7 +133,7 @@ const SignInButton = () => {
   )
 }
 
-const SignOutButton = () => {
+const SignOutButton = props => {
   return (
     <>
       <Button variant="outline-success" onClick={handleSignOut}>Sign Out</Button>
@@ -144,6 +143,10 @@ const SignOutButton = () => {
     
     
 const App = () => {
+
+
+
+
   return (
     <>
       <MyNavBar />
