@@ -8,8 +8,8 @@ import "firebase/firestore"
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+// React-Bootstrap imports
 import "bootstrap/dist/css/bootstrap.min.css";
-
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -17,8 +17,10 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
+// Custom styless
 import './style.css';
 
+// Firbase config
 const firebaseConfig = {
   apiKey: "AIzaSyCQiJIXDWoPw9Uc4tpophAapgq7G2am-V0",
   authDomain: "ingredientory.firebaseapp.com",
@@ -35,30 +37,22 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// React code
+//----- React code -----
+
+// Nav bar on top of page
 const MyNavBar = props => {
 
-  // CHANGE (ugly right now but it works)
-  const [isLoggedIn, setLoggedIn] = useState(false)
-
-  /* email: test@test.com pass: test123 */
-  auth.onAuthStateChanged(function (user) {
-    if (user) {
-      setLoggedIn(true);
-      console.log('user logged in: ', user.email)
-    } else {
-      setLoggedIn(false);
-      console.log('user logged out')
-    }
-  });
+  const isLoggedIn = props.authState;
   
   return (
     <Navbar bg="light" expand="lg">
 
       <Navbar.Brand href="#home">Ingredientory</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-        {isLoggedIn ? <SignOutButton /> : <SignInButton />}
+        { // Change button depending on auth state
+          isLoggedIn ? <SignOutButton /> : <SignInButton />}
       </Navbar.Collapse>
 
     </Navbar>
@@ -66,11 +60,6 @@ const MyNavBar = props => {
 };
 
 const SignInButton = props => {
-
-  // ----- Declare ids ------ //
-  const emailId = 'email';
-  const passwordId = 'password';
-  // ------
 
   // ----- Set up state hooks ------
 
@@ -84,19 +73,38 @@ const SignInButton = props => {
   const handleEmailChange = event => {
     setEmail(event.target.value);
   }
+
   // For password text
   const [password, setPassword] = useState('');
   const handlePasswordChange = event => {
     setPassword(event.target.value);
   }
 
-  // ------
+  // ------ End set up state hooks -----
 
-  // Submission
+  // Submission callback function
   const submitForm = event => {
-    alert('A form was submitted');
-    handleSignIn(email, password);
-    console.log(email, ' ', password);
+    //alert('A form was submitted');
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log("Logged in as: ", auth.currentUser.email)
+      })
+      .catch(error => {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      // [START_EXCLUDE]
+      if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+
+    });
+
+    //console.log(email, ' ', password);
     event.preventDefault();
   }
 
@@ -111,12 +119,12 @@ const SignInButton = props => {
 
         <Modal.Body>
           <Form onSubmit={submitForm}>
-            <Form.Group controlId={emailId}>
+            <Form.Group controlId="email">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
             </Form.Group>
 
-            <Form.Group controlId={passwordId}>
+            <Form.Group controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
             </Form.Group>
@@ -134,6 +142,20 @@ const SignInButton = props => {
 }
 
 const SignOutButton = props => {
+
+  const handleSignOut = () => {
+    auth.signOut()
+      .then(() => {
+        alert('Successfully Signed Out');
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        console.log(error);
+      })
+  }
+
   return (
     <>
       <Button variant="outline-success" onClick={handleSignOut}>Sign Out</Button>
@@ -144,12 +166,24 @@ const SignOutButton = props => {
     
 const App = () => {
 
+  // Save authentication state (whether user is logged in or not)
+  const [isLoggedIn, setLoggedIn] = useState(false)
 
-
+  // Bind an function to auth object that runs when there is a change in auth state
+  /* email: test@test.com pass: test123 */
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      setLoggedIn(true);
+      // console.log('user logged in: ', user.email)
+    } else {
+      setLoggedIn(false);
+      // console.log('user logged out')
+    }
+  });
 
   return (
     <>
-      <MyNavBar />
+      <MyNavBar authState={isLoggedIn}/>
     </>
   );
 }
@@ -157,24 +191,8 @@ const App = () => {
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-// End React code
+//----- End React code ------
 
-// Add button listeners
-
-/*
-const signUpButton = document.querySelector("#sign-up-button")
-  .addEventListener("click", handleSignUp);
-
-const signInButton = document.querySelector('#sign-in-button')
-  .addEventListener('click', handleSignIn);
-
-const signOutButton = document.querySelector('#sign-out-button')
-  .addEventListener('click', handleSignOut);
-
-const addDatabaseButton = document.querySelector("#add-database")
-  .addEventListener("click", addDatabase);
-
-  */
 function testing() {
   alert('click')
 }
@@ -198,36 +216,6 @@ function handleSignUp() {
       }
       console.log(error);
     });
-}
-
-function handleSignIn(email, password) {
-  //var email = document.querySelector("#email-input-field").value;
-  //var password = document.querySelector("#password-input-field").value;
-
-  auth.signInWithEmailAndPassword(email, password).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // [START_EXCLUDE]
-    if (errorCode === 'auth/wrong-password') {
-      alert('Wrong password.');
-    } else {
-      alert(errorMessage);
-    }
-    console.log(error);
-
-  });
-}
-
-function handleSignOut() {
-  auth.signOut().then(function () {
-    alert('Successfully Signed Out');
-  }).catch(function (error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    alert(errorMessage);
-    console.log(error);
-  })
 }
 
 function addDatabase() {
