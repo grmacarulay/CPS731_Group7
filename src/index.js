@@ -43,7 +43,7 @@ const auth = firebase.auth();
 const MyNavBar = props => {
 
   const isLoggedIn = props.authState;
-  
+
   return (
     <Navbar bg="light" expand="lg">
 
@@ -114,10 +114,16 @@ const SignUpForm = props => {
   }
 
   // For name text
-  const [name, setName] = useState('');
-  const handleNameChange = event => {
-    setName(event.target.value);
+  const [firstName, setFirstName] = useState('');
+  const handleFirstNameChange = event => {
+    setFirstName(event.target.value);
   }
+
+  const [lastName, setLastName] = useState('');
+  const handleLastNameChange = event => {
+    setLastName(event.target.value);
+  }
+
 
   const submitForm = event => {
     auth.createUserWithEmailAndPassword(email, password)
@@ -151,9 +157,14 @@ const SignUpForm = props => {
         <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
       </Form.Group>
 
-      <Form.Group controlId="name">
-        <Form.Label>Name</Form.Label>
-        <Form.Control type="text" placeholder="Name" onChange={handleNameChange} />
+      <Form.Group controlId="firstName">
+        <Form.Label>First Name</Form.Label>
+        <Form.Control type="text" placeholder="John" onChange={handleFirstNameChange} />
+      </Form.Group>
+
+      <Form.Group controlId="lastName">
+        <Form.Label>Last Name</Form.Label>
+        <Form.Control type="text" placeholder="Doe" onChange={handleLastNameChange} />
       </Form.Group>
 
       <Button variant="primary" type="submit">
@@ -244,8 +255,8 @@ const SignOutButton = props => {
     </>
   )
 }
-    
-    
+
+
 const App = () => {
 
   // Save authentication state (whether user is logged in or not)
