@@ -5,7 +5,7 @@ import "firebase/auth";
 import "firebase/firestore"
 
 // React Imports
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 // React-Bootstrap imports
@@ -16,6 +16,10 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
+
+// Typeahead
+import { Typeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 // Custom styless
 import './style.css';
@@ -65,14 +69,17 @@ const SignInButton = props => {
 
   // ----- Set up state hooks ------
 
-  // For showing/hiding the modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   // Keep track whether user is signing in or signing up
   const [isSigningIn, setSigningIn] = useState(true);
   const toggleForms = () => setSigningIn(!isSigningIn);
+
+  // For showing/hiding the modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setSigningIn(true);
+    setShow(false);
+  }
+  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -124,27 +131,25 @@ const SignUpForm = props => {
     setLastName(event.target.value);
   }
 
-  //initialize variables.
-  var uid;
-  var date= new Date();
-
   const submitForm = event => {
     auth.createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        uid = userCredential.user.uid;
+        
         console.log("Created user:", userCredential.user.email);
-        db.collection("users").add({
-          first_name: firstName,
-          last_name: lastName,
-          user_id: uid,
-          date_created: date,
-        })
+
+        db.collection("users")
+          .add({
+            first_name: firstName,
+            last_name: lastName,
+            user_id: userCredential.user.uid,
+            date_created: new Date(),
+          })
           .then(function (docRef) {
             console.log("Document written with ID: ", docRef.id);
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);
-          });
+        });
           
       }).catch(error => {
         // Handle Errors here.
@@ -275,6 +280,50 @@ const SignOutButton = props => {
 }
 
 
+const SearchBar = props => {
+
+  // For search bar query
+  const [query, setQuery] = useState('');
+  const handleQueryChange = (text, event) => {
+    setQuery(text);
+  }
+
+  // For search bar selections
+  const [selected, setSelected] = useState([]);
+  const handleSelectedChange = selected => {
+    setSelected(selected);
+  }
+
+  const handleSearch = () => {
+    console.log('You have search for: ', selected.toString());
+  }
+  
+  // Stub, get from database in handleQueryChange
+  var options = [
+    'Lettuce',
+    'Tomato',
+    'Onion',
+    'Bun',
+  ];
+
+  return (
+    <>
+      <Typeahead
+        id='search bar'
+        placeholder="Type an ingredient"
+        multiple
+        options={options}
+        onInputChange={handleQueryChange} // the text the user is typing
+        onChange={handleSelectedChange} // the selection the user inputted
+      />
+
+      <Button variant="primary" onClick={handleSearch}>
+        Search
+      </Button>
+    </>
+  )
+}
+
 const App = () => {
 
   // Save authentication state (whether user is logged in or not)
@@ -294,7 +343,8 @@ const App = () => {
 
   return (
     <>
-      <MyNavBar authState={isLoggedIn}/>
+      <MyNavBar authState={isLoggedIn} />
+      <SearchBar/>
     </>
   );
 }
