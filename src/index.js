@@ -124,11 +124,28 @@ const SignUpForm = props => {
     setLastName(event.target.value);
   }
 
+  //initialize variables.
+  var uid;
+  var date= new Date();
 
   const submitForm = event => {
     auth.createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
+        uid = userCredential.user.uid;
         console.log("Created user:", userCredential.user.email);
+        db.collection("users").add({
+          first_name: firstName,
+          last_name: lastName,
+          user_id: uid,
+          date_created: date,
+        })
+          .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+          });
+          
       }).catch(error => {
         // Handle Errors here.
         var errorCode = error.code;
@@ -141,6 +158,7 @@ const SignUpForm = props => {
         }
         console.log(error);
       });
+
     event.preventDefault();
   }
 
@@ -298,28 +316,3 @@ firebase.auth().onAuthStateChanged((user) => {
     // User not logged in or has just logged out.
   }
 });
-
-//Add Database Text.
-function addDatabase() {
-
-  email  = document.querySelector("#email-input-field").value;
-  password = document.querySelector("#password-input-field").value;
-  first_name= document.querySelector("#firstName-input-field").value;
-  last_name = document.querySelector("#lastName-input-field").value;
-  var d= new Date();
-
-  db.collection("users").add({
-    first_name: first_name,
-    last_name: last_name,
-    user_id: userid,
-    date_created: d,
-    email:email,
-    password:password
-  })
-    .then(function (docRef) {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch(function (error) {
-      console.error("Error adding document: ", error);
-    });
-}
