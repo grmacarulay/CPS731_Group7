@@ -18,10 +18,10 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
 // Typeahead
-import { Typeahead } from 'react-bootstrap-typeahead';
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-// Custom styless
+// Custom styles
 import './style.css';
 
 // Firbase config
@@ -279,14 +279,10 @@ const SignOutButton = props => {
   )
 }
 
-
 const SearchBar = props => {
 
-  // For search bar query
+  // For search bar query text
   const [query, setQuery] = useState('');
-  const handleQueryChange = (text, event) => {
-    setQuery(text);
-  }
 
   // For search bar selections
   const [selected, setSelected] = useState([]);
@@ -294,27 +290,76 @@ const SearchBar = props => {
     setSelected(selected);
   }
 
-  const handleSearch = () => {
-    console.log('You have search for: ', selected.toString());
+  // For options
+  const [options, setOptions] = useState([]);
+
+  // For changes to options
+  const [isLoading, setLoading] = useState(false);
+
+  // STUB
+  var testData = [
+    { ingredient_name: "baking powder" },
+    { ingredient_name: "milk" },
+    { ingredient_name: "all-purpose flour" },
+    { ingredient_name: "salt" },
+    { ingredient_name: "white sugar" },
+    { ingredient_name: "egg" },
+    { ingredient_name: "butter" }
+  ];
+
+  const handleQueryChange = query => {
+    console.log('handle query')
+    setQuery(query);
+
+    // TODO optimize cache to decrease network calls
+
+    // TODO get only a few
+    // setLoading(true);
+    // db.collection("ingredients").get()
+    //   .then(snapshot => {
+    //     // Put all docs in an array
+    //     var tempOptions = [];
+    //     snapshot.docs.forEach(doc => {
+    //       tempOptions.push(doc.data());
+    //     })
+    //     setOptions(tempOptions);
+    //     setLoading(false);
+    //   }
+    // );
+
+    // STUB, simulates above to save on data
+    setLoading(true);
+    setOptions(testData);
+    setLoading(false);
   }
   
-  // Stub, get from database in handleQueryChange
-  var options = [
-    'Lettuce',
-    'Tomato',
-    'Onion',
-    'Bun',
-  ];
+  // For testing: Print query to console
+  // Sidenote: do not read query in handleQueryChange because setQuery is async
+  useEffect(
+    () => {
+      //console.log(query);
+    }, [query]
+  );
+
+  // TODO
+  const handleSearch = () => {
+    console.log('You have search for: ');
+    console.log(selected);
+  }
 
   return (
     <>
-      <Typeahead
+      <AsyncTypeahead                   // Async because we are querying database for suggestions
         id='search bar'
         placeholder="Type an ingredient"
+        labelKey="ingredient_name"
         multiple
-        options={options}
-        onInputChange={handleQueryChange} // the text the user is typing
-        onChange={handleSelectedChange} // the selection the user inputted
+        promptText=''
+        isLoading={isLoading}
+        minLength={1}                   // Length of query before options will show
+        options={options}               // The suggestions
+        onSearch={handleQueryChange}    // Fires when the user types something
+        onChange={handleSelectedChange} // Fires when the user selects or deselects
       />
 
       <Button variant="primary" onClick={handleSearch}>
