@@ -50,8 +50,10 @@ const MyNavBar = props => {
 
   return (
     <Navbar bg="light" expand="lg">
+    <img src="\src\images\carrot.svg" width="40" height="35" className="d-inline-block align-top"/> {' '}
 
-      <Navbar.Brand href="#home">Ingredientory</Navbar.Brand>
+<b>Ingredientory</b>
+      <Navbar.Brand href="#home"></Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
