@@ -71,13 +71,5 @@ node_modules/
 .vscode
 Website.code-workspace
 
-# babel
-.babelrc
-
-# Webpack
-package.json
-package-lock.json
-webpack.config.js
-
 # public folder
 public/
