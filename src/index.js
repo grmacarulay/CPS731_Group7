@@ -62,7 +62,7 @@ const MyNavBar = props => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
 
 
         { // Change button depending on auth state
@@ -292,12 +292,19 @@ const SignOutButton = props => {
 
 const SearchBar = props => {
 
-  // grabs values within a collection (just outputs into console)
-   db.collection('ingredients').get().then((snapshot) => {
-     snapshot.docs.forEach(doc => {
-       console.log(doc.data().ingredient_name);
-     })
-   })
+//   var array_test=[] ;
+//
+//   // grabs values within a collection (just outputs into console)
+//    db.collection('ingredients').get().then((snapshot) => {
+//      snapshot.docs.forEach(doc => {
+//        console.log(doc.data().ingredient_name);
+//        array_test.push(doc.data().ingredient_name);
+//      })
+//    })
+//
+// db.collection('ingredients').get().then((snapshot) => {
+//    console.log(array_test.toString());
+//  })
 
   // For search bar query text
   const [query, setQuery] = useState('');
