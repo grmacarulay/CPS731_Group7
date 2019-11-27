@@ -50,24 +50,15 @@ const MyNavBar = props => {
 
   return (
     <Navbar bg="light" expand="lg">
+    <img src="\src\images\carrot.svg" width="40" height="35" className="d-inline-block align-top"/> {' '}
 
-      <Navbar.Brand href="#home">
-      <img
-      src="\src\images\carrot.svg"
-      width="40"
-      height="35"
-      className="d-inline-block align-top"
-      /> {' '}
-      <b>Ingredientory</b>
-      </Navbar.Brand>
+<b>Ingredientory</b>
+      <Navbar.Brand href="#home"></Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
-
-
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         { // Change button depending on auth state
           isLoggedIn ? <SignOutButton /> : <SignInButton />}
-
       </Navbar.Collapse>
 
     </Navbar>
@@ -291,20 +282,6 @@ const SignOutButton = props => {
 }
 
 const SearchBar = props => {
-
-//   var array_test=[] ;
-//
-//   // grabs values within a collection (just outputs into console)
-//    db.collection('ingredients').get().then((snapshot) => {
-//      snapshot.docs.forEach(doc => {
-//        console.log(doc.data().ingredient_name);
-//        array_test.push(doc.data().ingredient_name);
-//      })
-//    })
-//
-// db.collection('ingredients').get().then((snapshot) => {
-//    console.log(array_test.toString());
-//  })
 
   // For search bar query text
   const [query, setQuery] = useState('');
