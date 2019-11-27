@@ -51,12 +51,23 @@ const MyNavBar = props => {
   return (
     <Navbar bg="light" expand="lg">
 
-      <Navbar.Brand href="#home">Ingredientory</Navbar.Brand>
+      <Navbar.Brand href="#home">
+      <img
+      src="\src\images\carrot.svg"
+      width="40"
+      height="35"
+      className="d-inline-block align-top"
+      /> {' '}
+      <b>Ingredientory</b>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+
+
         { // Change button depending on auth state
           isLoggedIn ? <SignOutButton /> : <SignInButton />}
+
       </Navbar.Collapse>
 
     </Navbar>
@@ -134,7 +145,7 @@ const SignUpForm = props => {
   const submitForm = event => {
     auth.createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        
+
         console.log("Created user:", userCredential.user.email);
 
         db.collection("users")
@@ -150,7 +161,7 @@ const SignUpForm = props => {
           .catch(function (error) {
             console.error("Error adding document: ", error);
         });
-          
+
       }).catch(error => {
         // Handle Errors here.
         var errorCode = error.code;
@@ -281,6 +292,13 @@ const SignOutButton = props => {
 
 const SearchBar = props => {
 
+  // grabs values within a collection (just outputs into console)
+   db.collection('ingredients').get().then((snapshot) => {
+     snapshot.docs.forEach(doc => {
+       console.log(doc.data().ingredient_name);
+     })
+   })
+
   // For search bar query text
   const [query, setQuery] = useState('');
 
@@ -332,7 +350,7 @@ const SearchBar = props => {
     setOptions(testData);
     setLoading(false);
   }
-  
+
   // For testing: Print query to console
   // Sidenote: do not read query in handleQueryChange because setQuery is async
   useEffect(
