@@ -134,7 +134,7 @@ const SignUpForm = props => {
   const submitForm = event => {
     auth.createUserWithEmailAndPassword(email, password)
       .then(userCredential => {
-        
+
         console.log("Created user:", userCredential.user.email);
 
         db.collection("users")
@@ -150,7 +150,7 @@ const SignUpForm = props => {
           .catch(function (error) {
             console.error("Error adding document: ", error);
         });
-          
+
       }).catch(error => {
         // Handle Errors here.
         var errorCode = error.code;
@@ -332,7 +332,7 @@ const SearchBar = props => {
     setOptions(testData);
     setLoading(false);
   }
-  
+
   // For testing: Print query to console
   // Sidenote: do not read query in handleQueryChange because setQuery is async
   useEffect(
