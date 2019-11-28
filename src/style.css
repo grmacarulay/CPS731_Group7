@@ -15,10 +15,16 @@
   margin-bottom: 30px;
 }
 
-.searchbar {
-  font-size: 30px;
+.staatliches{
+  font-family: Staatliches;
 }
 
-input {
-  height: 50px;
+.searchbar {
+  font-size: 30px;
+  background-color: orange;
+}
+
+
+@font-face {
+  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
 }

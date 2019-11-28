@@ -65,7 +65,7 @@ const MyNavBar = props => {
       height="35"
       className="d-inline-block align-top"
       /> {' '}
-      <b>Ingredientory</b>
+      <b className="staatliches">Ingredientory</b>
       </Navbar.Brand>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -102,11 +102,11 @@ const SignInButton = props => {
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleShow}>Sign In</Button>
+      <Button variant="outline-success" onClick={handleShow} className="staatliches">Sign In</Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
+          <Modal.Title className="staatliches">Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -386,24 +386,25 @@ const SearchBar = props => {
     <div className="bottom">  </div>
 
     <Row >
-    <Col> </Col>
-    <Col>
-      <AsyncTypeahead                // Async because we are querying database for suggestions
+    <Col md={3}> </Col>
+    <Col md={6}>
+      <AsyncTypeahead className="staatliches"               // Async because we are querying database for suggestions
         id='search bar'
-        placeholder="Type an ingredient"
+        placeholder="Type an ingredient..."
         labelKey="ingredient_name"
         multiple
         promptText=''
-
         isLoading={isLoading}
         minLength={1}                   // Length of query before options will show
         options={options}               // The suggestions
         onSearch={handleQueryChange}    // Fires when the user types something
         onChange={handleSelectedChange} // Fires when the user selects or deselects
+
         bsSize="large"
+
       />
       </Col>
-      <Col> </Col>
+      <Col md={3}> </Col>
       </Row>
 
 
@@ -411,7 +412,7 @@ const SearchBar = props => {
 
       <Row>
       <Col> </Col>
-      <Col className="text-center">
+      <Col className="text-center staatliches">
       <Button variant="primary" onClick={handleSearch} className="searchbar">
         Search
       </Button>
@@ -445,7 +446,6 @@ const App = () => {
   return (
     <>
       <MyNavBar authState={isLoggedIn} />
-
 
       <SearchBar/>
     </>
