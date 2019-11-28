@@ -61,7 +61,11 @@ const MyNavBar = props => {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home"><img src="\src\images\carrot.svg" width="40" height="35" className="d-inline-block align-top"/> {' '} <b>Ingredientory</b></Navbar.Brand>
+      <Navbar.Brand href="#home">
+      <img src="\src\images\chef.svg" width="40" height="40" className="d-inline-block align-top"/>
+      {' '}
+      <b className="staatliches">Ingredientory</b>
+      </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
@@ -110,7 +114,7 @@ const SignInButton = props => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={toggleForms}>
+          <Button variant="secondary" onClick={toggleForms} className="staatliches">
             {isSigningIn ? 'Not a member? Sign Up' : 'Already a member? Sign in'}
           </Button>
         </Modal.Footer>
@@ -186,26 +190,26 @@ const SignUpForm = props => {
   return (
     <Form onSubmit={submitForm}>
       <Form.Group controlId="email">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+        <Form.Label className="staatliches">Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} className="oswald" required />
       </Form.Group>
 
       <Form.Group controlId="password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+        <Form.Label className="staatliches">Password</Form.Label>
+        <Form.Control type="password" placeholder="Enter password" onChange={handlePasswordChange} className="oswald" required/>
       </Form.Group>
 
       <Form.Group controlId="firstName">
-        <Form.Label>First Name</Form.Label>
-        <Form.Control type="text" placeholder="John" onChange={handleFirstNameChange} />
+        <Form.Label className="staatliches">First Name</Form.Label>
+        <Form.Control type="text" placeholder="John" onChange={handleFirstNameChange} className="oswald" required/>
       </Form.Group>
 
       <Form.Group controlId="lastName">
-        <Form.Label>Last Name</Form.Label>
-        <Form.Control type="text" placeholder="Doe" onChange={handleLastNameChange} />
+        <Form.Label className="staatliches">Last Name</Form.Label>
+        <Form.Control type="text" placeholder="Doe" onChange={handleLastNameChange} className="oswald" required/>
       </Form.Group>
 
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" className="staatliches">
         Submit
       </Button>
 
@@ -255,16 +259,16 @@ const SignInForm = props => {
   return (
     <Form onSubmit={submitForm}>
       <Form.Group controlId="email">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+        <Form.Label className="staatliches">Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} className="oswald" required/>
       </Form.Group>
 
       <Form.Group controlId="password">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+        <Form.Label className="staatliches">Password</Form.Label>
+        <Form.Control type="password" placeholder="Enter password" onChange={handlePasswordChange} className="oswald" required />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" className="staatliches">
         Submit
       </Button>
 
@@ -289,7 +293,7 @@ const SignOutButton = props => {
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleSignOut}>Sign Out</Button>
+      <Button variant="outline-success" onClick={handleSignOut} className="staatliches">Sign Out</Button>
     </>
   )
 }
@@ -381,12 +385,23 @@ const SearchBar = props => {
     <>
     <div className="bottom">  </div>
 
+    <Row>
+    <Col className="text-center">
+    <img src="/src/images/Logo.png"
+     alt=""
+     width="1000px"
+     height="300px"
+     className="responsive-image"
+    />
+    </Col>
+    </Row>
+
     <Row >
     <Col md={3}> </Col>
     <Col md={6}>
-      <AsyncTypeahead className="staatliches"               // Async because we are querying database for suggestions
+      <AsyncTypeahead className="oswald"               // Async because we are querying database for suggestions
         id='search bar'
-        placeholder="Type an ingredient..."
+        placeholder="Type an ingredient ..."
         labelKey="ingredient_name"
         multiple
         promptText=''
@@ -396,6 +411,8 @@ const SearchBar = props => {
         onSearch={handleQueryChange}    // Fires when the user types something
         onChange={handleSelectedChange} // Fires when the user selects or deselects
         bsSize="large"
+        required
+
       />
       </Col>
       <Col md={3}> </Col>
@@ -407,7 +424,7 @@ const SearchBar = props => {
       <Row>
       <Col> </Col>
       <Col className="text-center staatliches">
-      <Button variant="primary" onClick={handleSearch} className="searchbar">
+      <Button variant="primary" onClick={handleSearch} className="search-btn">
         Search
       </Button>
       </Col>
