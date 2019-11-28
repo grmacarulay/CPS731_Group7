@@ -30,19 +30,21 @@ html {
 }
 
 .staatliches{
-  font-family: Staatliches;
+  font-family: 'Staatliches';
 }
 
 .oswald{
-  font-family: Oswald;
+  font-family: 'Oswald', sans-serif;
 }
 
+/* search button */
 .search-btn {
   font-size: 30px;
   background-color: orange;
   color: white;
   border: 3px solid darkorange;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .search-btn:hover{
@@ -50,9 +52,13 @@ html {
   border: 3px solid darkorange;
 }
 
+.test {
+  background-color: red;
+}
+
 
 
 @font-face {
-  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap' );
   src: url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 }
