@@ -342,6 +342,7 @@ const SearchBar = props => {
 
   // TODO
   const handleSearch = () => {
+    props.onSearchingStateChange(true);
     console.log('You have search for: ');
     console.log(selected);
   }
@@ -368,10 +369,23 @@ const SearchBar = props => {
   )
 }
 
+// Genies Page
+const App2 = () => {
+  window.location.href = "#another_page"
+  return (
+    <div id="another_page">
+      <h1>Another Page</h1>
+    </div>
+  )
+}
+
 const App = () => {
 
   // Save authentication state (whether user is logged in or not)
-  const [isLoggedIn, setLoggedIn] = useState(false)
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  // Did user click the search button
+  const [isSearching, setSearching] = useState(false);
 
   // Bind an function to auth object that runs when there is a change in auth state
   /* email: test@test.com pass: test123 */
@@ -388,7 +402,7 @@ const App = () => {
   return (
     <>
       <MyNavBar authState={isLoggedIn} />
-      <SearchBar/>
+      {isSearching ? <App2 /> : <SearchBar onSearchingStateChange={setSearching} />}
     </>
   );
 }
