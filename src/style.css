@@ -52,10 +52,38 @@ html {
   border: 3px solid darkorange;
 }
 
-.test {
-  background-color: red;
+.filter-no
+{
+  color: #f7f7f7;
 }
 
+.right{
+  max-width: '100%' ;
+  background-color: yellow;
+}
+
+.left{
+  max-width: '100%' ;
+  background-color: #f7f7f7;
+}
+
+.testest {
+position: absolute;
+}
+
+.stickyicky {
+position: sticky;
+ top: 0;
+}
+
+.side {
+  width: 16%;
+}
+
+.whitetext
+{
+  color: white;
+}
 
 
 @font-face {
