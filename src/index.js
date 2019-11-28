@@ -1,10 +1,30 @@
+// Firebase Imports
 import * as firebase from "firebase/app";
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore"
-import React from "react";
+
+// React Imports
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
+// React-Bootstrap imports
+import "bootstrap/dist/css/bootstrap.min.css";
+import Button from "react-bootstrap/Button";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import Form from "react-bootstrap/Form";
+import Modal from "react-bootstrap/Modal";
+
+// Typeahead
+import { AsyncTypeahead } from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+
+// Custom styles
+import './style.css';
+
+// Firbase config
 const firebaseConfig = {
   apiKey: "AIzaSyCQiJIXDWoPw9Uc4tpophAapgq7G2am-V0",
   authDomain: "ingredientory.firebaseapp.com",
@@ -21,99 +41,379 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
-// Listen for auth changes
-auth.onAuthStateChanged(function (user) {
-  if (user) {
-    console.log('user logged in: ', user)
-  } else {
-    console.log('user logged out')
+//----- React code -----
+
+// Nav bar on top of page
+const MyNavBar = props => {
+
+  const isLoggedIn = props.authState;
+
+  return (
+    <Navbar bg="light" expand="lg">
+      <Navbar.Brand href="#home"><img src="\src\images\carrot.svg" width="40" height="35" className="d-inline-block align-top"/> {' '} <b>Ingredientory</b></Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+        { // Change button depending on auth state
+          isLoggedIn ? <SignOutButton /> : <SignInButton />}
+      </Navbar.Collapse>
+
+    </Navbar>
+  )
+};
+
+// Sign in button will show a modal
+// This modal contains a button to sign up, clicking this modal will cause the form to change
+const SignInButton = props => {
+
+  // ----- Set up state hooks ------
+
+  // Keep track whether user is signing in or signing up
+  const [isSigningIn, setSigningIn] = useState(true);
+  const toggleForms = () => setSigningIn(!isSigningIn);
+
+  // For showing/hiding the modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setSigningIn(true);
+    setShow(false);
+  }
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <Button variant="outline-success" onClick={handleShow}>Sign In</Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          {isSigningIn ? <SignInForm /> : <SignUpForm />}
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={toggleForms}>
+            {isSigningIn ? 'Not a member? Sign Up' : 'Already a member? Sign in'}
+          </Button>
+        </Modal.Footer>
+
+      </Modal>
+
+    </>
+  )
+}
+
+const SignUpForm = props => {
+
+  // For email text
+  const [email, setEmail] = useState('');
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
   }
 
-});
+  // For password text
+  const [password, setPassword] = useState('');
+  const handlePasswordChange = event => {
+    setPassword(event.target.value);
+  }
 
-// React code
-const hello = <div> Hello React, Webpack 4 & Babel 7!</div>;
-ReactDOM.render(hello, document.querySelector("#react"));
-// End React code
+  // For name text
+  const [firstName, setFirstName] = useState('');
+  const handleFirstNameChange = event => {
+    setFirstName(event.target.value);
+  }
+
+  const [lastName, setLastName] = useState('');
+  const handleLastNameChange = event => {
+    setLastName(event.target.value);
+  }
+
+  const submitForm = event => {
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+
+        console.log("Created user:", userCredential.user.email);
+
+        db.collection("users")
+          .add({
+            first_name: firstName,
+            last_name: lastName,
+            user_id: userCredential.user.uid,
+            date_created: new Date(),
+          })
+          .then(function (docRef) {
+            console.log("Document written with ID: ", docRef.id);
+          })
+          .catch(function (error) {
+            console.error("Error adding document: ", error);
+        });
+
+      }).catch(error => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+
+        if (errorCode == 'auth/weak-password') {
+          alert('The password is too weak.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+      });
+
+    event.preventDefault();
+  }
 
 
+  return (
+    <Form onSubmit={submitForm}>
+      <Form.Group controlId="email">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+      </Form.Group>
+
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+      </Form.Group>
+
+      <Form.Group controlId="firstName">
+        <Form.Label>First Name</Form.Label>
+        <Form.Control type="text" placeholder="John" onChange={handleFirstNameChange} />
+      </Form.Group>
+
+      <Form.Group controlId="lastName">
+        <Form.Label>Last Name</Form.Label>
+        <Form.Control type="text" placeholder="Doe" onChange={handleLastNameChange} />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+
+    </Form>
+  )
+}
+
+const SignInForm = props => {
+
+  // For email text
+  const [email, setEmail] = useState('');
+  const handleEmailChange = event => {
+    setEmail(event.target.value);
+  }
+
+  // For password text
+  const [password, setPassword] = useState('');
+  const handlePasswordChange = event => {
+    setPassword(event.target.value);
+  }
+
+  const submitForm = event => {
+    //alert('A form was submitted');
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        console.log("Logged in as: ", auth.currentUser.email)
+      })
+      .catch(error => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // [START_EXCLUDE]
+        if (errorCode === 'auth/wrong-password') {
+          alert('Wrong password.');
+        } else {
+          alert(errorMessage);
+        }
+        console.log(error);
+
+      });
+
+    //console.log(email, ' ', password);
+    event.preventDefault();
+  }
+
+  return (
+    <Form onSubmit={submitForm}>
+      <Form.Group controlId="email">
+        <Form.Label>Email address</Form.Label>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} />
+      </Form.Group>
+
+      <Form.Group controlId="password">
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange} />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">
+        Submit
+      </Button>
+
+    </Form>
+  )
+}
+
+const SignOutButton = props => {
+
+  const handleSignOut = () => {
+    auth.signOut()
+      .then(() => {
+        alert('Successfully Signed Out');
+      })
+      .catch(error => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        console.log(error);
+      })
+  }
+
+  return (
+    <>
+      <Button variant="outline-success" onClick={handleSignOut}>Sign Out</Button>
+    </>
+  )
+}
+
+const SearchBar = props => {
+
+  // For search bar query text
+  const [query, setQuery] = useState('');
+
+  // For search bar selections
+  const [selected, setSelected] = useState([]);
+  const handleSelectedChange = selected => {
+    setSelected(selected);
+  }
+
+  // For options
+  const [options, setOptions] = useState([]);
+
+  // For changes to options
+  const [isLoading, setLoading] = useState(false);
+
+  // STUB
+  var testData = [
+    { ingredient_name: "baking powder" },
+    { ingredient_name: "milk" },
+    { ingredient_name: "all-purpose flour" },
+    { ingredient_name: "salt" },
+    { ingredient_name: "white sugar" },
+    { ingredient_name: "egg" },
+    { ingredient_name: "butter" }
+  ];
+
+  const handleQueryChange = query => {
+    console.log('handle query')
+    setQuery(query);
+
+    // TODO optimize cache to decrease network calls
+
+    // TODO get only a few
+    // setLoading(true);
+    // db.collection("ingredients").get()
+    //   .then(snapshot => {
+    //     // Put all docs in an array
+    //     var tempOptions = [];
+    //     snapshot.docs.forEach(doc => {
+    //       tempOptions.push(doc.data());
+    //     })
+    //     setOptions(tempOptions);
+    //     setLoading(false);
+    //   }
+    // );
+
+    // STUB, simulates above to save on data
+    setLoading(true);
+    setOptions(testData);
+    setLoading(false);
+  }
+
+  // For testing: Print query to console
+  // Sidenote: do not read query in handleQueryChange because setQuery is async
+  useEffect(
+    () => {
+      //console.log(query);
+    }, [query]
+  );
+
+  // TODO
+  const handleSearch = () => {
+    props.onSearchingStateChange(true);
+    console.log('You have search for: ');
+    console.log(selected);
+  }
+
+  return (
+    <>
+      <AsyncTypeahead                   // Async because we are querying database for suggestions
+        id='search bar'
+        placeholder="Type an ingredient"
+        labelKey="ingredient_name"
+        multiple
+        promptText=''
+        isLoading={isLoading}
+        minLength={1}                   // Length of query before options will show
+        options={options}               // The suggestions
+        onSearch={handleQueryChange}    // Fires when the user types something
+        onChange={handleSelectedChange} // Fires when the user selects or deselects
+      />
+
+      <Button variant="primary" onClick={handleSearch}>
+        Search
+      </Button>
+    </>
+  )
+}
+
+// Genies Page
+const App2 = () => {
+  window.location.href = "#another_page"
+  return (
+    <div id="another_page">
+      <h1>Another Page</h1>
+    </div>
+  )
+}
+
+const App = () => {
+
+  // Save authentication state (whether user is logged in or not)
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  // Did user click the search button
+  const [isSearching, setSearching] = useState(false);
+
+  // Bind an function to auth object that runs when there is a change in auth state
+  /* email: test@test.com pass: test123 */
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      setLoggedIn(true);
+      // console.log('user logged in: ', user.email)
+    } else {
+      setLoggedIn(false);
+      // console.log('user logged out')
+    }
+  });
+
+  return (
+    <>
+      <MyNavBar authState={isLoggedIn} />
+      {isSearching ? <App2 /> : <SearchBar onSearchingStateChange={setSearching} />}
+    </>
+  );
+}
 
 
+ReactDOM.render(<App />, document.getElementById('root'));
 
-
-// Add button listeners
-const signUpButton = document.querySelector("#sign-up-button")
-  .addEventListener("click", handleSignUp);
-
-const signInButton = document.querySelector('#sign-in-button')
-  .addEventListener('click', handleSignIn);
-
-const signOutButton = document.querySelector('#sign-out-button')
-  .addEventListener('click', handleSignOut);
-
-const addDatabaseButton = document.querySelector("#add-database")
-  .addEventListener("click", addDatabase);
-
+//----- End React code ------
 
 function testing() {
-  alert('click')
-}
-
-//Initialize user and password.
-var email;
-var password;
-var first_name;
-var last_name;
-
-function handleSignUp() {
-  email = document.querySelector("#email1-input-field").value;
-  password = document.querySelector("#password1-input-field").value;
-
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(function () {
-      console.log("Saved");
-    }).catch (function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-
-    if (errorCode == 'auth/weak-password') {
-      alert('The password is too weak.');
-    } else {
-      alert(errorMessage);
-    }
-    console.log(error);
-  });
-}
-
-function handleSignIn() {
-  email  = document.querySelector("#email1-input-field").value;
-  password = document.querySelector("#password1-input-field").value;
-
-  auth.signInWithEmailAndPassword(email, password).catch(function (error) {
-    // Handle Errors here.
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    // [START_EXCLUDE]
-    if (errorCode === 'auth/wrong-password') {
-      alert('Wrong password.');
-    } else {
-      alert(errorMessage);
-    }
-    console.log(error);
-
-  });
-}
-
-function handleSignOut() {
-  auth.signOut().then(function() {
-    alert('Successfully Signed Out');
-  }).catch(function (error) {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-    alert(errorMessage);
-    console.log(error);
-  })
+  alert('hi')
 }
 var userid;
 firebase.auth().onAuthStateChanged((user) => {
@@ -124,42 +424,3 @@ firebase.auth().onAuthStateChanged((user) => {
     // User not logged in or has just logged out.
   }
 });
-
-//Add Database Text.
-function addDatabase() {
-
-  email  = document.querySelector("#email-input-field").value;
-  password = document.querySelector("#password-input-field").value;
-  first_name= document.querySelector("#firstName-input-field").value;
-  last_name = document.querySelector("#lastName-input-field").value;
-  var d= new Date();
-
-  db.collection("users").add({
-    first_name: first_name,
-    last_name: last_name,
-    user_id: userid,
-    date_created: d,
-    email:email,
-    password:password
-  })
-    .then(function (docRef) {
-      console.log("Document written with ID: ", docRef.id);
-    })
-    .catch(function (error) {
-      console.error("Error adding document: ", error);
-    });
-}
-
-// button.addEventListener("click", function () {
-//   const s = textField.value;
-//   console.log("Sent " + s);
-
-//   doc.set({
-//     text: s
-//   }).then(function () {
-//     console.log("Saved");
-//   }).catch(function (error) {
-//     console.log("Error");
-//   });
-
-// })
