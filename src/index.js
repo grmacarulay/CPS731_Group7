@@ -600,7 +600,7 @@ const App2 = props => {
         </Card>
 
         <Card fluid className="whitetext">
-                _
+                __
               </Card>
 
         <Card>
@@ -608,7 +608,7 @@ const App2 = props => {
                     <Accordion.Toggle as={Card.Header} className="text-center" eventKey="5">
                       Ethnicity
                     </Accordion.Toggle>
-            
+
                   <Accordion.Collapse eventKey="5">
                     <Card.Body>
                       <Form>
