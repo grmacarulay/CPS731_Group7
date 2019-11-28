@@ -50,6 +50,10 @@ html {
   border: 3px solid darkorange;
 }
 
+.filters{
+  padding-top: 55px;
+}
+
 
 
 @font-face {

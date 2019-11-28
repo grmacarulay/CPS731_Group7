@@ -443,7 +443,7 @@ const App2 = () => {
   return (
     <div id="another_page">
   <Row>
-    <Col xs={3} className="filters">
+    <Col xs={2} className="filters">
       <Accordion>
         <Card>
           <Card.Header>
@@ -503,20 +503,20 @@ const App2 = () => {
                 {['checkbox'].map(type => (
                   <div key={`custom-inline-${type}`} className="mb-3">
                   <Row> <Col>
-                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Stewing" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Broiling" type={type} id={`custom-inline-${type}-3`} />
-                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Steaming" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Searing" type={type} id={`custom-inline-${type}-6`} />
+                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-7`} />
+                      <Form.Check custom inline label="Stewing" type={type} id={`custom-inline-${type}-8`} />
+                      <Form.Check custom inline label="Broiling" type={type} id={`custom-inline-${type}-9`} />
+                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-10`} />
+                      <Form.Check custom inline label="Steaming" type={type} id={`custom-inline-${type}-11`} />
+                      <Form.Check custom inline label="Searing" type={type} id={`custom-inline-${type}-12`} />
                     </Col>
                     <Col>
-                      <Form.Check custom inline label="Grilling" type={type} id={`custom-inline-${type}-7`} />
-                      <Form.Check custom inline label="Making" type={type} id={`custom-inline-${type}-8`} />
-                      <Form.Check custom inline label="Roasting" type={type} id={`custom-inline-${type}-9`} />
-                      <Form.Check custom inline label="Frying" type={type} id={`custom-inline-${type}-10`} />
-                      <Form.Check custom inline label="Sauteing" type={type} id={`custom-inline-${type}-11`} />
-                      <Form.Check custom inline label="Braising" type={type} id={`custom-inline-${type}-12`} />
+                      <Form.Check custom inline label="Grilling" type={type} id={`custom-inline-${type}-13`} />
+                      <Form.Check custom inline label="Making" type={type} id={`custom-inline-${type}-14`} />
+                      <Form.Check custom inline label="Roasting" type={type} id={`custom-inline-${type}-15`} />
+                      <Form.Check custom inline label="Frying" type={type} id={`custom-inline-${type}-16`} />
+                      <Form.Check custom inline label="Sauteing" type={type} id={`custom-inline-${type}-17`} />
+                      <Form.Check custom inline label="Braising" type={type} id={`custom-inline-${type}-18`} />
                   </Col> </Row>
                   </div>
                 ))}
@@ -548,14 +548,14 @@ const App2 = () => {
                 {['checkbox'].map(type => (
                   <div key={`custom-inline-${type}`} className="mb-3">
                   <Row> <Col>
-                      <Form.Check custom inline label="Vegetarian" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Dairy Free" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Kosher" type={type} id={`custom-inline-${type}-3`} />
+                      <Form.Check custom inline label="Vegetarian" type={type} id={`custom-inline-${type}-19`} />
+                      <Form.Check custom inline label="Dairy Free" type={type} id={`custom-inline-${type}-20`} />
+                      <Form.Check custom inline label="Kosher" type={type} id={`custom-inline-${type}-21`} />
                     </Col>
                     <Col>
-                      <Form.Check custom inline label="Gluten Free" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Halal" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Peanut Free" type={type} id={`custom-inline-${type}-6`} />
+                      <Form.Check custom inline label="Gluten Free" type={type} id={`custom-inline-${type}-22`} />
+                      <Form.Check custom inline label="Halal" type={type} id={`custom-inline-${type}-23`} />
+                      <Form.Check custom inline label="Peanut Free" type={type} id={`custom-inline-${type}-24`} />
 
                   </Col> </Row>
                   </div>
@@ -576,16 +576,16 @@ const App2 = () => {
                 {['checkbox'].map(type => (
                   <div key={`custom-inline-${type}`} className="mb-3">
                   <Row> <Col>
-                      <Form.Check custom inline label="Italian" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Greek" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Indian" type={type} id={`custom-inline-${type}-3`} />
-                      <Form.Check custom inline label="Chinese" type={type} id={`custom-inline-${type}-4`} />
+                      <Form.Check custom inline label="Italian" type={type} id={`custom-inline-${type}-25`} />
+                      <Form.Check custom inline label="Greek" type={type} id={`custom-inline-${type}-26`} />
+                      <Form.Check custom inline label="Indian" type={type} id={`custom-inline-${type}-27`} />
+                      <Form.Check custom inline label="Chinese" type={type} id={`custom-inline-${type}-28`} />
                     </Col>
                     <Col>
-                      <Form.Check custom inline label="Mexican" type={type} id={`custom-inline-${type}5`} />
-                      <Form.Check custom inline label="American" type={type} id={`custom-inline-${type}-6`} />
-                      <Form.Check custom inline label="French" type={type} id={`custom-inline-${type}-7`} />
-                      <Form.Check custom inline label="Japanese" type={type} id={`custom-inline-${type}-8`} />
+                      <Form.Check custom inline label="Mexican" type={type} id={`custom-inline-${type}-29`} />
+                      <Form.Check custom inline label="American" type={type} id={`custom-inline-${type}-30`} />
+                      <Form.Check custom inline label="French" type={type} id={`custom-inline-${type}-31`} />
+                      <Form.Check custom inline label="Japanese" type={type} id={`custom-inline-${type}-32`} />
                   </Col> </Row>
                   </div>
                 ))}
