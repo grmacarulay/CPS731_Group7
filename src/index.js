@@ -20,6 +20,7 @@ import Modal from "react-bootstrap/Modal";
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
 
 // Custom styles
 import './style.css';
