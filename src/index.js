@@ -421,19 +421,23 @@ const App2 = () => {
   window.location.href = "#Results_Page"
   return (
     <div id="another_page">
+    <Row>
       <Navbar>
-          <NavDropdown title="Sort">
-            <NavDropdown.Item href="#">Rating</NavDropdown.Item>
-            <NavDropdown.Item href="#">Time</NavDropdown.Item>
-            <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
-          </NavDropdown>
-        <Navbar.Collapse className="justify-content-end">
+        <Col> <NavDropdown title="Sort">
+          <NavDropdown.Item href="#">Rating</NavDropdown.Item>
+          <NavDropdown.Item href="#">Time</NavDropdown.Item>
+          <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
+        </NavDropdown> </Col>
+        <Col xs={100}> </Col>
+        <Col><Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
               Signed in as: <a href="#profile">Name</a>
           </Navbar.Text>
-        </Navbar.Collapse>
+        </Navbar.Collapse> </Col>
       </Navbar>
+    </Row>
 
+    <Row>
       <Nav className="flex-column">
         <Nav.Link eventKey="disabled" disabled>Ingredients</Nav.Link>
         <Nav.Link eventKey="disabled" disabled>Meal Type</Nav.Link>
@@ -442,6 +446,7 @@ const App2 = () => {
         <Nav.Link eventKey="disabled" disabled>Dietary Restrictions</Nav.Link>
         <Nav.Link eventKey="disabled" disabled>Ethnicity</Nav.Link>
       </Nav>
+    </Row>
     </div>
   )
 }
