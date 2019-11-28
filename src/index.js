@@ -25,12 +25,15 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
-
-
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
+
+// Sidenav
+import SideNav, { Toggle, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
+// Be sure to include styles at some point, probably during your bootstraping
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 // Custom styles
 import './style.css';
@@ -67,6 +70,7 @@ const MyNavBar = props => {
       <b className="staatliches">Ingredientory</b>
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
+
 
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
           <Navbar.Text>
@@ -436,24 +440,33 @@ const SearchBar = props => {
   )
 }
 
+
+
+
+
 // Genies Page
-const App2 = () => {
+const App2 = props => {
 
   window.location.href = "#Results_Page"
   return (
     <div id="another_page">
-  <Row>
-    <Col xs={3} className="filters">
-      <Accordion>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="0">
+
+  <Container fluid >
+  <Row fluid>
+  <Col md={2} className=" left min-vh-100 testtest" fluid>
+
+  <Nav defaultActiveKey="/home" className="flex-column w3-sidebar side">
+
+  <Accordion>
+  <Card fluid>
+          <Card.Header className="text-center">
+            <Accordion.Toggle as={Button} variant="link" eventKey="0" >
               Ingredients
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <Button variant="primary"> Milk <Badge variant="light">x</Badge></Button>
+              <Button variant="primary"> Milk <Badge >x</Badge></Button>
               <Button variant="primary"> Baking Powder <Badge variant="light">x</Badge></Button>
               <Button variant="primary"> Butter <Badge variant="light">x</Badge></Button>
               <Button variant="primary"> All-Purpose Flour <Badge variant="light">x</Badge></Button>
@@ -463,8 +476,14 @@ const App2 = () => {
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-        <Card>
-          <Card.Header>
+
+        <Card fluid className="whitetext">
+                _
+              </Card>
+
+
+  <Card fluid>
+          <Card.Header className="text-center">
             <Accordion.Toggle as={Button} variant="link" eventKey="1">
               Meal Type
             </Accordion.Toggle>
@@ -474,7 +493,8 @@ const App2 = () => {
               <Form>
                 {['checkbox'].map(type => (
                   <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
+                  <Row>
+                    <Col>
                       <Form.Check custom inline label="Snack" type={type} id={`custom-inline-${type}-1`} />
                       <Form.Check custom inline label="Breakfast" type={type} id={`custom-inline-${type}-2`} />
                       <Form.Check custom inline label="Lunch" type={type} id={`custom-inline-${type}-3`} />
@@ -484,60 +504,76 @@ const App2 = () => {
                       <Form.Check custom inline label="Dinner" type={type} id={`custom-inline-${type}-5`} />
                       <Form.Check custom inline label="Late Night Munchies" type={type} id={`custom-inline-${type}-6`} />
 
-                  </Col> </Row>
+                  </Col>
+                </Row>
                   </div>
                 ))}
               </Form>
             </Card.Body>
           </Accordion.Collapse>
+  </Card>
+
+  <Card fluid className="whitetext">
+          _
         </Card>
+
+  <Card>
+            <Card.Header className="text-center">
+              <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                Cooking Method
+              </Accordion.Toggle>
+            </Card.Header>
+            <Accordion.Collapse eventKey="2">
+              <Card.Body>
+                <Form>
+                  {['checkbox'].map(type => (
+                    <div key={`custom-inline-${type}`} className="mb-3">
+                    <Row> <Col>
+                        <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-1`} />
+                        <Form.Check custom inline label="Stewing" type={type} id={`custom-inline-${type}-2`} />
+                        <Form.Check custom inline label="Broiling" type={type} id={`custom-inline-${type}-3`} />
+                        <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-4`} />
+                        <Form.Check custom inline label="Steaming" type={type} id={`custom-inline-${type}-5`} />
+                        <Form.Check custom inline label="Searing" type={type} id={`custom-inline-${type}-6`} />
+                      </Col>
+                      <Col>
+                        <Form.Check custom inline label="Grilling" type={type} id={`custom-inline-${type}-7`} />
+                        <Form.Check custom inline label="Making" type={type} id={`custom-inline-${type}-8`} />
+                        <Form.Check custom inline label="Roasting" type={type} id={`custom-inline-${type}-9`} />
+                        <Form.Check custom inline label="Frying" type={type} id={`custom-inline-${type}-10`} />
+                        <Form.Check custom inline label="Sauteing" type={type} id={`custom-inline-${type}-11`} />
+                        <Form.Check custom inline label="Braising" type={type} id={`custom-inline-${type}-12`} />
+                    </Col> </Row>
+                    </div>
+                  ))}
+                </Form>
+              </Card.Body>
+            </Accordion.Collapse>
+          </Card>
+
+          <Card fluid className="whitetext">
+                  _
+                </Card>
+
+          <Card>
+                    <Card.Header className="text-center">
+                      <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                        Spice Level
+                      </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="3">
+                      <Card.Body>
+                          Spice Level
+                      </Card.Body>
+                    </Accordion.Collapse>
+          </Card>
+
+          <Card fluid className="whitetext">
+                  _
+                </Card>
+
         <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="2">
-              Cooking Method
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="2">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Stewing" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Broiling" type={type} id={`custom-inline-${type}-3`} />
-                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Steaming" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Searing" type={type} id={`custom-inline-${type}-6`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Grilling" type={type} id={`custom-inline-${type}-7`} />
-                      <Form.Check custom inline label="Making" type={type} id={`custom-inline-${type}-8`} />
-                      <Form.Check custom inline label="Roasting" type={type} id={`custom-inline-${type}-9`} />
-                      <Form.Check custom inline label="Frying" type={type} id={`custom-inline-${type}-10`} />
-                      <Form.Check custom inline label="Sauteing" type={type} id={`custom-inline-${type}-11`} />
-                      <Form.Check custom inline label="Braising" type={type} id={`custom-inline-${type}-12`} />
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="3">
-              Spice Level
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="3">
-            <Card.Body>
-                Spice Level
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
+          <Card.Header  className="text-center">
             <Accordion.Toggle as={Button} variant="link" eventKey="4">
               Dietary Restrictions
             </Accordion.Toggle>
@@ -564,62 +600,61 @@ const App2 = () => {
             </Card.Body>
           </Accordion.Collapse>
         </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="5">
-              Ethnicity
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="5">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Italian" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Greek" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Indian" type={type} id={`custom-inline-${type}-3`} />
-                      <Form.Check custom inline label="Chinese" type={type} id={`custom-inline-${type}-4`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Mexican" type={type} id={`custom-inline-${type}5`} />
-                      <Form.Check custom inline label="American" type={type} id={`custom-inline-${type}-6`} />
-                      <Form.Check custom inline label="French" type={type} id={`custom-inline-${type}-7`} />
-                      <Form.Check custom inline label="Japanese" type={type} id={`custom-inline-${type}-8`} />
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-    </Col>
 
-    <Col>
-      <Row>
-        <Col className="search">
-          <SearchBar/>
-        </Col>
-        <Col className="sort_col">
-          <Navbar>
-            <Navbar.Collapse className="justify-content-end">
-              <NavDropdown className="sort" title="Sort" alignRight>
-                <NavDropdown.Item href="#">Rating</NavDropdown.Item>
-                <NavDropdown.Item href="#">Time</NavDropdown.Item>
-                <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
-              </NavDropdown>
-            </Navbar.Collapse>
-          </Navbar>
-        </Col>
-      </Row>
-      <Row className="results">
-        <Col>
-          Results
-        </Col>
-      </Row>
-    </Col>
+        <Card fluid className="whitetext">
+                _
+              </Card>
+
+        <Card>
+                  <Card.Header className="text-center">
+                    <Accordion.Toggle as={Button} variant="link" eventKey="5">
+                      Ethnicity
+                    </Accordion.Toggle>
+                  </Card.Header>
+                  <Accordion.Collapse eventKey="5">
+                    <Card.Body>
+                      <Form>
+                        {['checkbox'].map(type => (
+                          <div key={`custom-inline-${type}`} className="mb-3">
+                          <Row> <Col>
+                              <Form.Check custom inline label="Italian" type={type} id={`custom-inline-${type}-1`} />
+                              <Form.Check custom inline label="Greek" type={type} id={`custom-inline-${type}-2`} />
+                              <Form.Check custom inline label="Indian" type={type} id={`custom-inline-${type}-3`} />
+                              <Form.Check custom inline label="Chinese" type={type} id={`custom-inline-${type}-4`} />
+                            </Col>
+                            <Col>
+                              <Form.Check custom inline label="Mexican" type={type} id={`custom-inline-${type}5`} />
+                              <Form.Check custom inline label="American" type={type} id={`custom-inline-${type}-6`} />
+                              <Form.Check custom inline label="French" type={type} id={`custom-inline-${type}-7`} />
+                              <Form.Check custom inline label="Japanese" type={type} id={`custom-inline-${type}-8`} />
+                          </Col> </Row>
+                          </div>
+                        ))}
+                      </Form>
+                    </Card.Body>
+                  </Accordion.Collapse>
+        </Card>
+        <Card fluid className="whitetext">
+                _
+              </Card>
+</Accordion>
+
+
+</Nav>
+
+  </Col>
+
+  <Col md={10} className="right">
+  
+  </Col>
+
+
+
+
+
   </Row>
+
+  </Container>
   </div>
   )
 }
