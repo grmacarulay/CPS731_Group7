@@ -11,7 +11,7 @@ var HTMLWebpackPluginConfig = new HTMLWebpackPlugin({
 module.exports = {
 
   // Path to your entry point. From this file Webpack will begin his work
-  entry: './src/index.js',
+  entry: './src/account.js',
 
   module: {
     rules: [
