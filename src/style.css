@@ -37,10 +37,32 @@ html {
   font-family: Staatliches;
 }
 
+.sort
+{
+  margin-right: 10%
+}
+
+.filters{
+  background-color: white
+}
+
+.results{
+  background-color: red
+}
+
+.search{
+  background-color: yellow
+}
+
+.sort_col{
+  background-color: blue
+}
+
 .searchbar {
   font-size: 30px;
   background-color: orange;
 }
+
 
 
 @font-face {
