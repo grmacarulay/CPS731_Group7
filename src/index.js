@@ -459,11 +459,11 @@ const App2 = props => {
 
   <Accordion>
   <Card fluid>
-          <Card.Header className="text-center">
-            <Accordion.Toggle as={Button} variant="link" eventKey="0" >
+
+            <Accordion.Toggle as={Card.Header} className="text-center" eventKey="0" >
               Ingredients
             </Accordion.Toggle>
-          </Card.Header>
+
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <Button variant="primary"> Milk <Badge >x</Badge></Button>
@@ -483,11 +483,9 @@ const App2 = props => {
 
 
   <Card fluid>
-          <Card.Header className="text-center">
-            <Accordion.Toggle as={Button} variant="link" eventKey="1">
+            <Accordion.Toggle as={Card.Header} className="text-center" eventKey="1">
               Meal Type
             </Accordion.Toggle>
-          </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
               <Form>
@@ -518,11 +516,11 @@ const App2 = props => {
         </Card>
 
   <Card>
-            <Card.Header className="text-center">
-              <Accordion.Toggle as={Button} variant="link" eventKey="2">
+
+              <Accordion.Toggle as={Card.Header} className="text-center" eventKey="2">
                 Cooking Method
               </Accordion.Toggle>
-            </Card.Header>
+
             <Accordion.Collapse eventKey="2">
               <Card.Body>
                 <Form>
@@ -556,11 +554,11 @@ const App2 = props => {
                 </Card>
 
           <Card>
-                    <Card.Header className="text-center">
-                      <Accordion.Toggle as={Button} variant="link" eventKey="3">
+
+                      <Accordion.Toggle as={Card.Header} className="text-center"eventKey="3">
                         Spice Level
                       </Accordion.Toggle>
-                    </Card.Header>
+
                     <Accordion.Collapse eventKey="3">
                       <Card.Body>
                           Spice Level
@@ -573,11 +571,11 @@ const App2 = props => {
                 </Card>
 
         <Card>
-          <Card.Header  className="text-center">
-            <Accordion.Toggle as={Button} variant="link" eventKey="4">
+
+            <Accordion.Toggle as={Card.Header} className="text-center" eventKey="4">
               Dietary Restrictions
             </Accordion.Toggle>
-          </Card.Header>
+
           <Accordion.Collapse eventKey="4">
             <Card.Body>
               <Form>
@@ -606,11 +604,11 @@ const App2 = props => {
               </Card>
 
         <Card>
-                  <Card.Header className="text-center">
-                    <Accordion.Toggle as={Button} variant="link" eventKey="5">
+
+                    <Accordion.Toggle as={Card.Header} className="text-center" eventKey="5">
                       Ethnicity
                     </Accordion.Toggle>
-                  </Card.Header>
+            
                   <Accordion.Collapse eventKey="5">
                     <Card.Body>
                       <Form>
@@ -645,15 +643,36 @@ const App2 = props => {
   </Col>
 
   <Col md={10} className="right">
-  
-  </Col>
+  <Row>
+    <Col className="search">
+      <SearchBar/>
+      </Col>
 
-
-
-
-
+      <Col className="sort_col">
+                <Navbar>
+                  <Navbar.Collapse className="justify-content-end">
+                    <NavDropdown className="sort" title="Sort" alignRight>
+                      <NavDropdown.Item href="#">Rating</NavDropdown.Item>
+                      <NavDropdown.Item href="#">Time</NavDropdown.Item>
+                      <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
+                    </NavDropdown>
+                  </Navbar.Collapse>
+                </Navbar>
+              </Col>
   </Row>
 
+<Row>
+<Col md={12} className="right">
+      <Card>
+        <Card.Header>
+          Hello
+        </Card.Header>
+      </Card>
+      </Col>
+</Row>
+
+  </Col>
+  </Row>
   </Container>
   </div>
   )
