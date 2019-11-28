@@ -5,3 +5,20 @@
 .toast {
   margin: 0 auto;
 }
+
+.bottom {
+  margin-bottom: 200px;
+}
+
+.searchAndButtonSpace
+{
+  margin-bottom: 30px;
+}
+
+.searchbar {
+  font-size: 30px;
+}
+
+input {
+  height: 50px;
+}

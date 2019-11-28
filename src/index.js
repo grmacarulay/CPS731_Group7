@@ -17,9 +17,16 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+
+
+
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
 
 // Custom styles
 import './style.css';
@@ -60,7 +67,7 @@ const MyNavBar = props => {
       /> {' '}
       <b>Ingredientory</b>
       </Navbar.Brand>
-      
+
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
@@ -375,25 +382,48 @@ const SearchBar = props => {
 
   return (
     <>
-      <AsyncTypeahead                   // Async because we are querying database for suggestions
+
+    <div className="bottom">  </div>
+
+    <Row >
+    <Col> </Col>
+    <Col>
+      <AsyncTypeahead                // Async because we are querying database for suggestions
         id='search bar'
         placeholder="Type an ingredient"
         labelKey="ingredient_name"
         multiple
         promptText=''
+
         isLoading={isLoading}
         minLength={1}                   // Length of query before options will show
         options={options}               // The suggestions
         onSearch={handleQueryChange}    // Fires when the user types something
         onChange={handleSelectedChange} // Fires when the user selects or deselects
+        bsSize="large"
       />
+      </Col>
+      <Col> </Col>
+      </Row>
 
-      <Button variant="primary" onClick={handleSearch}>
+
+      <div className="searchAndButtonSpace">  </div>
+
+      <Row>
+      <Col> </Col>
+      <Col className="text-center">
+      <Button variant="primary" onClick={handleSearch} className="searchbar">
         Search
       </Button>
+      </Col>
+      <Col> </Col>
+
+      </Row>
+
     </>
   )
 }
+
 
 const App = () => {
 
@@ -415,6 +445,8 @@ const App = () => {
   return (
     <>
       <MyNavBar authState={isLoggedIn} />
+
+
       <SearchBar/>
     </>
   );
