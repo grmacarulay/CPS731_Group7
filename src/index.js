@@ -360,6 +360,7 @@ const SearchBar = props => {
         options={options}               // The suggestions
         onSearch={handleQueryChange}    // Fires when the user types something
         onChange={handleSelectedChange} // Fires when the user selects or deselects
+        bsSize="medium"
       />
 
       <Button variant="primary" onClick={handleSearch}>
@@ -371,10 +372,30 @@ const SearchBar = props => {
 
 // Genies Page
 const App2 = () => {
-  window.location.href = "#another_page"
+  window.location.href = "#Results_Page"
   return (
     <div id="another_page">
-      <h1>Another Page</h1>
+      <Navbar>
+          <NavDropdown title="Sort">
+            <NavDropdown.Item href="#">Rating</NavDropdown.Item>
+            <NavDropdown.Item href="#">Time</NavDropdown.Item>
+            <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
+          </NavDropdown>
+        <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+              Signed in as: <a href="#profile">Name</a>
+          </Navbar.Text>
+        </Navbar.Collapse>
+      </Navbar>
+
+      <Nav className="flex-column">
+        <Nav.Link eventKey="disabled" disabled>Ingredients</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Meal Type</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Cooking Method</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Spice Level</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Dietary Restrictions</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Ethnicity</Nav.Link>
+      </Nav>
     </div>
   )
 }
