@@ -1,10 +1,10 @@
-body {
+ body {
   background-image:url('/src/images/kitchen-background.jpg');
   background-size:cover;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
-  height: 80%; /* change these for mobile aka media queries */
+  height: 80%;
 }
 
 html {
@@ -54,6 +54,7 @@ html {
   width: 400px;
  height: 400px;
  object-fit: cover;
+}
 
 @font-face {
   src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');

@@ -22,6 +22,9 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Carousel from "react-bootstrap/Carousel";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
@@ -67,71 +70,111 @@ import './style.css';
 
 
 //Profile Page
-const Profile = props => {
+export const Profile = props => {
   return (
     <>
+    <Container>
     <Jumbotron>
-    <div>My Profile</div>
+    <Row>
+    <Col md={3}></Col>
+    <Col md={6}>
+    <div className="text-center">
     <h1>Welcome Xavier !</h1>
+    <img className="carousel" src="src/images/male.jpg"
+    alt="Pizza"></img>
     <p>First Name: Xavier</p>
     <p>Last Name: Cage</p>
     <p>Email: xaviercage4life@gmail.coms</p>
-    <Button>Edit</Button>
+    <Button>Edit Profile</Button>
+    </div>
+    </Col>
+    <Col md={3}></Col>
+    </Row>
     </Jumbotron>
+    </Container>
     <Recipes />
     </>
   )
 }
 
-const Recipes = props => {
+export const Recipes = props => {
   return (
     <>
-    <Jumbotron class = "container text-center">
-    <Carousel>
-  <Carousel.Item>
-    <img
-      className="carousel"
-      src="src/images/lasagna.jpg"
-      alt="lasagna"
-    />
-    <Carousel.Caption>
-      <h3>First slide label</h3>
-      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-    </Carousel.Caption>
-  </Carousel.Item>
-  <Carousel.Item>
-    <img
-      className="carousel"
-      src="src/images/Pizza.png"
-      alt="Pizza"
+    <Container>
+    <Jumbotron>
+    <h1 className="text-center">Xavier's Approved Recipes</h1>
+    <Row>
+    <Col md={3}></Col>
+    <Col md={6}>
+          <div className="text-center">
+          <Carousel>
+          <Carousel.Item>
+            <img
+              className="carousel"
+              src="src/images/lasagna.jpg"
+              alt="lasagna"
+            />
+            <Carousel.Caption>
+              <h3>Lasagna</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
 
-    />
+          <Carousel.Item>
+            <img
+              className="carousel"
+              src="src/images/Pizza.png"
+              alt="Pizza"
 
-    <Carousel.Caption>
-      <h3>Second slide label</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </Carousel.Caption>
-  </Carousel.Item>
-  <Carousel.Item>
-    <img
-      className="carousel"
-      src="src\images\Hersheys Chocolate Cake.jpg"
-      alt="Hersheys Chocolate Cake.jpg"
-    />
+            />
 
-    <Carousel.Caption>
-      <h3>Third slide label</h3>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-    </Carousel.Caption>
-  </Carousel.Item>
-</Carousel>
-</Jumbotron>
+            <Carousel.Caption>
+              <h3>Pizza</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img
+              className="carousel"
+              src="src\images\Hersheys Chocolate Cake.jpg"
+              alt="Hersheys Chocolate Cake.jpg"
+            />
+
+            <Carousel.Caption>
+              <h3>Hersheys Chocolate Cake</h3>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+          <Carousel.Item>
+            <img
+              className="carousel"
+              src="src\images\adobo.jpg"
+              alt="adobo.jpg"
+            />
+
+            <Carousel.Caption>
+              <h3>Filipino Adobo</h3>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+
+
+
+        </Carousel>
+        </div>
+        </Col>
+        <Col md={3}></Col>
+        </Row>
+        </Jumbotron>
+        </Container>
     </>
   )
 }
 
 //Approved Recipes List
-const App = () => {
+export const App = () => {
   return (
     <>
       <Profile />
