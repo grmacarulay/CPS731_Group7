@@ -471,11 +471,14 @@ const App = () => {
     }
   });
 
+
   return (
     <>
+
       <MyNavBar authState={isLoggedIn} />
       {isSearching ? <App2 /> : <SearchBar onSearchingStateChange={setSearching} />}
     </>
+
   );
 }
 
