@@ -17,9 +17,16 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+
+
+
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
 
 // Custom styles
 import './style.css';
@@ -50,12 +57,16 @@ const MyNavBar = props => {
 
   return (
     <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home"><img src="\src\images\carrot.svg" width="40" height="35" className="d-inline-block align-top"/> {' '} <b>Ingredientory</b></Navbar.Brand>
+      <Navbar.Brand href="#home"><img src="\src\images\carrot.svg" width="40" height="35" className="d-inline-block align-top staa"/> {' '}
+      <b className="staatliches">Ingredientory</b></Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
-      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
+
+
         { // Change button depending on auth state
           isLoggedIn ? <SignOutButton /> : <SignInButton />}
+
       </Navbar.Collapse>
 
     </Navbar>
@@ -82,11 +93,11 @@ const SignInButton = props => {
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleShow}>Sign In</Button>
+      <Button variant="outline-success" onClick={handleShow} className="staatliches">Sign In</Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
+          <Modal.Title className="staatliches">Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -280,6 +291,20 @@ const SignOutButton = props => {
 
 const SearchBar = props => {
 
+//   var array_test=[] ;
+//
+//   // grabs values within a collection (just outputs into console)
+//    db.collection('ingredients').get().then((snapshot) => {
+//      snapshot.docs.forEach(doc => {
+//        console.log(doc.data().ingredient_name);
+//        array_test.push(doc.data().ingredient_name);
+//      })
+//    })
+//
+// db.collection('ingredients').get().then((snapshot) => {
+//    console.log(array_test.toString());
+//  })
+
   // For search bar query text
   const [query, setQuery] = useState('');
 
@@ -349,9 +374,15 @@ const SearchBar = props => {
 
   return (
     <>
-      <AsyncTypeahead                   // Async because we are querying database for suggestions
+
+    <div className="bottom">  </div>
+
+    <Row >
+    <Col md={3}> </Col>
+    <Col md={6}>
+      <AsyncTypeahead className="staatliches"               // Async because we are querying database for suggestions
         id='search bar'
-        placeholder="Type an ingredient"
+        placeholder="Type an ingredient..."
         labelKey="ingredient_name"
         multiple
         promptText=''
@@ -360,21 +391,63 @@ const SearchBar = props => {
         options={options}               // The suggestions
         onSearch={handleQueryChange}    // Fires when the user types something
         onChange={handleSelectedChange} // Fires when the user selects or deselects
-      />
 
-      <Button variant="primary" onClick={handleSearch}>
+        bsSize="large"
+
+      />
+      </Col>
+      <Col md={3}> </Col>
+      </Row>
+
+
+      <div className="searchAndButtonSpace">  </div>
+
+      <Row>
+      <Col> </Col>
+      <Col className="text-center staatliches">
+      <Button variant="primary" onClick={handleSearch} className="searchbar">
         Search
       </Button>
+      </Col>
+      <Col> </Col>
+
+      </Row>
+
     </>
   )
 }
 
 // Genies Page
 const App2 = () => {
-  window.location.href = "#another_page"
+  window.location.href = "#Results_Page"
   return (
     <div id="another_page">
-      <h1>Another Page</h1>
+    <Row>
+      <Navbar>
+        <Col> <NavDropdown title="Sort">
+          <NavDropdown.Item href="#">Rating</NavDropdown.Item>
+          <NavDropdown.Item href="#">Time</NavDropdown.Item>
+          <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
+        </NavDropdown> </Col>
+        <Col xs={100}> </Col>
+        <Col><Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+              Signed in as: <a href="#profile">Name</a>
+          </Navbar.Text>
+        </Navbar.Collapse> </Col>
+      </Navbar>
+    </Row>
+
+    <Row>
+      <Nav className="flex-column">
+        <Nav.Link eventKey="disabled" disabled>Ingredients</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Meal Type</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Cooking Method</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Spice Level</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Dietary Restrictions</Nav.Link>
+        <Nav.Link eventKey="disabled" disabled>Ethnicity</Nav.Link>
+      </Nav>
+    </Row>
     </div>
   )
 }
@@ -399,11 +472,14 @@ const App = () => {
     }
   });
 
+
   return (
     <>
+
       <MyNavBar authState={isLoggedIn} />
       {isSearching ? <App2 /> : <SearchBar onSearchingStateChange={setSearching} />}
     </>
+
   );
 }
 
