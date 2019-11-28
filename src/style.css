@@ -11,13 +11,9 @@ html {
   height: 100%;
 }
 
-.band{
-  background-color: black;
-  opacity: 50%;
-}
-
-.header {
-  text-align: center;
+.responsive-image {
+  max-width: 100%;
+  height: auto;
 }
 
 .toast {
@@ -25,7 +21,7 @@ html {
 }
 
 .bottom {
-  margin-bottom: 200px;
+  margin-bottom: 30px;
 }
 
 .searchAndButtonSpace
@@ -37,12 +33,26 @@ html {
   font-family: Staatliches;
 }
 
-.searchbar {
+.oswald{
+  font-family: Oswald;
+}
+
+.search-btn {
   font-size: 30px;
   background-color: orange;
+  color: white;
+  border: 3px solid darkorange;
+  cursor: pointer;
 }
+
+.search-btn:hover{
+  background-color:darkorange ;
+  border: 3px solid darkorange;
+}
+
 
 
 @font-face {
   src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+  src: url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 }
