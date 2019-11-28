@@ -5,3 +5,26 @@
 .toast {
   margin: 0 auto;
 }
+
+.bottom {
+  margin-bottom: 200px;
+}
+
+.searchAndButtonSpace
+{
+  margin-bottom: 30px;
+}
+
+.staatliches{
+  font-family: Staatliches;
+}
+
+.searchbar {
+  font-size: 30px;
+  background-color: orange;
+}
+
+
+@font-face {
+  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+}
