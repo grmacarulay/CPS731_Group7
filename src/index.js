@@ -443,12 +443,17 @@ const App = () => {
     }
   });
 
+
   return (
     <>
+
       <MyNavBar authState={isLoggedIn} />
 
+
       <SearchBar/>
+
     </>
+
   );
 }
 
