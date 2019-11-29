@@ -447,16 +447,6 @@ const SearchBar = props => {
 // Genies Page
 const App2 = props => {
 
-  var recipe_names_array=[] ;
-  const[recipe_names, setRecipe] = useState("");
-
-  // grabs values within a collection (just outputs into console)
-   db.collection('recipes').get().then((snapshot) => {
-     snapshot.docs.forEach(doc => {
-       recipe_names_array.push(doc.data().name);
-     })
-        setRecipe(recipe_names_array);
-   })
 
 
    // var recipe_time_array=[];
@@ -479,9 +469,9 @@ const App2 = props => {
 
   <Container fluid >
   <Row fluid>
-  <Col md={2} className="min-vh-100 testtest" fluid>
+<Col md={2} className="min-vh-100 testtest" fluid>
 
-  <Nav defaultActiveKey="/home" className="left flex-column w3-sidebar side">
+<Nav defaultActiveKey="/home" className="left flex-column w3-sidebar side">
 
   <Accordion>
   <Card fluid>
@@ -666,9 +656,13 @@ const App2 = props => {
 
 </Nav>
 
-  </Col>
+</Col>
 
-<Col md={10} className="right">
+<Col md={10}
+className="right"
+// Wesley Code
+>
+
   <Row>
     <Col className="search">
       <SearchBar/>
@@ -687,55 +681,84 @@ const App2 = props => {
               </Col>
   </Row>
 
-  <Row>
-  <Col md={6} className="right">
+</Col>
+</Row>
 
-      <Card className="results-card-size">
-        <Card.Img className="responsive-image"
-        variant="top"
-        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
-        />
-        <Card.Body>
-        <Card.Text classname="text-center">
-      <b> {recipe_names[1]} </b>
-        <br></br>
-          <br></br>
-           This is a great recipe that I found in my Grandma's recipe book.
-          Judging from the weathered look of this recipe card, this was a family favorite.
-          <br></br>
-          <br></br>
-          <p align="right" className="bottom-card">  <b> 15 minutes </b> </p>
-      </Card.Text>
-       </Card.Body>
-       <Card.Footer className="text-muted">Submitted By : Wesley Morota</Card.Footer>
 
-      </Card>
-  </Col>
+<RecipeCardResults/>
 
-  <Col md={6} className="right">
+
+</Container>
+</div>
+  )
+}
+
+const RecipeCardResults = props => {
+
+  var recipe_names_array=[] ;
+  const[recipe_names, setRecipe] = useState("");
+
+  // grabs values within a collection (just outputs into console)
+   db.collection('recipes').get().then((snapshot) => {
+     snapshot.docs.forEach(doc => {
+       recipe_names_array.push(doc.data().name);
+     })
+        setRecipe(recipe_names_array);
+   })
+
+  return (
+
+<Container className="this-is-a-margin">
+<Row>
+    <Row>
+    <Col md={6} className="right">
 
         <Card className="results-card-size">
           <Card.Img className="responsive-image"
           variant="top"
-          src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/burger.jpg?alt=media&token=688b8b14-43aa-4cd5-93ea-08e872aec0fd"
+          src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
           />
           <Card.Body>
-          <Card.Text>
-          <b> {recipe_names[4]} </b>
+          <Card.Text classname="text-center">
+        <b> {recipe_names[1]} </b>
           <br></br>
-          <br></br>
-          The steak of veggie burgers. Serve on a bun with lettuce, tomato, and aioli sauce. Oh yeah!
-          <br></br>
-          <br></br>
-          <p align="right" className="bottom-card">  <b> 30 minutes </b> </p>
+            <br></br>
+             This is a great recipe that I found in my Grandma's recipe book.
+            Judging from the weathered look of this recipe card, this was a family favorite.
+            <br></br>
+            <br></br>
+            <p align="right" className="bottom-card">  <b> 15 minutes </b> </p>
         </Card.Text>
          </Card.Body>
-         <Card.Footer className="text-muted">Submitted By : Genieferose Macarulay</Card.Footer>
+         <Card.Footer className="text-muted">Submitted By : Wesley Morota</Card.Footer>
 
         </Card>
     </Col>
 
-</Row>
+    <Col md={6} className="right">
+
+          <Card className="results-card-size">
+            <Card.Img className="responsive-image"
+            variant="top"
+            src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/burger.jpg?alt=media&token=688b8b14-43aa-4cd5-93ea-08e872aec0fd"
+            />
+            <Card.Body>
+            <Card.Text>
+            <b> {recipe_names[4]} </b>
+            <br></br>
+            <br></br>
+            The steak of veggie burgers. Serve on a bun with lettuce, tomato, and aioli sauce. Oh yeah!
+            <br></br>
+            <br></br>
+            <br></br>
+            <p align="right" className="bottom-card">  <b> 30 minutes </b> </p>
+          </Card.Text>
+           </Card.Body>
+           <Card.Footer className="text-muted">Submitted By : Genieferose Macarulay</Card.Footer>
+
+          </Card>
+    </Col>
+  </Row>
 
 <Row>
 <Col md={6} className="right">
@@ -758,7 +781,6 @@ const App2 = props => {
       </Card.Text>
        </Card.Body>
        <Card.Footer className="text-muted">Submitted By : Kyle Padernilla </Card.Footer>
-
       </Card>
   </Col>
 
@@ -778,19 +800,18 @@ const App2 = props => {
           this lighter version of poutine
           <br></br>
           <br></br>
+          <br></br>
           <p align="right" className="bottom-card">  <b> 15 minutes </b> </p>
         </Card.Text>
          </Card.Body>
          <Card.Footer className="text-muted">Submitted By : Paul Baculna  </Card.Footer>
         </Card>
     </Col>
-
 </Row>
 
-</Col>
-  </Row>
+</Row>
   </Container>
-  </div>
+
   )
 }
 

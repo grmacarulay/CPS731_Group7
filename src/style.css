@@ -97,6 +97,10 @@ position: sticky;
   color: white;
 }
 
+.this-is-a-margin {
+  margin-top: -20%; 
+}
+
 .w3-sidebar
 {
   height:100%;
