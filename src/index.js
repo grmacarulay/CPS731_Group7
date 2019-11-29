@@ -307,6 +307,9 @@ const SignOutButton = props => {
 
 const MainPage = props => {
 
+  const onIngredientsChange = props.onIngredientsChange;
+  const onPageChange = props.onPageChange;
+
   return (
     <Container fluid>
       <Row className="justify-content-center">
@@ -319,7 +322,10 @@ const MainPage = props => {
       </Row>
       <Row className="justify-content-center">
         <Col md={6}>
-          <SearchBar page="main" onPageChange={props.onPageChange} />
+          <SearchBar
+            page="main"
+            onPageChange={onPageChange}
+            onIngredientsChange={onIngredientsChange} />
         </Col>
       </Row>
     </Container>
@@ -329,13 +335,14 @@ const MainPage = props => {
 
 const SearchBar = props => {
 
+  const onIngredientsChange = props.onIngredientsChange;
+
   // For search bar query text
   const [query, setQuery] = useState('');
 
   // For search bar selections
-  const [selected, setSelected] = useState([]);
   const handleSelectedChange = selected => {
-    setSelected(selected);
+    onIngredientsChange(selected);
   }
 
   // For options
@@ -392,8 +399,6 @@ const SearchBar = props => {
   // TODO
   const handleSearch = () => {
     props.onPageChange("results");
-    console.log('You have search for: ');
-    console.log(selected);
   }
 
   var typeahead =
@@ -430,7 +435,6 @@ const SearchBar = props => {
           </Row>
         </Container>
         :
-        
         <Container fluid>
           <Row className="justify-content-center align-items-center">
             <Col md={9} className="align-items-mcenter">
@@ -454,30 +458,7 @@ const FilterCard = props => {
   const items = props.items
   const eventKey = props.eventKey
 
-  var initialState = items
-  // items.map(item => {
-  //   initialState[item] = false;
-  // })
-
-  const [state, setState] = useState(initialState);
   const onChangeFilters = props.onChangeFilters;
-
-  // const handleChange = event => {
-  //   const target = event.target;
-  //   const value = target.type === 'checkbox' ? target.checked : target.value;
-  //   const name = target.name;
-
-  //   setState(prevState => {
-  //     prevState[name] = value;
-  //     return(prevState)
-  //   });
-  //   console.log(state)
-  // }
-  // useEffect(
-  //   () => {
-  //     console.log(state);
-  //   }, [state]
-  // );
 
   return (
     <>
@@ -542,9 +523,10 @@ const SelectedIngredientsCard = props => {
 const SortOptions = props => {
 
   const options = props.options
+  const handleOnSelect = props.onSelectSort
 
   return (
-    <Dropdown>
+    <Dropdown onSelect={handleOnSelect}>
       <Dropdown.Toggle>
         Sort by
       </Dropdown.Toggle>
@@ -552,7 +534,7 @@ const SortOptions = props => {
       <Dropdown.Menu>
         {
           options.map((option, index) => {
-            return (<Dropdown.Item key={`${option}-sortOption`}>{option}</Dropdown.Item>)
+            return (<Dropdown.Item name={option} key={`${option}-sortOption`}>{option}</Dropdown.Item>)
           })
         }
       </Dropdown.Menu>
@@ -594,6 +576,15 @@ const FiltersSideBar = props => {
 
 const ResultsPage = props => {
 
+  const onPageChange = props.onPageChange;
+  const onIngredientsChange = props.onIngredientsChange;
+  const selectedIngredients = props.selectedIngredients;
+
+  // Test
+  Object.values(selectedIngredients).map(value => {
+    console.log(value)
+  })
+
   // Hard Coded
   const selected = ['Milk', 'Baking Powder', 'Butter', 'All-purpose Flour', 'Salt', 'White Sugar', 'Egg']
 
@@ -625,6 +616,7 @@ const ResultsPage = props => {
     return (initialFilters)
   }
 
+  // Filter States
   const [filters, setFilters] = useState(initializeFilters(filterList));
   const handleFilterChange = filter => event => {
     const target = event.target;
@@ -638,6 +630,13 @@ const ResultsPage = props => {
      console.log(filters)
   }
 
+  // Sort States
+  const [sort, setSort] = useState('Rating')
+  const onSelectSort = (eventKey, event) => {
+    setSort(event.target.name)
+    console.log(sort)
+  }
+
   return (
     <Container fluid >
       <Row noGutters>
@@ -649,13 +648,14 @@ const ResultsPage = props => {
 
           <Row noGutters className="align-items-center justify-content-center">
             <Col>
-              <SearchBar page="results"/>
+              <SearchBar
+                onpage="results"
+                onPageChange={onPageChange}
+                onIngredientsChange={onIngredientsChange}/>
             </Col>
 
             <Col md={3}>
-
-              <SortOptions options={sortOptions}/>
-
+              <SortOptions options={sortOptions} onSelectSort={onSelectSort}/>
             </Col>
           </Row>
 
@@ -683,9 +683,8 @@ const App = () => {
   // Is it being used in the main screen or results page
   const [page, setPage] = useState('main');
 
-  const handleMainPageChange = main => {
-    setMain(main);
-  }
+  // Ingredients user wants to search
+  const [ingredients, setIngredients] = useState([]);
 
   // Bind an function to auth object that runs when there is a change in auth state
   /* email: test@test.com pass: test123 */
@@ -702,7 +701,10 @@ const App = () => {
   return (
     <>
       <MyNavBar authState={isLoggedIn} page={page} />
-      {(page === "main") ? <MainPage onPageChange={setPage} /> : <ResultsPage onPageChange={setPage} />}
+      {(page === "main") ?
+        <MainPage onPageChange={setPage} onIngredientsChange={setIngredients} />
+        :
+        <ResultsPage onPageChange={setPage} selectedIngredients={ingredients} onIngredientsChange={setIngredients} />}
     </>
 
   );
