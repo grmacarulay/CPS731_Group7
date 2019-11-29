@@ -113,7 +113,7 @@ export const Profile = props => {
     <Col md={3}></Col>
     <Col md={6}>
     <div className="text-center">
-    <h1 className = "headerStyle">Welcome Xander !</h1>
+    <h1 className = "headerStyle">Welcome Wesley !</h1>
     <img className="carousel" src="src/images/male.jpg"
     alt="Pizza"></img>
     <p>First Name: Wesley</p>
