@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Firebase Imports
 import * as firebase from "firebase/app";
+import "firebase/database"; //newly added
 import "firebase/analytics";
 import "firebase/auth";
 import "firebase/firestore"
@@ -33,8 +34,26 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 // Custom styles
 import './style.css';
 
-// //Firebase Variables
-// var user = firebase.auth().currentUser;
+// Firbase config
+const firebaseConfig = {
+  apiKey: "AIzaSyCQiJIXDWoPw9Uc4tpophAapgq7G2am-V0",
+  authDomain: "ingredientory.firebaseapp.com",
+  databaseURL: "https://ingredientory.firebaseio.com",
+  projectId: "ingredientory",
+  storageBucket: "ingredientory.appspot.com",
+  messagingSenderId: "16706844326",
+  appId: "1:16706844326:web:5f2d386536963ddd316667",
+  measurementId: "G-1E8MRBE26T"
+};
+firebase.initializeApp(firebaseConfig);
+
+// Create auth and firestore references
+const db = firebase.database();
+const auth = firebase.auth();
+
+//Firebase Variables
+//var user = firebase.auth().currentUser;
+// var user = db.users.'lWO64EMXYFwx3YprG6ON'
 // var firstName, lastName, email, photoUrl, uid;
 //
 // if (user != null) {
@@ -47,25 +66,14 @@ import './style.css';
 //                    // you have one. Use User.getToken() instead.
 // }
 
-// Nav bar on top of page
-// const MyNavBar = props => {
-//
-//   const isLoggedIn = props.authState;
-//
-//   return (
-//     <Navbar bg="light" expand="lg">
-//
-//       <Navbar.Brand href="#home">Ingredientory</Navbar.Brand>
-//       <Navbar.Toggle aria-controls="basic-navbar-nav" />
-//
-//       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-//         { // Change button depending on auth state
-//           isLoggedIn ? <SignOutButton /> : <SignInButton />}
-//       </Navbar.Collapse>
-//
-//     </Navbar>
-//   )
-// };
+function writeUserData(userId, firstName,lastName, email) {
+  firebase.database().ref('users/' + userId).set({
+    first_name: firstName,
+    last_name: lastName,
+    email: email,
+    user_id: userId
+  });
+}
 
 
 
