@@ -644,45 +644,41 @@ const App2 = () => {
 
 */
 
-function getRecipe(){
-
-  var food_name;
-  var ingredients;
-  var creator;
-  var dietary_restrictions;
-  var difficulty;
-  var ethnicity;
-  var ingredients;
-  var meal_type;
-  var rating;
-  var time;
-  var food=["gello","tym"];
-
-  // Create a reference to the cities collection
-  var citiesRef = db.collection("recipes");
-
-  // Create a query against the collection.
-  db.collection("recipes").where("name", "==", "Adobo")
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            food_name = doc.data().ingredients[2]; //gets the name.
-
-            console.log(food_name);
-
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-
-}
-
-getRecipe();
-
 const RecipePage = () => {;
 
+  const[foodName,setfoodName] = useState("Chicken Adobo"); //set the new FoodName.
+
+  const[cookingMethod,setCookingMethod] = useState("boiling"); //set the new cooking method.
+
+  const[rating,setRating] = useState(3); //set the rating method.
+
+  const[ingredients,setIngredients] = useState("Chicken, oil, vinegar"); //sets the ingredients.
+
+  const[mealType,setMealType] = useState("lunch,dinner"); //sets the meal type.
+
+  const[ethnicity,setEthnicity] = useState("filipino"); //sets the ethnicity.
+
+  const[dietaryRestrictions,setDietaryRestrictions] = useState("Peanut-free"); //sets the ethnicity.
+
+
+  // Create a reference to the cities collection.
+  //var citiesRef = db.collection("recipes");
+
+  // Create a query against the collection. "Adobo is placeholder for the button is press."
+  //db.collection("recipes").where("name", "==", "Chicken Adobo")
+    //.get()
+    //.then(function(querySnapshot) {
+      //  querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            //setfoodName(doc.data().name); //gets the name.
+            //setCookingMethod(doc.data().cooking_method); //gets the cooking method.
+            //setRating(parseFloat(doc.data().rating); //gets the rating.
+            //setIngredients(doc.data().ingredients); //gets the ingredients.
+      //  });
+  //  })
+  //  .catch(function(error) {
+  //      console.log("Error getting documents: ", error);
+    //});
 
 
   return (
@@ -690,7 +686,7 @@ const RecipePage = () => {;
     <div className="recipeModal">
       <Container>
         <Jumbotron className="jumbotron_style">
-          <h1 className="recipe_heading">{}</h1>
+          <h1 className="recipe_heading">{foodName}</h1>
             <Carousel>
               <Carousel.Item>
               <img className="responsive-image" src="src/images/Adobo-Chicken.jpg" alt="adobo"/>
@@ -712,10 +708,10 @@ const RecipePage = () => {;
             <Card.Body className="card_body">
 
             <div className="gen_info">
-              <h2 className="text-center recipe_heading">Famous Filipino Adobo</h2>
+              <h2 className="text-center recipe_heading">{foodName}</h2>
 
               <StarRatings starDimension="20px"
-                rating={4}
+                rating={rating}
                 starRatedColor="yellow"
                 numberOfStars={5}
                 name='rating'
@@ -739,31 +735,36 @@ const RecipePage = () => {;
             <div className="ingredients">
               <h3 className="recipeHeading">Ingredients</h3>
                 <p>
-                  <ul className="list-styles">
-                    <li className="steps">1. Chicken</li>
-                    <li  className="steps" >2. Vinegar</li>
-                  </ul>
+                      {ingredients}
                   </p>
             </div>
 
             <div className="meal_type">
               <h3 className="recipeHeading">Meal-Type</h3>
                 <p>
+                {mealType}
                   </p>
             </div>
 
             <div className="cooking_method">
               <h3 className="recipeHeading">Cooking Method</h3>
-                <p>
-
+                  <p>
+                  {cookingMethod}
                   </p>
             </div>
 
             <div className="diet">
               <h3 className="recipeHeading">Dietary Restrictions</h3>
                 <p>
+                {dietaryRestrictions}
+                </p>
+            </div>
 
-                  </p>
+            <div className="ethnicity">
+              <h3 className="recipeHeading">Ethnicity</h3>
+                <p>
+                {ethnicity}
+                </p>
             </div>
 
             <div className="steps">
