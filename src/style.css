@@ -91,11 +91,13 @@ position: sticky;
   left: 0%;
 }
 
+/*
 .results-card-size {
   margin-top: 3%;
   width: 90%;
   height: 60%;
 }
+*/
 
 .whitetext
 {
@@ -107,7 +109,7 @@ position: sticky;
 }
 
 .yellow {
-  background-color: yellow
+  background-color: #F7F7F7
 }
 
 .blue {
