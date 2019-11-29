@@ -116,9 +116,9 @@ export const Profile = props => {
     <h1 className = "headerStyle">Welcome Xander !</h1>
     <img className="carousel" src="src/images/male.jpg"
     alt="Pizza"></img>
-    <p>First Name: Xander</p>
-    <p>Last Name: Cage</p>
-    <p>Email: xaviercage4life@gmail.coms</p>
+    <p>First Name: Wesley</p>
+    <p>Last Name: Morota</p>
+    <p>Email: wesleymorota@gmail.com</p>
     <Button>Edit Profile</Button>
     <br></br>
     <br></br>
@@ -139,11 +139,12 @@ export const Recipes = props => {
     <>
     <Container>
     <Jumbotron className = "jumbotronInvis">
-    <h1 className="headerStyle">Xander's Approved Recipes</h1>
+
     <Row>
     <Col md={3}></Col>
     <Col md={6}>
           <div className="text-center">
+          <h1 className="headerStyle">Xander's Approved Recipes</h1>
           <Carousel>
           <Carousel.Item>
             <img
