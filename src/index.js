@@ -58,12 +58,12 @@ const auth = firebase.auth();
 const MyNavBar = props => {
 
   const isLoggedIn = props.authState;
-  const isMain = props.isMain;
+  const page = props.page;
 
   let brand = null;
 
   console.log('navbar')
-  if (isMain) {
+  if (page !== "main") {
     brand =
       <Navbar.Brand href="#home">
         <img src="\src\images\chef.svg" width="40" height="40" className="d-inline-block align-top" />
@@ -573,6 +573,30 @@ const FiltersSideBar = props => {
   )
 }
 
+const RecipeCard = props => {
+
+  const title = props.title;
+  const time = props.time;
+
+  return (
+    <Card className="results-card-size">
+      <Card.Img className="responsive-image"
+        variant="top"
+        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+      />
+      <Card.Title as="h5" className="">{title}</Card.Title>
+      <Card.Subtitle className="mb-2 text-muted">{time}</Card.Subtitle>
+      <Card.Body>
+        <Card.Text className="text-center">
+          This is a great recipe that I found in my Grandma's recipe book.
+           Judging from the weathered look of this recipe card, this was a family favorite.
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer className="text-muted">Submitted By : Wesley Morota</Card.Footer>
+
+    </Card>
+  )
+}
 
 
 const ResultsPage = props => {
@@ -602,6 +626,9 @@ const ResultsPage = props => {
     'Dietary Restrictions': dietaryRestrictions,
     'Ethnicities': ethnicities,
   }
+
+  var recipeTitle = ['Pancake', 'Cake', 'Adobo', 'Noodles']
+  var time = '15 minutes'
 
   const initializeFilters = filters => {
     var initialFilters = {}
@@ -642,16 +669,16 @@ const ResultsPage = props => {
     console.log(sort)
   }, [sort])
 
-  var recipe_names_array=[] ;
-  const[recipe_names, setRecipe] = useState("");
+  var recipe_names_array = [];
+  const [recipe_names, setRecipe] = useState("");
 
-  // grabs values within a collection (just outputs into console)
-   db.collection('recipes').get().then((snapshot) => {
-     snapshot.docs.forEach(doc => {
-       recipe_names_array.push(doc.data().name);
-     })
-        setRecipe(recipe_names_array);
-   })
+  // // grabs values within a collection (just outputs into console)
+  //  db.collection('recipes').get().then((snapshot) => {
+  //    snapshot.docs.forEach(doc => {
+  //      recipe_names_array.push(doc.data().name);
+  //    })
+  //       setRecipe(recipe_names_array);
+  //  })
 
   return (
     <Container fluid >
@@ -667,112 +694,31 @@ const ResultsPage = props => {
               <SearchBar
                 onpage="results"
                 onPageChange={onPageChange}
-                onIngredientsChange={onIngredientsChange}/>
+                onIngredientsChange={onIngredientsChange} />
             </Col>
 
             <Col md={3}>
-              <SortOptions options={sortOptions} onSelectSort={onSelectSort}/>
+              <SortOptions options={sortOptions} onSelectSort={onSelectSort} />
             </Col>
           </Row>
 
-    <Row noGutters>
-    <Col md={6} className="right">
+          <Row noGutters className="right">
+            <Col md={6} className="right">
+             <RecipeCard title={recipeTitle[0]} time={time}/>
+            </Col>
+            <Col md={6} className="right">
+              <RecipeCard title={recipeTitle[0]} time={time}/>
+            </Col>
+          </Row>
 
-        <Card className="results-card-size">
-          <Card.Img className="responsive-image"
-          variant="top"
-          src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
-          />
-          <Card.Body>
-          <Card.Text classname="text-center">
-        <b> {recipe_names[1]} </b>
-          <br></br>
-            <br></br>
-             This is a great recipe that I found in my Grandma's recipe book.
-            Judging from the weathered look of this recipe card, this was a family favorite.
-            <br></br>
-            <br></br>
-            <p align="right" className="bottom-card">  <b> 15 minutes </b> </p>
-        </Card.Text>
-         </Card.Body>
-         <Card.Footer className="text-muted">Submitted By : Wesley Morota</Card.Footer>
-
-        </Card>
-    </Col>
-
-    <Col md={6} className="right">
-
-          <Card className="results-card-size">
-            <Card.Img className="responsive-image"
-            variant="top"
-            src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/burger.jpg?alt=media&token=688b8b14-43aa-4cd5-93ea-08e872aec0fd"
-            />
-            <Card.Body>
-            <Card.Text>
-            <b> {recipe_names[4]} </b>
-            <br></br>
-            <br></br>
-            The steak of veggie burgers. Serve on a bun with lettuce, tomato, and aioli sauce. Oh yeah!
-            <br></br>
-            <br></br>
-            <br></br>
-            <p align="right" className="bottom-card">  <b> 30 minutes </b> </p>
-          </Card.Text>
-           </Card.Body>
-           <Card.Footer className="text-muted">Submitted By : Genieferose Macarulay</Card.Footer>
-
-          </Card>
-    </Col>
-  </Row>
-
-<Row noGutters>
-<Col md={6} className="right">
-
-      <Card className="results-card-size">
-        <Card.Img className="responsive-image"
-        variant="top"
-        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/Adobo-Chicken.jpg?alt=media&token=61b4fcc9-3453-42d0-b60e-d215a77c3662"
-        />
-        <Card.Body>
-        <Card.Text>
-        <b> {recipe_names[0]} </b>
-        <br></br>
-        <br></br>
-        My mom always makes her saucy Chicken Adobo recipe when I come home to visit.
-        I think it's even better the next day as leftovers — she says it's because of the vinegar.
-        <br></br>
-        <br></br>
-        <p align="right" className="bottom-card">  <b> 120 minutes </b> </p>
-      </Card.Text>
-       </Card.Body>
-       <Card.Footer className="text-muted">Submitted By : Kyle Padernilla </Card.Footer>
-      </Card>
-  </Col>
-
-  <Col md={6} className="right">
-
-        <Card className="results-card-size">
-          <Card.Img className="responsive-image"
-          variant="top"
-          src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/poutine.png?alt=media&token=1af203e4-bf03-4ce1-b906-7260828a60e1"
-          />
-          <Card.Body>
-          <Card.Text>
-            <b> {recipe_names[2]} </b>
-            <br></br>
-            <br></br>
-          Crispy fries are covered with mozzarella cheese and hot beef gravy in
-          this lighter version of poutine
-          <br></br>
-          <br></br>
-          <br></br>
-          <p align="right" className="bottom-card">  <b> 15 minutes </b> </p>
-        </Card.Text>
-         </Card.Body>
-         <Card.Footer className="text-muted">Submitted By : Paul Baculna  </Card.Footer>
-        </Card>
-    </Col>
-</Row>
+          <Row noGutters>
+            <Col md={6} className="right">
+              <RecipeCard title={recipeTitle[0]} time={time} />
+            </Col>
+            <Col md={6} className="right">
+              <RecipeCard title={recipeTitle[0]} time={time} />
+            </Col>
+          </Row>
 
         </Col>
       </Row>
