@@ -25,6 +25,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 
+import Dropdown from "react-bootstrap/Dropdown";
+
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -71,7 +73,7 @@ const MyNavBar = props => {
   }
 
   return (
-    <Navbar expand="lg">
+    <Navbar sticky="top" expand="lg" bg='light'>
       {brand}
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
@@ -422,19 +424,20 @@ const SearchBar = props => {
             <Col>
               {typeahead}
             </Col>
-          </Row>
-          <Row className="justify-content-center">
+          </Row >
+          <Row className="justify-content-center align-items-center top-padding">
             {button}
           </Row>
         </Container>
         :
-        <Container fluid className="red">
-          <Row>
-            <Col md={9}>
+        
+        <Container fluid>
+          <Row className="justify-content-center align-items-center">
+            <Col md={9} className="align-items-mcenter">
               {typeahead}
             </Col>
             <Col>
-              {button}
+              <Button onClick={handleSearch} className="search-btn staatliches">Search</Button>
             </Col>
           </Row>
         </Container>
@@ -453,14 +456,14 @@ const FilterCard = props => {
 
   return (
     <>
-    <Card>
-      <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey}>
-        {label}
-      </Accordion.Toggle>
+      <Card>
+        <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey}>
+          {label}
+        </Accordion.Toggle>
 
-      <Accordion.Collapse eventKey={eventKey}>
-        <Card.Body>
-          <Form>
+        <Accordion.Collapse eventKey={eventKey}>
+          <Card.Body>
+            <Form>
               {
                 items.map(type => {
                   return (
@@ -468,9 +471,9 @@ const FilterCard = props => {
                   )
                 })
               }
-          </Form>
-        </Card.Body>
-      </Accordion.Collapse>
+            </Form>
+          </Card.Body>
+        </Accordion.Collapse>
       </Card>
     </>
   )
@@ -511,7 +514,7 @@ const FiltersSideBar = props => {
 
   return (
     <>
-      <Nav defaultActiveKey="/home" className="flex-column w3-sidebar side">
+      <Nav defaultActiveKey="/home" fill className="yellow flex-column sidebar">
         <Accordion>
           <SelectedIngredientsCard selected={selected} eventKey={0} />
 
@@ -547,39 +550,42 @@ const ResultsPage = props => {
   window.location.href = "#Results_Page"
   return (
     <Container fluid >
-      <Row>
-        <Col md={2} className="left min-vh-100 testtest">
+      <Row noGutters>
+        <Col md={2}>
           <FiltersSideBar selected={selected} filters={cards} />
         </Col>
 
-        <Col md={10} className="right">
-          <Row>
-            <Col md={10} className="search">
+        <Col md={10}>
+
+          <Row noGutters className="align-items-center justify-content-center">
+            <Col>
               <SearchBar page="results" />
             </Col>
 
-            <Col className="sort_col">
-              <Navbar>
-                <Navbar.Collapse className="justify-content-end">
-                  <NavDropdown className="sort" title="Sort" alignRight>
+            <Col md={3}>
 
-                    <NavDropdown.Item href="#">Rating</NavDropdown.Item>
-                    <NavDropdown.Item href="#">Time</NavDropdown.Item>
-                    <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
+              <Dropdown>
+                <Dropdown.Toggle>
+                  Sort by
+                </Dropdown.Toggle>
 
-                  </NavDropdown>
+                <Dropdown.Menu>
+                  <Dropdown.Item>Rating</Dropdown.Item>
+                  <Dropdown.Item>Time</Dropdown.Item>
+                  <Dropdown.Item>Spice Level</Dropdown.Item>
+                </Dropdown.Menu>
 
-                </Navbar.Collapse>
-              </Navbar>
+              </Dropdown>
+
             </Col>
           </Row>
 
-          <Row>
+          <Row noGutters>
             <Col md={12} className="right">
               <Card>
                 <Card.Header>
                   Hello
-        </Card.Header>
+                </Card.Header>
               </Card>
             </Col>
           </Row>

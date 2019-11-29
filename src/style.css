@@ -44,7 +44,6 @@ html {
   color: white;
   border: 3px solid darkorange;
   cursor: pointer;
-  margin-top: 20px;
 }
 
 .search-btn:hover{
@@ -70,13 +69,13 @@ html {
 position: absolute;
 }
 
+.top-padding {
+  padding-top: 20px;
+}
+
 .stickyicky {
 position: sticky;
  top: 0;
-}
-
-.side {
-  width: 16%;
 }
 
 .whitetext
@@ -86,6 +85,25 @@ position: sticky;
 
 .red {
   background-color:red;
+}
+
+.yellow {
+  background-color: yellow
+}
+
+.blue {
+  background-color: blue
+}
+
+.no_margin {
+  margin: 0, 0;
+}
+
+.sidebar
+{
+  height:100%;
+  z-index:1;
+  overflow:auto;
 }
 
 
