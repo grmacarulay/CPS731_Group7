@@ -1,5 +1,5 @@
 body {
-  background-image:url('/src/images/kitchen-background.jpg');
+  background-image:url('https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/kitchen-background.jpg?alt=media&token=f861bd13-fe8f-4901-b2b3-0f09f4c60958');
   background-size:cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -139,7 +139,7 @@ position: sticky;
 
 .filter-font{
   font-family: Staatliches;
-  font-size: 25px; 
+  font-size: 25px;
 }
 
 

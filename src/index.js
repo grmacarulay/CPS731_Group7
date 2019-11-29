@@ -67,7 +67,8 @@ const MyNavBar = props => {
   if (page !== "main") {
     brand =
       <Navbar.Brand href="#home">
-        <img src="\src\images\chef.svg" width="40" height="40" className="d-inline-block align-top" />
+        <img src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/chef.svg?alt=media&token=c0f126c3-5b94-467f-a7b8-2985f4097b68"
+        width="40" height="40" className="d-inline-block align-top" />
         {' '}
         <b className="staatliches">Ingredientory</b>
       </Navbar.Brand>
@@ -314,7 +315,7 @@ const MainPage = props => {
   return (
     <Container fluid>
       <Row className="justify-content-center">
-        <img src="/src/images/Logo.png"
+        <img src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/Logo.png?alt=media&token=bf9773e5-1044-4b04-a860-7df137392ce3"
           alt=""
           width="1000px"
           height="300px"
@@ -709,7 +710,7 @@ const ResultsPage = props => {
               <RecipeCard title={recipeTitle[0]} time={time} />
             </CardGroup>
             <CardGroup>
-              <RecipeCard title={recipeTitle[0]} time={time} /> 
+              <RecipeCard title={recipeTitle[0]} time={time} />
               <RecipeCard title={recipeTitle[0]} time={time} />
             </CardGroup>
           </Row>
