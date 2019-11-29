@@ -20,6 +20,7 @@ import Modal from "react-bootstrap/Modal";
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
+import CardGroup from 'react-bootstrap/CardGroup'
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -28,7 +29,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Carousel from "react-bootstrap/Carousel";
 import StarRatings from 'react-star-ratings';
 
-
+import Dropdown from "react-bootstrap/Dropdown";
 
 // Typeahead
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
@@ -61,20 +62,27 @@ const auth = firebase.auth();
 const MyNavBar = props => {
 
   const isLoggedIn = props.authState;
+  const page = props.page;
+
+  let brand = null;
+
+  console.log('navbar')
+  if (page !== "main") {
+    brand =
+      <Navbar.Brand href="#home">
+        <img src="\src\images\chef.svg" width="40" height="40" className="d-inline-block align-top" />
+        {' '}
+        <b className="staatliches">Ingredientory</b>
+      </Navbar.Brand>
+  }
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">
-      <img src="\src\images\chef.svg" width="40" height="40" className="d-inline-block align-top"/>
-      {' '}
-      <b className="staatliches">Ingredientory</b>
-      </Navbar.Brand>
+    <Navbar sticky="top" expand="lg" bg='light'>
+      {brand}
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
+
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end ">
-          <Navbar.Text>
-              Signed in as: <a href="#profile">Name</a>
-          </Navbar.Text>
 
         { // Change button depending on auth state
           isLoggedIn ? <SignOutButton /> : <SignInButton />}
@@ -105,11 +113,11 @@ const SignInButton = props => {
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleShow} className="staatliches">Sign In</Button>
+      <Button variant="primary" onClick={handleShow} className="staatliches">Sign In</Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title className="staatliches">Sign{isSigningIn ? ' in to ': ' up for '}Ingredientory</Modal.Title>
+          <Modal.Title className="staatliches">Sign{isSigningIn ? ' in to ' : ' up for '}Ingredientory</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
@@ -171,7 +179,7 @@ const SignUpForm = props => {
           })
           .catch(function (error) {
             console.error("Error adding document: ", error);
-        });
+          });
 
       }).catch(error => {
         // Handle Errors here.
@@ -199,17 +207,17 @@ const SignUpForm = props => {
 
       <Form.Group controlId="password">
         <Form.Label className="staatliches">Password</Form.Label>
-        <Form.Control type="password" placeholder="Enter password" onChange={handlePasswordChange} className="oswald" required/>
+        <Form.Control type="password" placeholder="Enter password" onChange={handlePasswordChange} className="oswald" required />
       </Form.Group>
 
       <Form.Group controlId="firstName">
         <Form.Label className="staatliches">First Name</Form.Label>
-        <Form.Control type="text" placeholder="John" onChange={handleFirstNameChange} className="oswald" required/>
+        <Form.Control type="text" placeholder="John" onChange={handleFirstNameChange} className="oswald" required />
       </Form.Group>
 
       <Form.Group controlId="lastName">
         <Form.Label className="staatliches">Last Name</Form.Label>
-        <Form.Control type="text" placeholder="Doe" onChange={handleLastNameChange} className="oswald" required/>
+        <Form.Control type="text" placeholder="Doe" onChange={handleLastNameChange} className="oswald" required />
       </Form.Group>
 
       <Button variant="primary" type="submit" className="staatliches">
@@ -263,7 +271,7 @@ const SignInForm = props => {
     <Form onSubmit={submitForm}>
       <Form.Group controlId="email">
         <Form.Label className="staatliches">Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} className="oswald" required/>
+        <Form.Control type="email" placeholder="Enter email" onChange={handleEmailChange} className="oswald" required />
       </Form.Group>
 
       <Form.Group controlId="password">
@@ -296,34 +304,49 @@ const SignOutButton = props => {
 
   return (
     <>
-      <Button variant="outline-success" onClick={handleSignOut} className="staatliches">Sign Out</Button>
+      <Button variant="secondary" onClick={handleSignOut} className="staatliches">Sign Out</Button>
     </>
+  )
+}
+
+const MainPage = props => {
+
+  const onIngredientsChange = props.onIngredientsChange;
+  const onPageChange = props.onPageChange;
+
+  return (
+    <Container fluid>
+      <Row className="justify-content-center">
+        <img src="/src/images/Logo.png"
+          alt=""
+          width="1000px"
+          height="300px"
+          className="responsive-image"
+        />
+      </Row>
+      <Row className="justify-content-center">
+        <Col md={6}>
+          <SearchBar
+            page="main"
+            onPageChange={onPageChange}
+            onIngredientsChange={onIngredientsChange} />
+        </Col>
+      </Row>
+    </Container>
+
   )
 }
 
 const SearchBar = props => {
 
-//   var array_test=[] ;
-//
-//   // grabs values within a collection (just outputs into console)
-//    db.collection('ingredients').get().then((snapshot) => {
-//      snapshot.docs.forEach(doc => {
-//        console.log(doc.data().ingredient_name);
-//        array_test.push(doc.data().ingredient_name);
-//      })
-//    })
-//
-// db.collection('ingredients').get().then((snapshot) => {
-//    console.log(array_test.toString());
-//  })
+  const onIngredientsChange = props.onIngredientsChange;
 
   // For search bar query text
   const [query, setQuery] = useState('');
 
   // For search bar selections
-  const [selected, setSelected] = useState([]);
   const handleSelectedChange = selected => {
-    setSelected(selected);
+    onIngredientsChange(selected);
   }
 
   // For options
@@ -379,443 +402,339 @@ const SearchBar = props => {
 
   // TODO
   const handleSearch = () => {
-    props.onSearchingStateChange(true);
-    console.log('You have search for: ');
-    console.log(selected);
+    props.onPageChange("results");
   }
 
-  return (
-    <>
-    <div className="bottom">  </div>
-
-    <Row>
-    <Col className="text-center">
-    <img src="/src/images/Logo.png"
-     alt=""
-     width="1000px"
-     height="300px"
-     className="responsive-image"
+  var typeahead =
+    <AsyncTypeahead className="oswald"               // Async because we are querying database for suggestions
+      id='search bar'
+      placeholder="Type an ingredient ..."
+      labelKey="ingredient_name"
+      multiple
+      promptText=''
+      isLoading={isLoading}
+      minLength={1}                   // Length of query before options will show
+      options={options}               // The suggestions
+      onSearch={handleQueryChange}    // Fires when the user types something
+      onChange={handleSelectedChange} // Fires when the user selects or deselects
+      bsSize="large"
+      required
     />
-    </Col>
-    </Row>
 
-    <Row >
-    <Col md={3}> </Col>
-    <Col md={6}>
-      <AsyncTypeahead className="oswald"               // Async because we are querying database for suggestions
-        id='search bar'
-        placeholder="Type an ingredient ..."
-        labelKey="ingredient_name"
-        multiple
-        promptText=''
-        isLoading={isLoading}
-        minLength={1}                   // Length of query before options will show
-        options={options}               // The suggestions
-        onSearch={handleQueryChange}    // Fires when the user types something
-        onChange={handleSelectedChange} // Fires when the user selects or deselects
-        bsSize="large"
-        required
+  var button = <Button onClick={handleSearch} className="search-btn staatliches">Search</Button>
 
-      />
-      </Col>
-      <Col md={3}> </Col>
-      </Row>
-
-
-      <div className="searchAndButtonSpace">  </div>
-
-      <Row>
-      <Col> </Col>
-      <Col className="text-center staatliches">
-      <Button variant="primary" onClick={handleSearch} className="search-btn">
-        Search
-      </Button>
-      </Col>
-      <Col> </Col>
-
-      </Row>
-
-    </>
-  )
-}
-
-// Genies Page
-const App2 = () => {
-
-
-  window.location.href = "#Results_Page"
-  return (
-    <div id="another_page">
-  <Row>
-    <Col xs={3} className="filters">
-      <Accordion>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="0">
-              Ingredients
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <Button variant="primary"> Milk <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Baking Powder <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Butter <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> All-Purpose Flour <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Salt <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> White Sugar <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Egg <Badge variant="light">x</Badge></Button>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="1">
-              Meal Type
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Snack" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Breakfast" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Lunch" type={type} id={`custom-inline-${type}-3`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Brunch" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Dinner" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Late Night Munchies" type={type} id={`custom-inline-${type}-6`} />
-
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="2">
-              Cooking Method
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="2">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Stewing" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Broiling" type={type} id={`custom-inline-${type}-3`} />
-                      <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Steaming" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Searing" type={type} id={`custom-inline-${type}-6`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Grilling" type={type} id={`custom-inline-${type}-7`} />
-                      <Form.Check custom inline label="Making" type={type} id={`custom-inline-${type}-8`} />
-                      <Form.Check custom inline label="Roasting" type={type} id={`custom-inline-${type}-9`} />
-                      <Form.Check custom inline label="Frying" type={type} id={`custom-inline-${type}-10`} />
-                      <Form.Check custom inline label="Sauteing" type={type} id={`custom-inline-${type}-11`} />
-                      <Form.Check custom inline label="Braising" type={type} id={`custom-inline-${type}-12`} />
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="3">
-              Spice Level
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="3">
-            <Card.Body>
-                Spice Level
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="4">
-              Dietary Restrictions
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="4">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Vegetarian" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Dairy Free" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Kosher" type={type} id={`custom-inline-${type}-3`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Gluten Free" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Halal" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Peanut Free" type={type} id={`custom-inline-${type}-6`} />
-
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-        <Card>
-          <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="5">
-              Ethnicity
-            </Accordion.Toggle>
-          </Card.Header>
-          <Accordion.Collapse eventKey="5">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Italian" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Greek" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Indian" type={type} id={`custom-inline-${type}-3`} />
-                      <Form.Check custom inline label="Chinese" type={type} id={`custom-inline-${type}-4`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Mexican" type={type} id={`custom-inline-${type}5`} />
-                      <Form.Check custom inline label="American" type={type} id={`custom-inline-${type}-6`} />
-                      <Form.Check custom inline label="French" type={type} id={`custom-inline-${type}-7`} />
-                      <Form.Check custom inline label="Japanese" type={type} id={`custom-inline-${type}-8`} />
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion>
-    </Col>
-
-    <Col>
-      <Row>
-        <Col className="search">
-          <SearchBar/>
-        </Col>
-        <Col className="sort_col">
-          <Navbar>
-            <Navbar.Collapse className="justify-content-end">
-              <NavDropdown className="sort" title="Sort" alignRight>
-                <NavDropdown.Item href="#">Rating</NavDropdown.Item>
-                <NavDropdown.Item href="#">Time</NavDropdown.Item>
-                <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
-              </NavDropdown>
-            </Navbar.Collapse>
-          </Navbar>
-        </Col>
-      </Row>
-      <Row className="results">
-        <Col>
-          Results
-        </Col>
-      </Row>
-    </Col>
-  </Row>
-  </div>
-  )
-}
-
-/*
-// For email text
-  const [rating, newRating] = useState('');
-    const handleEmailChang = event => {
-      newRating(event.target.value);
-    }
-
-    <span><img src="\src\images\star.svg" width="20" height="20"/></span>
-    <span><img src="\src\images\star.svg" width="20" height="20"/></span>
-    <span><img src="\src\images\star.svg" width="20" height="20"/></span>
-    <span><img src="\src\images\star.svg" width="20" height="20"/></span>
-    <span><img src="\src\images\empty_star.svg" width="20" height="20"/></span>
-     {'   '}
-
-*/
-
-const RecipePage = () => {;
-
-  const[foodName,setfoodName] = useState("Chicken Adobo"); //set the new FoodName.
-
-  const[cookingMethod,setCookingMethod] = useState("boiling"); //set the new cooking method.
-
-  const[rating,setRating] = useState(3); //set the rating method.
-
-  const[ingredients,setIngredients] = useState("Chicken, oil, vinegar"); //sets the ingredients.
-
-  const[mealType,setMealType] = useState("lunch,dinner"); //sets the meal type.
-
-  const[ethnicity,setEthnicity] = useState("filipino"); //sets the ethnicity.
-
-  const[dietaryRestrictions,setDietaryRestrictions] = useState("Peanut-free"); //sets the ethnicity.
-
-
-  // Create a reference to the cities collection.
-  //var citiesRef = db.collection("recipes");
-
-  // Create a query against the collection. "Adobo is placeholder for the button is press."
-  //db.collection("recipes").where("name", "==", "Chicken Adobo")
-    //.get()
-    //.then(function(querySnapshot) {
-      //  querySnapshot.forEach(function(doc) {
-            // doc.data() is never undefined for query doc snapshots
-            //setfoodName(doc.data().name); //gets the name.
-            //setCookingMethod(doc.data().cooking_method); //gets the cooking method.
-            //setRating(parseFloat(doc.data().rating); //gets the rating.
-            //setIngredients(doc.data().ingredients); //gets the ingredients.
-      //  });
-  //  })
-  //  .catch(function(error) {
-  //      console.log("Error getting documents: ", error);
-    //});
-
+  var page = props.page;
 
   return (
     <>
-    <div className="recipeModal">
-      <Container>
-        <Jumbotron className="jumbotron_style">
-          <h1 className="recipe_heading">{foodName}</h1>
-            <Carousel>
-              <Carousel.Item>
-              <img className="responsive-image" src="src/images/Adobo-Chicken.jpg" alt="adobo"/>
-              </Carousel.Item>
-              <Carousel.Item>
-              <img className="responsive-image"src="src/images/adobo2.jpg" alt="adobo" />
-                <Carousel.Caption>
-                <p>"Filipino party!"</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            </Carousel>
-        </Jumbotron>
-
-        <Row>
-        <Col md={1}></Col>
-        <Col md={6}>
-
-          <Card bg="secondary" text="white" className="card_size">
-            <Card.Body className="card_body">
-
-            <div className="gen_info">
-              <h2 className="text-center recipe_heading">{foodName}</h2>
-
-              <StarRatings starDimension="20px"
-                rating={rating}
-                starRatedColor="yellow"
-                numberOfStars={5}
-                name='rating'
-              />
+      {(page === "main") ?
+        <Container fluid>
+          <Row>
+            <Col>
+              {typeahead}
+            </Col>
+          </Row >
+          <Row className="justify-content-center align-items-center top-padding">
+            {button}
+          </Row>
+        </Container>
+        :
+        <Container fluid>
+          <Row className="justify-content-center align-items-center">
+            <Col md={9} className="align-items-mcenter">
+              {typeahead}
+            </Col>
+            <Col>
+              <Button onClick={handleSearch} className="search-btn staatliches">Search</Button>
+            </Col>
+          </Row>
+        </Container>
+      }
 
 
-               <div>
-               <a href="#" className="text-center">By: Bong Nevillo</a>
-              </div>
-
-
-                <div>
-                  <p>
-                  "This classic adobo recipe is simple to make and famous with all who have tasted it.
-                  It has been modified to be a bit more saucy than traditional adobo, it is delicious served over rice."
-                  </p>
-                </div>
-
-            </div>
-
-            <div className="ingredients">
-              <h3 className="recipeHeading">Ingredients</h3>
-                <p>
-                      {ingredients}
-                  </p>
-            </div>
-
-            <div className="meal_type">
-              <h3 className="recipeHeading">Meal-Type</h3>
-                <p>
-                {mealType}
-                  </p>
-            </div>
-
-            <div className="cooking_method">
-              <h3 className="recipeHeading">Cooking Method</h3>
-                  <p>
-                  {cookingMethod}
-                  </p>
-            </div>
-
-            <div className="diet">
-              <h3 className="recipeHeading">Dietary Restrictions</h3>
-                <p>
-                {dietaryRestrictions}
-                </p>
-            </div>
-
-            <div className="ethnicity">
-              <h3 className="recipeHeading">Ethnicity</h3>
-                <p>
-                {ethnicity}
-                </p>
-            </div>
-
-            <div className="steps">
-              <h3 className="recipeHeading">Steps</h3>
-                <p>
-                  <ul className="list-styles">
-                    <li className="steps">1. Heat the vegetable oil in a large skillet over medium-high heat. Cook chicken pieces until golden brown on both sides, then remove.
-                      Stir in the onion and garlic; cook until they soften and brown, about 6 minutes.</li>
-                    <li  className="steps" >2. Pour in vinegar and soy sauce, and season with garlic powder, black pepper, and bay leaf. Add the browned chicken, increase the heat to high, and bring to a boil.
-                      Reduce heat to medium-low, cover, and simmer until the chicken is tender and cooked through, 35 to 40 minutes.</li>
-                  </ul>
-                  </p>
-            </div>
-
-            </Card.Body>
-          </Card>
-
-        </Col>
-
-        <Col md={4}>
-          <div className= "nutrition_info">
-            <Card bg="secondary" text="white" className="card_size_nutr">
-              <Card.Body className="card_body">
-              <h3>Nutrition Info: </h3>
-              <p>Prep: 20min</p>
-              <p>Cook: 50 mins</p>
-              <p>Total: 1 hr 10 mins</p>
-              <p>Servings:6</p>
-              </Card.Body>
-            </Card>
-
-
-          </div>
-        </Col>
-        <Col md={1}></Col>
-        </Row>
-
-      </Container>
-    </div>
     </>
-
-  );
+  )
 }
+
+const FilterCard = props => {
+
+  const label = props.label;
+  const items = props.items
+  const eventKey = props.eventKey
+
+  const onChangeFilters = props.onChangeFilters;
+
+  return (
+    <>
+
+      <Card>
+        <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey}>
+          {label}
+        </Accordion.Toggle>
+
+        <Accordion.Collapse eventKey={eventKey}>
+          <Card.Body>
+            <Form>
+              {
+                Object.keys(items).map(type => {
+                  return (
+                    <Form.Check
+                      custom
+                      onChange={onChangeFilters(label)}
+                      name={type}
+                      type='checkbox'
+                      label={type}
+                      key={`${type}-checkbox`}
+                      id={type} />
+                  )
+                })
+              }
+            </Form>
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </>
+  )
+}
+
+const SelectedIngredientsCard = props => {
+
+  const selected = props.selected;
+  const eventKey = props.eventKey;
+
+  return (
+    <>
+      <Card>
+        <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey} >
+          Ingredients
+        </Accordion.Toggle>
+
+        <Accordion.Collapse eventKey={eventKey}>
+          <Card.Body>
+            {
+              selected.map(ingredient => {
+                return (
+                  <Button variant="primary" key={`${ingredient}-badge`}>{ingredient}<Badge >x</Badge> </Button>
+                )
+              })
+            }
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </>
+  )
+}
+
+const SortOptions = props => {
+
+  const options = props.options
+  const handleOnSelect = props.onSelectSort
+
+  return (
+    <Dropdown onSelect={handleOnSelect}>
+      <Dropdown.Toggle>
+        Sort by
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {
+          options.map((option, index) => {
+            return (<Dropdown.Item name={option} key={`${option}-sortOption`}>{option}</Dropdown.Item>)
+          })
+        }
+      </Dropdown.Menu>
+
+    </Dropdown>
+  )
+}
+
+const FiltersSideBar = props => {
+
+  const filters = props.filters;
+  const selected = props.selected;
+  const onChangeFilters = props.onChangeFilters;
+
+  return (
+    <>
+      <Nav defaultActiveKey="/home" fill className="yellow flex-column sidebar">
+        <Accordion>
+          <SelectedIngredientsCard selected={selected} eventKey={0} />
+          {
+            Object.keys(filters).map((item, index) => {
+              return (
+                <FilterCard
+                  label={item}
+                  onChangeFilters={onChangeFilters}
+                  items={filters[item]}
+                  eventKey={index + 1}
+                  key={`${item}-filterCard`} />)
+            })
+          }
+
+        </Accordion>
+      </Nav>
+    </>
+  )
+}
+
+const RecipeCard = props => {
+
+  const title = props.title;
+  const time = props.time;
+
+  return (
+    <Card className="results-card-size">
+      <Card.Img className="responsive-image"
+        variant="top"
+        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+      />
+      <Card.Title as="h5" className="">{title}</Card.Title>
+      <Card.Subtitle className="mb-2 text-muted">{time}</Card.Subtitle>
+      <Card.Body>
+        <Card.Text className="text-center">
+          This is a great recipe that I found in my Grandma's recipe book.
+           Judging from the weathered look of this recipe card, this was a family favorite.
+        </Card.Text>
+      </Card.Body>
+      <Card.Footer className="text-muted">Submitted By : Wesley Morota</Card.Footer>
+
+    </Card>
+  )
+}
+
+
+const ResultsPage = props => {
+
+  const onPageChange = props.onPageChange;
+  const onIngredientsChange = props.onIngredientsChange;
+  const selectedIngredients = props.selectedIngredients;
+
+  // Test
+  Object.values(selectedIngredients).map(value => {
+    console.log(value)
+  })
+
+  // Hard Coded
+  const selected = ['Milk', 'Baking Powder', 'Butter', 'All-purpose Flour', 'Salt', 'White Sugar', 'Egg']
+
+  var mealTypes = ['Snack', 'Breakfast', 'Lunch', 'Brunch', 'Dinner']
+  var cookingMethods = ['Grilling', 'Roasting', 'Frying', 'Baking']
+  var dietaryRestrictions = ['Vegetarian', 'Halal', 'Lactose-Free', 'Kosher']
+  var ethnicities = ['Italian', 'Indian', 'Chinese', 'French', 'Filipino']
+
+  var sortOptions = ['Rating', 'Time', 'Spice Level']
+
+  var filterList = {
+    'Meal Types': mealTypes,
+    'Cooking Methods': cookingMethods,
+    'Dietary Restrictions': dietaryRestrictions,
+    'Ethnicities': ethnicities,
+  }
+
+  var recipeTitle = ['Pancake', 'Cake', 'Adobo', 'Noodles']
+  var time = '15 minutes'
+
+  const initializeFilters = filters => {
+    var initialFilters = {}
+
+    Object.keys(filters).map(filter => {
+      var temp = {}
+      filters[filter].map(item => {
+        temp[item] = false;
+      })
+      initialFilters[filter] = temp;
+    })
+
+    return (initialFilters)
+  }
+
+  // Filter States
+  const [filters, setFilters] = useState(initializeFilters(filterList));
+  const handleFilterChange = filter => event => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    setFilters(prevState => {
+      prevState[filter][name] = value;
+      return (prevState)
+    });
+    console.log(filters)
+  }
+
+  // Sort States
+  const [sort, setSort] = useState('Rating')
+  const onSelectSort = (eventKey, event) => {
+    setSort(event.target.name)
+  }
+
+  // Print whenever sort changes
+  useEffect(() => {
+    console.log(sort)
+  }, [sort])
+
+  var recipe_names_array = [];
+  const [recipe_names, setRecipe] = useState("");
+
+  // // grabs values within a collection (just outputs into console)
+  //  db.collection('recipes').get().then((snapshot) => {
+  //    snapshot.docs.forEach(doc => {
+  //      recipe_names_array.push(doc.data().name);
+  //    })
+  //       setRecipe(recipe_names_array);
+  //  })
+
+  return (
+    <Container fluid >
+      <Row noGutters>
+        <Col md={2}>
+          <FiltersSideBar selected={selected} filters={filters} onChangeFilters={handleFilterChange} />
+        </Col>
+
+        <Col md={10}>
+
+          <Row noGutters className="align-items-center justify-content-center">
+            <Col>
+              <SearchBar
+                onpage="results"
+                onPageChange={onPageChange}
+                onIngredientsChange={onIngredientsChange} />
+            </Col>
+
+            <Col md={3}>
+              <SortOptions options={sortOptions} onSelectSort={onSelectSort} />
+            </Col>
+          </Row>
+
+          <Row noGutters className="right">
+            <CardGroup>
+              <RecipeCard title={recipeTitle[0]} time={time} />
+              <RecipeCard title={recipeTitle[0]} time={time} />
+            </CardGroup>
+            <CardGroup>
+              <RecipeCard title={recipeTitle[0]} time={time} />
+              <RecipeCard title={recipeTitle[0]} time={time} />
+            </CardGroup>
+          </Row>
+
+        </Col>
+      </Row>
+    </Container>
+  )
+}
+
+
 
 const App = () => {
 
   // Save authentication state (whether user is logged in or not)
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  // Did user click the search button
-  const [isSearching, setSearching] = useState(false);
+  // Is it being used in the main screen or results page
+  const [page, setPage] = useState('main');
+
+  // Ingredients user wants to search
+  const [ingredients, setIngredients] = useState([]);
 
   // Bind an function to auth object that runs when there is a change in auth state
   /* email: test@test.com pass: test123 */
@@ -829,12 +748,14 @@ const App = () => {
     }
   });
 
-
   return (
     <>
-
-      <MyNavBar authState={isLoggedIn} />
-      <RecipePage />
+      <MyNavBar authState={isLoggedIn} page={page} />
+      {(page === "main") ?
+        <MainPage onPageChange={setPage} onIngredientsChange={setIngredients} />
+        :
+        <ResultsPage onPageChange={setPage} selectedIngredients={ingredients} onIngredientsChange={setIngredients} />}
+    </>
 
     </>
     //{isSearching ? <RecipePage /> : <SearchBar onSearchingStateChange={setSearching} />}

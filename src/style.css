@@ -30,13 +30,14 @@ html {
 }
 
 .staatliches{
-  font-family: Staatliches;
+  font-family: 'Staatliches';
 }
 
 .oswald{
-  font-family: Oswald;
+  font-family: 'Oswald', sans-serif;
 }
 
+/* search button */
 .search-btn {
   font-size: 30px;
   background-color: orange;
@@ -50,22 +51,80 @@ html {
   border: 3px solid darkorange;
 }
 
-.card_body{
-padding:40px;
+.bottom-card{
+  margin-bottom: -1%;
 }
 
-.jumbotron_style{
-padding-top: 30px;
-text-align: center;
+.align-right {
+  text-align: right;
 }
 
-.recipeModal{
-padding:25px;
+.filter-no
+{
+  color: #f7f7f7;
 }
 
-.list-styles{
-  margin-top: 10px;
-  list-style: none;
+.right{
+  max-width: '100%' ;
+}
+
+.left{
+  max-width: '100%' ;
+  background-color: #f7f7f7;
+}
+
+.testest {
+position: absolute;
+}
+
+.top-padding {
+  padding-top: 20px;
+}
+
+.stickyicky {
+position: sticky;
+ top: 0;
+}
+
+.side {
+  width: 16%;
+  left: 0%;
+}
+
+/*
+.results-card-size {
+  margin-top: 3%;
+  width: 90%;
+  height: 60%;
+}
+*/
+
+.whitetext
+{
+  color: white;
+}
+
+.red {
+  background-color:red;
+}
+
+.yellow {
+  background-color: #F7F7F7
+}
+
+.blue {
+  background-color: blue
+}
+
+.no_margin {
+  margin: 0, 0;
+}
+
+.sidebar
+{
+  height:100%;
+  z-index:1;
+  overflow:auto;
 }
 
 .steps{
@@ -105,6 +164,6 @@ padding: 10px;
 
 
 @font-face {
-  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap' );
   src: url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 }
