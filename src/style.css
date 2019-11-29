@@ -50,6 +50,7 @@ html {
   border: 3px solid darkorange;
 }
 
+/*Faadhil's Part(END)*/
 .carousel{
   width: 400px;
  height: 400px;
@@ -68,6 +69,7 @@ html {
 .btn{
   padding: 10px;
 }
+/*Faadhil's Part(END)*/
 
 @font-face {
   src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
