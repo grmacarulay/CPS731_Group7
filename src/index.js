@@ -493,23 +493,23 @@ const SearchBar = props => {
     // TODO optimize cache to decrease network calls
 
     // TODO get only a few
-    // setLoading(true);
-    // db.collection("ingredients").get()
-    //   .then(snapshot => {
-    //     // Put all docs in an array
-    //     var tempOptions = [];
-    //     snapshot.docs.forEach(doc => {
-    //       tempOptions.push(doc.data());
-    //     })
-    //     setOptions(tempOptions);
-    //     setLoading(false);
-    //   }
-    // );
+    setLoading(true);
+    db.collection("ingredients").get()
+      .then(snapshot => {
+        // Put all docs in an array
+        var tempOptions = [];
+        snapshot.docs.forEach(doc => {
+          tempOptions.push(doc.data());
+        })
+        setOptions(tempOptions);
+        setLoading(false);
+      }
+    );
 
     // STUB, simulates above to save on data
-    setLoading(true);
-    setOptions(testData);
-    setLoading(false);
+    // setLoading(true);
+    // setOptions(testData);
+    // setLoading(false);
   }
 
   // For testing: Print query to console
