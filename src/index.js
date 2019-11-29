@@ -302,8 +302,14 @@ const SignOutButton = props => {
       })
   }
 
+  const handleProfile = () => {
+    console.log("handle profile here.");
+  }
+
   return (
     <>
+      <Button variant="link" onClick={handleProfile} className="staatliches">My Account</Button>
+      {' '}
       <Button variant="secondary" onClick={handleSignOut} className="staatliches">Sign Out</Button>
     </>
   )
@@ -723,7 +729,170 @@ const ResultsPage = props => {
   )
 }
 
+const RecipePage = () => {;
 
+  const[foodName,setfoodName] = useState("Chicken Adobo"); //set the new FoodName.
+
+  const[cookingMethod,setCookingMethod] = useState("boiling"); //set the new cooking method.
+
+  const[rating,setRating] = useState(3); //set the rating method.
+
+  const[ingredients,setIngredients] = useState("Chicken, oil, vinegar"); //sets the ingredients.
+
+  const[mealType,setMealType] = useState("lunch,dinner"); //sets the meal type.
+
+  const[ethnicity,setEthnicity] = useState("filipino"); //sets the ethnicity.
+
+  const[dietaryRestrictions,setDietaryRestrictions] = useState("Peanut-free"); //sets the ethnicity.
+
+
+  // Create a reference to the cities collection.
+  //var citiesRef = db.collection("recipes");
+
+  // Create a query against the collection. "Adobo is placeholder for the button is press."
+  //db.collection("recipes").where("name", "==", "Chicken Adobo")
+    //.get()
+    //.then(function(querySnapshot) {
+      //  querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            //setfoodName(doc.data().name); //gets the name.
+            //setCookingMethod(doc.data().cooking_method); //gets the cooking method.
+            //setRating(parseFloat(doc.data().rating); //gets the rating.
+            //setIngredients(doc.data().ingredients); //gets the ingredients.
+      //  });
+  //  })
+  //  .catch(function(error) {
+  //      console.log("Error getting documents: ", error);
+    //});
+
+
+  return (
+    <>
+    <div className="recipeModal">
+      <Container>
+        <Jumbotron className="jumbotron_style">
+          <h1 className="recipe_heading">{foodName}</h1>
+            <Carousel>
+              <Carousel.Item>
+              <img className="responsive-image" src="src/images/Adobo-Chicken.jpg" alt="adobo"/>
+              </Carousel.Item>
+              <Carousel.Item>
+              <img className="responsive-image"src="src/images/adobo2.jpg" alt="adobo" />
+                <Carousel.Caption>
+                <p>"Filipino party!"</p>
+                </Carousel.Caption>
+              </Carousel.Item>
+            </Carousel>
+        </Jumbotron>
+
+        <Row>
+        <Col md={1}></Col>
+        <Col md={6}>
+
+          <Card bg="secondary" text="white" className="card_size">
+            <Card.Body className="card_body">
+
+            <div className="gen_info">
+              <h2 className="text-center recipe_heading">{foodName}</h2>
+
+              <StarRatings starDimension="20px"
+                rating={rating}
+                starRatedColor="yellow"
+                numberOfStars={5}
+                name='rating'
+              />
+
+
+               <div>
+               <a href="#" className="text-center">By: Bong Nevillo</a>
+              </div>
+
+
+                <div>
+                  <p>
+                  "This classic adobo recipe is simple to make and famous with all who have tasted it.
+                  It has been modified to be a bit more saucy than traditional adobo, it is delicious served over rice."
+                  </p>
+                </div>
+
+            </div>
+
+            <div className="ingredients">
+              <h3 className="recipeHeading">Ingredients</h3>
+                <p>
+                      {ingredients}
+                  </p>
+            </div>
+
+            <div className="meal_type">
+              <h3 className="recipeHeading">Meal-Type</h3>
+                <p>
+                {mealType}
+                  </p>
+            </div>
+
+            <div className="cooking_method">
+              <h3 className="recipeHeading">Cooking Method</h3>
+                  <p>
+                  {cookingMethod}
+                  </p>
+            </div>
+
+            <div className="diet">
+              <h3 className="recipeHeading">Dietary Restrictions</h3>
+                <p>
+                {dietaryRestrictions}
+                </p>
+            </div>
+
+            <div className="ethnicity">
+              <h3 className="recipeHeading">Ethnicity</h3>
+                <p>
+                {ethnicity}
+                </p>
+            </div>
+
+            <div className="steps">
+              <h3 className="recipeHeading">Steps</h3>
+                <p>
+                  <ul className="list-styles">
+                    <li className="steps">1. Heat the vegetable oil in a large skillet over medium-high heat. Cook chicken pieces until golden brown on both sides, then remove.
+                      Stir in the onion and garlic; cook until they soften and brown, about 6 minutes.</li>
+                    <li  className="steps" >2. Pour in vinegar and soy sauce, and season with garlic powder, black pepper, and bay leaf. Add the browned chicken, increase the heat to high, and bring to a boil.
+                      Reduce heat to medium-low, cover, and simmer until the chicken is tender and cooked through, 35 to 40 minutes.</li>
+                  </ul>
+                  </p>
+            </div>
+
+            </Card.Body>
+          </Card>
+
+        </Col>
+
+        <Col md={4}>
+          <div className= "nutrition_info">
+            <Card bg="secondary" text="white" className="card_size_nutr">
+              <Card.Body className="card_body">
+              <h3>Nutrition Info: </h3>
+              <p>Prep: 20min</p>
+              <p>Cook: 50 mins</p>
+              <p>Total: 1 hr 10 mins</p>
+              <p>Servings:6</p>
+              </Card.Body>
+            </Card>
+
+
+          </div>
+        </Col>
+        <Col md={1}></Col>
+        </Row>
+
+      </Container>
+    </div>
+    </>
+
+  );
+}
 
 const App = () => {
 
@@ -757,8 +926,6 @@ const App = () => {
         <ResultsPage onPageChange={setPage} selectedIngredients={ingredients} onIngredientsChange={setIngredients} />}
     </>
 
-    </>
-    //{isSearching ? <RecipePage /> : <SearchBar onSearchingStateChange={setSearching} />}
   );
 }
 
@@ -768,6 +935,8 @@ ReactDOM.render(<App />, document.getElementById('root'));
 
 function testing() {
 }
+
+var userid;
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
