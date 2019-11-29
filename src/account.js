@@ -11,7 +11,7 @@ import * as firebase from "firebase/app";
 import "firebase/database"; //newly added
 import "firebase/analytics";
 import "firebase/auth";
-import "firebase/firestore"
+import "firebase/firestore";
 
 // React-Bootstrap imports
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -66,6 +66,8 @@ const auth = firebase.auth();
 //                    // you have one. Use User.getToken() instead.
 // }
 
+  var user, firstName, lastName, email, photoUrl, uid;
+
 function writeUserData(userId, firstName,lastName, email) {
   firebase.database().ref('users/' + userId).set({
     first_name: firstName,
@@ -74,6 +76,30 @@ function writeUserData(userId, firstName,lastName, email) {
     user_id: userId
   });
 }
+
+  // Create a reference to the cities collection
+//  var docRef = db.collection("users");
+
+// Create a query against the collection.
+// db.collection("users").where("user_id", "==", "XOpg2Fd2ZJYoVQGKzVDRqn0KnLd2")
+//     .get()
+//     .then(function(querySnapshot) {
+//         querySnapshot.forEach(function(doc) {
+//             // doc.data() is never undefined for query doc snapshots
+//             //console.log(doc.data().ingredients[2]);
+//             user = doc.data();
+//             email = user.email;
+//             firstName = user.first_name;
+//             lastName = user.last_name;
+//             //photoUrl = user.photoURL;
+//             uid = user.user_id;
+//             console.log(email, firstName, lastName);
+//
+//         });
+//     })
+//     .catch(function(error) {
+//         console.log("Error getting documents: ", error);
+//     });
 
 
 
