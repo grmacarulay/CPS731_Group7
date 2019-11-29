@@ -695,6 +695,7 @@ className="right"
 
 const RecipeCardResults = props => {
 
+  
   var recipe_names_array=[] ;
   const[recipe_names, setRecipe] = useState("");
 
@@ -705,6 +706,8 @@ const RecipeCardResults = props => {
      })
         setRecipe(recipe_names_array);
    })
+
+
 
   return (
 

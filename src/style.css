@@ -98,7 +98,9 @@ position: sticky;
 }
 
 .this-is-a-margin {
-  margin-top: -20%; 
+  margin-top: -20%;
+  justify-content: center;
+  margin-right: 7%; 
 }
 
 .w3-sidebar
