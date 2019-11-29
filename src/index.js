@@ -627,7 +627,7 @@ const ResultsPage = props => {
       prevState[filter][name] = value;
       return (prevState)
     });
-     console.log(filters)
+    console.log(filters)
   }
 
   // Sort States
@@ -636,6 +636,7 @@ const ResultsPage = props => {
     setSort(event.target.name)
   }
 
+  // Print whenever sort changes
   useEffect(() => {
     console.log(sort)
   }, [sort])
