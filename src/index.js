@@ -20,6 +20,7 @@ import Modal from "react-bootstrap/Modal";
 import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 import Badge from 'react-bootstrap/Badge'
+import CardGroup from 'react-bootstrap/CardGroup'
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -703,21 +704,14 @@ const ResultsPage = props => {
           </Row>
 
           <Row noGutters className="right">
-            <Col md={6} className="right">
-             <RecipeCard title={recipeTitle[0]} time={time}/>
-            </Col>
-            <Col md={6} className="right">
-              <RecipeCard title={recipeTitle[0]} time={time}/>
-            </Col>
-          </Row>
-
-          <Row noGutters>
-            <Col md={6} className="right">
+            <CardGroup>
               <RecipeCard title={recipeTitle[0]} time={time} />
-            </Col>
-            <Col md={6} className="right">
               <RecipeCard title={recipeTitle[0]} time={time} />
-            </Col>
+            </CardGroup>
+            <CardGroup>
+              <RecipeCard title={recipeTitle[0]} time={time} /> 
+              <RecipeCard title={recipeTitle[0]} time={time} />
+            </CardGroup>
           </Row>
 
         </Col>
