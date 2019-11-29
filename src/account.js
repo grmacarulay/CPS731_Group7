@@ -79,10 +79,10 @@ export const Profile = props => {
     <Col md={3}></Col>
     <Col md={6}>
     <div className="text-center">
-    <h1 className = "headerStyle">Welcome Xavier !</h1>
+    <h1 className = "headerStyle">Welcome Xander !</h1>
     <img className="carousel" src="src/images/male.jpg"
     alt="Pizza"></img>
-    <p>First Name: Xavier</p>
+    <p>First Name: Xander</p>
     <p>Last Name: Cage</p>
     <p>Email: xaviercage4life@gmail.coms</p>
     <Button>Edit Profile</Button>
@@ -105,7 +105,7 @@ export const Recipes = props => {
     <>
     <Container>
     <Jumbotron className = "jumbotronInvis">
-    <h1 className="headerStyle">Xavier's Approved Recipes</h1>
+    <h1 className="headerStyle">Xander's Approved Recipes</h1>
     <Row>
     <Col md={3}></Col>
     <Col md={6}>
@@ -119,7 +119,7 @@ export const Recipes = props => {
             />
             <Carousel.Caption>
               <h3>Garfield Lasagna</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <p>Mmmm Lasagna!</p>
             </Carousel.Caption>
           </Carousel.Item>
 
@@ -133,7 +133,7 @@ export const Recipes = props => {
 
             <Carousel.Caption>
               <h3>Italian Pizza</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <p>Mama mia.</p>
             </Carousel.Caption>
           </Carousel.Item>
 
@@ -146,7 +146,7 @@ export const Recipes = props => {
 
             <Carousel.Caption>
               <h3>Hersheys Chocolate Cake</h3>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+              <p>Yummy and chocolatey!</p>
             </Carousel.Caption>
           </Carousel.Item>
 
@@ -159,7 +159,7 @@ export const Recipes = props => {
 
             <Carousel.Caption>
               <h3>Filipino Adobo</h3>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+              <p>Fillipino people food.</p>
             </Carousel.Caption>
           </Carousel.Item>
 
