@@ -37,6 +37,7 @@ html {
   font-family: 'Oswald', sans-serif;
 }
 
+/* search button */
 .search-btn {
   font-size: 30px;
   background-color: orange;
@@ -76,6 +77,10 @@ html {
 position: absolute;
 }
 
+.top-padding {
+  padding-top: 20px;
+}
+
 .stickyicky {
 position: sticky;
  top: 0;
@@ -97,32 +102,31 @@ position: sticky;
   color: white;
 }
 
-.this-is-a-margin {
-  margin-top: -20%;
-  justify-content: center;
-  margin-right: 7%; 
+.red {
+  background-color:red;
 }
 
-.w3-sidebar
+.yellow {
+  background-color: yellow
+}
+
+.blue {
+  background-color: blue
+}
+
+.no_margin {
+  margin: 0, 0;
+}
+
+.sidebar
 {
   height:100%;
-  width:200px;
-  background-color:#fff;
-  position:fixed!important;
   z-index:1;
   overflow:auto;
 }
 
-.w3-sidebar.w3-collapse {
-  display:block!important;
-}
-
-.w3-sidebar.w3-collapse {
-  display:none;
-}
-
 
 @font-face {
-  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
+  src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap' );
   src: url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
 }
