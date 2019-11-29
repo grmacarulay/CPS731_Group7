@@ -59,7 +59,6 @@ html {
 
 .right{
   max-width: '100%' ;
-  background-color: yellow;
 }
 
 .left{
@@ -83,6 +82,10 @@ position: sticky;
 .whitetext
 {
   color: white;
+}
+
+.red {
+  background-color:red;
 }
 
 

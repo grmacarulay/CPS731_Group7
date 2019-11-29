@@ -30,11 +30,6 @@ import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead-bs4.css';
 
-// Sidenav
-import SideNav, { Toggle, NavItem, NavIcon, NavText } from '@trendmicro/react-sidenav';
-// Be sure to include styles at some point, probably during your bootstraping
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-
 // Custom styles
 import './style.css';
 
@@ -322,7 +317,7 @@ const MainPage = props => {
       </Row>
       <Row className="justify-content-center">
         <Col md={6}>
-          <SearchBar isMain={props.isMain} onSearchingStateChange={props.onSearchingStateChange} />
+          <SearchBar page="main" onPageChange={props.onPageChange} />
         </Col>
       </Row>
     </Container>
@@ -394,7 +389,7 @@ const SearchBar = props => {
 
   // TODO
   const handleSearch = () => {
-    props.onSearchingStateChange(true);
+    props.onPageChange("results");
     console.log('You have search for: ');
     console.log(selected);
   }
@@ -417,264 +412,181 @@ const SearchBar = props => {
 
   var button = <Button onClick={handleSearch} className="search-btn staatliches">Search</Button>
 
+  var page = props.page;
+
   return (
     <>
-      {props.isMain ? null : <Container fluid>
-        <Row>
-        <Col>
-          {typeahead}
-        </Col>
-      </Row>
-
-      <Row className="justify-content-center">
-        {button}
-      </Row>
-
-
-    </Container>}
+      {(page === "main") ?
+        <Container fluid>
+          <Row>
+            <Col>
+              {typeahead}
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            {button}
+          </Row>
+        </Container>
+        :
+        <Container fluid className="red">
+          <Row>
+            <Col md={9}>
+              {typeahead}
+            </Col>
+            <Col>
+              {button}
+            </Col>
+          </Row>
+        </Container>
+      }
 
 
     </>
   )
 }
 
+const FilterCard = props => {
 
+  var label = props.label;
+  var items = props.items
+  var eventKey = props.eventKey
 
+  return (
+    <>
+    <Card>
+      <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey}>
+        {label}
+      </Accordion.Toggle>
 
+      <Accordion.Collapse eventKey={eventKey}>
+        <Card.Body>
+          <Form>
+              {
+                items.map(type => {
+                  return (
+                    <Form.Check custom label={type} type='checkbox' key={`${type}-checkbox`} id={type} />
+                  )
+                })
+              }
+          </Form>
+        </Card.Body>
+      </Accordion.Collapse>
+      </Card>
+    </>
+  )
+}
 
-// Genies Page
-const App2 = props => {
+const SelectedIngredientsCard = props => {
 
+  const selected = props.selected;
+  const eventKey = props.eventKey;
 
+  return (
+    <>
+      <Card>
+        <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey} >
+          Ingredients
+        </Accordion.Toggle>
+
+        <Accordion.Collapse eventKey={eventKey}>
+          <Card.Body>
+            {
+              selected.map(ingredient => {
+                return (
+                  <Button variant="primary" key={`${ingredient}-badge`}>{ingredient}<Badge >x</Badge> </Button>
+                )
+              })
+            }
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </>
+  )
+}
+
+const FiltersSideBar = props => {
+
+  const filters = props.filters;
+  const selected = props.selected;
+
+  return (
+    <>
+      <Nav defaultActiveKey="/home" className="flex-column w3-sidebar side">
+        <Accordion>
+          <SelectedIngredientsCard selected={selected} eventKey={0} />
+
+          {
+            Object.keys(filters).map((item, index) => {
+              return (<FilterCard label={item} items={filters[item]} eventKey={index + 1} key={`${item}-filterCard`} />)
+            })
+          }
+
+        </Accordion>
+      </Nav>
+    </>
+  )
+}
+
+const ResultsPage = props => {
+
+  // Hard Coded
+  const selected = ['Milk', 'Baking Powder', 'Butter', 'All-purpose Flour', 'Salt', 'White Sugar', 'Egg']
+
+  var mealTypes = ['Snack', 'Breakfast', 'Lunch', 'Brunch', 'Dinner']
+  var cookingMethods = ['Grilling', 'Roasting', 'Frying', 'Baking']
+  var dietaryRestrictions = ['Vegetarian', 'Halal', 'Lactose-Free', 'Kosher']
+  var ethnicities = ['Italian', 'Indian', 'Chinese', 'French', 'Filipino']
+
+  var cards = {
+    'Meal Types': mealTypes,
+    'Cooking Methods': cookingMethods,
+    'Dietary Restrictions': dietaryRestrictions,
+    'Ethnicities': ethnicities,
+  }
 
   window.location.href = "#Results_Page"
   return (
-    <div id="another_page">
+    <Container fluid >
+      <Row>
+        <Col md={2} className="left min-vh-100 testtest">
+          <FiltersSideBar selected={selected} filters={cards} />
+        </Col>
 
-  <Container fluid >
-  <Row fluid>
-  <Col md={2} className=" left min-vh-100 testtest" fluid>
+        <Col md={10} className="right">
+          <Row>
+            <Col md={10} className="search">
+              <SearchBar page="results" />
+            </Col>
 
-  <Nav defaultActiveKey="/home" className="flex-column w3-sidebar side">
+            <Col className="sort_col">
+              <Navbar>
+                <Navbar.Collapse className="justify-content-end">
+                  <NavDropdown className="sort" title="Sort" alignRight>
 
-  <Accordion>
-  <Card fluid>
+                    <NavDropdown.Item href="#">Rating</NavDropdown.Item>
+                    <NavDropdown.Item href="#">Time</NavDropdown.Item>
+                    <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
 
-            <Accordion.Toggle as={Card.Header} className="text-center" eventKey="0" >
-              Ingredients
-            </Accordion.Toggle>
+                  </NavDropdown>
 
-          <Accordion.Collapse eventKey="0">
-            <Card.Body>
-              <Button variant="primary"> Milk <Badge >x</Badge></Button>
-              <Button variant="primary"> Baking Powder <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Butter <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> All-Purpose Flour <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Salt <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> White Sugar <Badge variant="light">x</Badge></Button>
-              <Button variant="primary"> Egg <Badge variant="light">x</Badge></Button>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
+                </Navbar.Collapse>
+              </Navbar>
+            </Col>
+          </Row>
 
-        <Card fluid className="whitetext">
-                _
-              </Card>
-
-
-  <Card fluid>
-            <Accordion.Toggle as={Card.Header} className="text-center" eventKey="1">
-              Meal Type
-            </Accordion.Toggle>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row>
-                    <Col>
-                      <Form.Check custom inline label="Snack" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Breakfast" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Lunch" type={type} id={`custom-inline-${type}-3`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Brunch" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Dinner" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Late Night Munchies" type={type} id={`custom-inline-${type}-6`} />
-
-                  </Col>
-                </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-  </Card>
-
-  <Card fluid className="whitetext">
-          _
-        </Card>
-
-  <Card>
-
-              <Accordion.Toggle as={Card.Header} className="text-center" eventKey="2">
-                Cooking Method
-              </Accordion.Toggle>
-
-            <Accordion.Collapse eventKey="2">
-              <Card.Body>
-                <Form>
-                  {['checkbox'].map(type => (
-                    <div key={`custom-inline-${type}`} className="mb-3">
-                    <Row> <Col>
-                        <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-1`} />
-                        <Form.Check custom inline label="Stewing" type={type} id={`custom-inline-${type}-2`} />
-                        <Form.Check custom inline label="Broiling" type={type} id={`custom-inline-${type}-3`} />
-                        <Form.Check custom inline label="Stir Frying" type={type} id={`custom-inline-${type}-4`} />
-                        <Form.Check custom inline label="Steaming" type={type} id={`custom-inline-${type}-5`} />
-                        <Form.Check custom inline label="Searing" type={type} id={`custom-inline-${type}-6`} />
-                      </Col>
-                      <Col>
-                        <Form.Check custom inline label="Grilling" type={type} id={`custom-inline-${type}-7`} />
-                        <Form.Check custom inline label="Making" type={type} id={`custom-inline-${type}-8`} />
-                        <Form.Check custom inline label="Roasting" type={type} id={`custom-inline-${type}-9`} />
-                        <Form.Check custom inline label="Frying" type={type} id={`custom-inline-${type}-10`} />
-                        <Form.Check custom inline label="Sauteing" type={type} id={`custom-inline-${type}-11`} />
-                        <Form.Check custom inline label="Braising" type={type} id={`custom-inline-${type}-12`} />
-                    </Col> </Row>
-                    </div>
-                  ))}
-                </Form>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-
-          <Card fluid className="whitetext">
-                  _
-                </Card>
-
-          <Card>
-
-                      <Accordion.Toggle as={Card.Header} className="text-center"eventKey="3">
-                        Spice Level
-                      </Accordion.Toggle>
-
-                    <Accordion.Collapse eventKey="3">
-                      <Card.Body>
-                          Spice Level
-                      </Card.Body>
-                    </Accordion.Collapse>
-          </Card>
-
-          <Card fluid className="whitetext">
-                  _
-                </Card>
-
-        <Card>
-
-            <Accordion.Toggle as={Card.Header} className="text-center" eventKey="4">
-              Dietary Restrictions
-            </Accordion.Toggle>
-
-          <Accordion.Collapse eventKey="4">
-            <Card.Body>
-              <Form>
-                {['checkbox'].map(type => (
-                  <div key={`custom-inline-${type}`} className="mb-3">
-                  <Row> <Col>
-                      <Form.Check custom inline label="Vegetarian" type={type} id={`custom-inline-${type}-1`} />
-                      <Form.Check custom inline label="Dairy Free" type={type} id={`custom-inline-${type}-2`} />
-                      <Form.Check custom inline label="Kosher" type={type} id={`custom-inline-${type}-3`} />
-                    </Col>
-                    <Col>
-                      <Form.Check custom inline label="Gluten Free" type={type} id={`custom-inline-${type}-4`} />
-                      <Form.Check custom inline label="Halal" type={type} id={`custom-inline-${type}-5`} />
-                      <Form.Check custom inline label="Peanut Free" type={type} id={`custom-inline-${type}-6`} />
-
-                  </Col> </Row>
-                  </div>
-                ))}
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
-        </Card>
-
-        <Card fluid className="whitetext">
-                __
-              </Card>
-
-        <Card>
-
-                    <Accordion.Toggle as={Card.Header} className="text-center" eventKey="5">
-                      Ethnicity
-                    </Accordion.Toggle>
-
-                  <Accordion.Collapse eventKey="5">
-                    <Card.Body>
-                      <Form>
-                        {['checkbox'].map(type => (
-                          <div key={`custom-inline-${type}`} className="mb-3">
-                          <Row> <Col>
-                              <Form.Check custom inline label="Italian" type={type} id={`custom-inline-${type}-1`} />
-                              <Form.Check custom inline label="Greek" type={type} id={`custom-inline-${type}-2`} />
-                              <Form.Check custom inline label="Indian" type={type} id={`custom-inline-${type}-3`} />
-                              <Form.Check custom inline label="Chinese" type={type} id={`custom-inline-${type}-4`} />
-                            </Col>
-                            <Col>
-                              <Form.Check custom inline label="Mexican" type={type} id={`custom-inline-${type}5`} />
-                              <Form.Check custom inline label="American" type={type} id={`custom-inline-${type}-6`} />
-                              <Form.Check custom inline label="French" type={type} id={`custom-inline-${type}-7`} />
-                              <Form.Check custom inline label="Japanese" type={type} id={`custom-inline-${type}-8`} />
-                          </Col> </Row>
-                          </div>
-                        ))}
-                      </Form>
-                    </Card.Body>
-                  </Accordion.Collapse>
-        </Card>
-        <Card fluid className="whitetext">
-                _
-              </Card>
-</Accordion>
-
-
-</Nav>
-
-  </Col>
-
-  <Col md={10} className="right">
-  <Row>
-    <Col className="search">
-      <SearchBar/>
-      </Col>
-
-      <Col className="sort_col">
-                <Navbar>
-                  <Navbar.Collapse className="justify-content-end">
-                    <NavDropdown className="sort" title="Sort" alignRight>
-                      <NavDropdown.Item href="#">Rating</NavDropdown.Item>
-                      <NavDropdown.Item href="#">Time</NavDropdown.Item>
-                      <NavDropdown.Item href="#">Spice Level</NavDropdown.Item>
-                    </NavDropdown>
-                  </Navbar.Collapse>
-                </Navbar>
-              </Col>
-  </Row>
-
-<Row>
-<Col md={12} className="right">
-      <Card>
-        <Card.Header>
-          Hello
+          <Row>
+            <Col md={12} className="right">
+              <Card>
+                <Card.Header>
+                  Hello
         </Card.Header>
-      </Card>
-      </Col>
-</Row>
+              </Card>
+            </Col>
+          </Row>
 
-  </Col>
-  </Row>
-  </Container>
-  </div>
+        </Col>
+      </Row>
+    </Container>
   )
 }
 
@@ -683,11 +595,8 @@ const App = () => {
   // Save authentication state (whether user is logged in or not)
   const [isLoggedIn, setLoggedIn] = useState(false);
 
-  // Did user click the search button
-  const [isSearching, setSearching] = useState(false);
-
   // Is it being used in the main screen or results page
-  const [isMain, setMain] = useState('true');
+  const [page, setPage] = useState('main');
 
   const handleMainPageChange = main => {
     setMain(main);
@@ -705,17 +614,14 @@ const App = () => {
     }
   });
 
-
   return (
     <>
-
-      <MyNavBar authState={isLoggedIn} isMain={isSearching} />
-      {isSearching ? <App2 /> : <MainPage isMain={isSearching} onSearchingStateChange={setSearching} />}
+      <MyNavBar authState={isLoggedIn} page={page} />
+      {(page === "main") ? <MainPage onPageChange={setPage} /> : <ResultsPage onPageChange={setPage} />}
     </>
 
   );
 }
-
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
