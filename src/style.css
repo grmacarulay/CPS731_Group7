@@ -56,6 +56,19 @@ html {
  object-fit: cover;
 }
 
+.jumbotronInvis{
+  background:#887F7E;
+}
+
+.headerStyle{
+    padding: 20px;
+    text-align: center;
+}
+
+.btn{
+  padding: 10px;
+}
+
 @font-face {
   src: url('https://fonts.googleapis.com/css?family=Staatliches&display=swap');
   src: url('https://fonts.googleapis.com/css?family=Oswald&display=swap');

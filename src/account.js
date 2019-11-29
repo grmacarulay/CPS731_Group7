@@ -74,18 +74,21 @@ export const Profile = props => {
   return (
     <>
     <Container>
-    <Jumbotron>
+    <Jumbotron className = "jumbotronInvis">
     <Row>
     <Col md={3}></Col>
     <Col md={6}>
     <div className="text-center">
-    <h1>Welcome Xavier !</h1>
+    <h1 className = "headerStyle">Welcome Xavier !</h1>
     <img className="carousel" src="src/images/male.jpg"
     alt="Pizza"></img>
     <p>First Name: Xavier</p>
     <p>Last Name: Cage</p>
     <p>Email: xaviercage4life@gmail.coms</p>
     <Button>Edit Profile</Button>
+    <br></br>
+    <br></br>
+    <Button className = "btn">Manage Recipes</Button>
     </div>
     </Col>
     <Col md={3}></Col>
@@ -101,8 +104,8 @@ export const Recipes = props => {
   return (
     <>
     <Container>
-    <Jumbotron>
-    <h1 className="text-center">Xavier's Approved Recipes</h1>
+    <Jumbotron className = "jumbotronInvis">
+    <h1 className="headerStyle">Xavier's Approved Recipes</h1>
     <Row>
     <Col md={3}></Col>
     <Col md={6}>
@@ -115,7 +118,7 @@ export const Recipes = props => {
               alt="lasagna"
             />
             <Carousel.Caption>
-              <h3>Lasagna</h3>
+              <h3>Garfield Lasagna</h3>
               <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
             </Carousel.Caption>
           </Carousel.Item>
@@ -129,7 +132,7 @@ export const Recipes = props => {
             />
 
             <Carousel.Caption>
-              <h3>Pizza</h3>
+              <h3>Italian Pizza</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
             </Carousel.Caption>
           </Carousel.Item>
