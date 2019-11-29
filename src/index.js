@@ -634,8 +634,11 @@ const ResultsPage = props => {
   const [sort, setSort] = useState('Rating')
   const onSelectSort = (eventKey, event) => {
     setSort(event.target.name)
-    console.log(sort)
   }
+
+  useEffect(() => {
+    console.log(sort)
+  }, [sort])
 
   return (
     <Container fluid >
