@@ -50,6 +50,14 @@ html {
   border: 3px solid darkorange;
 }
 
+.bottom-card{
+  margin-bottom: -1%;
+}
+
+.align-right {
+  text-align: right;
+}
+
 .filter-no
 {
   color: #f7f7f7;
@@ -57,7 +65,6 @@ html {
 
 .right{
   max-width: '100%' ;
-  background-color: yellow;
 }
 
 .left{
@@ -76,11 +83,36 @@ position: sticky;
 
 .side {
   width: 16%;
+  left: 0%;
+}
+
+.results-card-size {
+  margin-top: 3%;
+  width: 90%;
+  height: 60%;
 }
 
 .whitetext
 {
   color: white;
+}
+
+.w3-sidebar
+{
+  height:100%;
+  width:200px;
+  background-color:#fff;
+  position:fixed!important;
+  z-index:1;
+  overflow:auto;
+}
+
+.w3-sidebar.w3-collapse {
+  display:block!important;
+}
+
+.w3-sidebar.w3-collapse {
+  display:none;
 }
 
 

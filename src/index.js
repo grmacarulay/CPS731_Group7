@@ -447,15 +447,26 @@ const SearchBar = props => {
 // Genies Page
 const App2 = props => {
 
+  var recipe_names=[] ;
+
+  // grabs values within a collection (just outputs into console)
+   db.collection('recipes').get().then((snapshot) => {
+     snapshot.docs.forEach(doc => {
+       console.log(doc.data().name);
+       recipe_names.push(doc.data().name);
+     })
+   })
+
+
   window.location.href = "#Results_Page"
   return (
     <div id="another_page">
 
   <Container fluid >
   <Row fluid>
-  <Col md={2} className=" left min-vh-100 testtest" fluid>
+  <Col md={2} className="min-vh-100 testtest" fluid>
 
-  <Nav defaultActiveKey="/home" className="flex-column w3-sidebar side">
+  <Nav defaultActiveKey="/home" className="left flex-column w3-sidebar side">
 
   <Accordion>
   <Card fluid>
@@ -642,7 +653,7 @@ const App2 = props => {
 
   </Col>
 
-  <Col md={10} className="right">
+<Col md={10} className="right">
   <Row>
     <Col className="search">
       <SearchBar/>
@@ -661,17 +672,99 @@ const App2 = props => {
               </Col>
   </Row>
 
-<Row>
-<Col md={12} className="right">
-      <Card>
-        <Card.Header>
-          Hello
-        </Card.Header>
+  <Row>
+  <Col md={6} className="right">
+
+      <Card className="results-card-size">
+        <Card.Img className="responsive-image"
+        variant="top"
+        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/Fluffy%20Pancakes.jpeg?alt=media&token=30dc41c6-56b8-4c59-91f8-732794e40373"
+        />
+        <Card.Body>
+        <Card.Text classname="text-center">
+      <b> Fluffy Pancakes With Maple Syrup </b>
+        <br></br>
+          <br></br>
+           This is a great recipe that I found in my Grandma's recipe book.
+          Judging from the weathered look of this recipe card, this was a family favorite.
+          <br></br>
+          <br></br>
+          <p align="right" className="bottom-card"> 20 mins </p>
+      </Card.Text>
+       </Card.Body>
+       <Card.Footer className="text-muted">Submitted By: Genie Macarulay</Card.Footer>
+
       </Card>
-      </Col>
+  </Col>
+
+  <Col md={6} className="right">
+
+        <Card className="results-card-size">
+          <Card.Img className="responsive-image"
+          variant="top"
+          src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/burger.jpg?alt=media&token=688b8b14-43aa-4cd5-93ea-08e872aec0fd"
+          />
+          <Card.Body>
+          <Card.Text>
+          <b> Portobello Mushroom Burger </b>
+          <br></br>
+          <br></br>
+          The steak of veggie burgers. Serve on a bun with lettuce, tomato, and aioli sauce. Oh yeah!
+          <br></br>
+          <br></br>
+          <p align="right" className="bottom-card"> 40 mins </p>
+        </Card.Text>
+         </Card.Body>
+         <Card.Footer className="text-muted">Submitted By: Bob Ross</Card.Footer>
+
+        </Card>
+    </Col>
+
 </Row>
 
+<Row>
+<Col md={6} className="right">
+
+      <Card className="results-card-size">
+        <Card.Img className="responsive-image"
+        variant="top"
+        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/Adobo-Chicken.jpg?alt=media&token=61b4fcc9-3453-42d0-b60e-d215a77c3662"
+        />
+        <Card.Body>
+        <Card.Text>
+        {recipe_names}
+        I am ddkdmdmssl
+      </Card.Text>
+       </Card.Body>
+       <Card.Footer className="text-muted">2 days ago</Card.Footer>
+
+      </Card>
   </Col>
+
+  <Col md={6} className="right">
+
+        <Card className="results-card-size">
+          <Card.Img className="responsive-image"
+          variant="top"
+          src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/poutine.png?alt=media&token=1af203e4-bf03-4ce1-b906-7260828a60e1"
+          />
+          <Card.Body>
+          <Card.Text>
+          Fluffy Pancakes
+          I am ddkdmdmssl
+        </Card.Text>
+         </Card.Body>
+         <Card.Footer className="text-muted">2 days ago</Card.Footer>
+
+        </Card>
+    </Col>
+
+</Row>
+
+
+
+
+</Col>
   </Row>
   </Container>
   </div>
