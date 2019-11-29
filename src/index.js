@@ -579,12 +579,14 @@ const RecipeCard = props => {
 
   const title = props.title;
   const time = props.time;
+  const author = props.author;
+  const image = props.image;
 
   return (
     <Card className="results-card-size">
       <Card.Img className="responsive-image"
         variant="top"
-        src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+        src={image}
       />
       <Card.Title as="h5" className="">{title}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">{time}</Card.Subtitle>
@@ -594,7 +596,7 @@ const RecipeCard = props => {
            Judging from the weathered look of this recipe card, this was a family favorite.
         </Card.Text>
       </Card.Body>
-      <Card.Footer className="text-muted">Submitted By : Wesley Morota</Card.Footer>
+      <Card.Footer className="text-muted">Submitted by: {author}</Card.Footer>
 
     </Card>
   )
@@ -629,8 +631,14 @@ const ResultsPage = props => {
     'Ethnicities': ethnicities,
   }
 
-  var recipeTitle = ['Pancake', 'Cake', 'Adobo', 'Noodles']
+  var recipeTitle = ['Fluffy Pancake w/ Maple Syrup', 'American-style Cheeseburger', 'Chicken Adobo', 'Traditional Canadian Poutine']
   var time = '15 minutes'
+  var authors = ['Wesley M.', 'Kyle P.', 'Faadhil A.', 'Genie M.']
+  var images = ["https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba",
+    "https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/burger.jpg?alt=media&token=688b8b14-43aa-4cd5-93ea-08e872aec0fd",
+    "https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/Adobo-Chicken.jpg?alt=media&token=61b4fcc9-3453-42d0-b60e-d215a77c3662",
+    "https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/poutine.png?alt=media&token=1af203e4-bf03-4ce1-b906-7260828a60e1"
+  ]
 
   const initializeFilters = filters => {
     var initialFilters = {}
@@ -706,12 +714,12 @@ const ResultsPage = props => {
 
           <Row noGutters className="right">
             <CardGroup>
-              <RecipeCard title={recipeTitle[0]} time={time} />
-              <RecipeCard title={recipeTitle[0]} time={time} />
+              <RecipeCard title={recipeTitle[0]} time={time} author={authors[0]} image={images[0]}/>
+              <RecipeCard title={recipeTitle[1]} time={time} author={authors[1]} image={images[1]}/>
             </CardGroup>
             <CardGroup>
-              <RecipeCard title={recipeTitle[0]} time={time} />
-              <RecipeCard title={recipeTitle[0]} time={time} />
+              <RecipeCard title={recipeTitle[2]} time={time} author={authors[2]} image={images[2]}/>
+              <RecipeCard title={recipeTitle[3]} time={time} author={authors[3]} image={images[3]}/>
             </CardGroup>
           </Row>
 
@@ -720,8 +728,6 @@ const ResultsPage = props => {
     </Container>
   )
 }
-
-
 
 const App = () => {
 
