@@ -450,9 +450,34 @@ const SearchBar = props => {
 
 const FilterCard = props => {
 
-  var label = props.label;
-  var items = props.items
-  var eventKey = props.eventKey
+  const label = props.label;
+  const items = props.items
+  const eventKey = props.eventKey
+
+  var initialState = items
+  // items.map(item => {
+  //   initialState[item] = false;
+  // })
+
+  const [state, setState] = useState(initialState);
+  const onChangeFilters = props.onChangeFilters;
+
+  // const handleChange = event => {
+  //   const target = event.target;
+  //   const value = target.type === 'checkbox' ? target.checked : target.value;
+  //   const name = target.name;
+
+  //   setState(prevState => {
+  //     prevState[name] = value;
+  //     return(prevState)
+  //   });
+  //   console.log(state)
+  // }
+  // useEffect(
+  //   () => {
+  //     console.log(state);
+  //   }, [state]
+  // );
 
   return (
     <>
@@ -465,9 +490,16 @@ const FilterCard = props => {
           <Card.Body>
             <Form>
               {
-                items.map(type => {
+                Object.keys(items).map(type => {
                   return (
-                    <Form.Check custom label={type} type='checkbox' key={`${type}-checkbox`} id={type} />
+                    <Form.Check
+                      custom
+                      onChange={onChangeFilters(label)}
+                      name={type}
+                      type='checkbox'
+                      label={type}
+                      key={`${type}-checkbox`}
+                      id={type} />
                   )
                 })
               }
@@ -507,29 +539,6 @@ const SelectedIngredientsCard = props => {
   )
 }
 
-const FiltersSideBar = props => {
-
-  const filters = props.filters;
-  const selected = props.selected;
-
-  return (
-    <>
-      <Nav defaultActiveKey="/home" fill className="yellow flex-column sidebar">
-        <Accordion>
-          <SelectedIngredientsCard selected={selected} eventKey={0} />
-
-          {
-            Object.keys(filters).map((item, index) => {
-              return (<FilterCard label={item} items={filters[item]} eventKey={index + 1} key={`${item}-filterCard`} />)
-            })
-          }
-
-        </Accordion>
-      </Nav>
-    </>
-  )
-}
-
 const SortOptions = props => {
 
   const options = props.options
@@ -552,6 +561,37 @@ const SortOptions = props => {
   )
 }
 
+const FiltersSideBar = props => {
+
+  const filters = props.filters;
+  const selected = props.selected;
+  const onChangeFilters = props.onChangeFilters;
+
+  return (
+    <>
+      <Nav defaultActiveKey="/home" fill className="yellow flex-column sidebar">
+        <Accordion>
+          <SelectedIngredientsCard selected={selected} eventKey={0} />
+          {
+            Object.keys(filters).map((item, index) => {
+              return (
+                <FilterCard 
+                  label={item}
+                  onChangeFilters={onChangeFilters}
+                  items={filters[item]}
+                  eventKey={index + 1}
+                  key={`${item}-filterCard`} />)
+            })
+          }
+
+        </Accordion>
+      </Nav>
+    </>
+  )
+}
+
+
+
 const ResultsPage = props => {
 
   // Hard Coded
@@ -564,26 +604,52 @@ const ResultsPage = props => {
 
   var sortOptions = ['Rating', 'Time', 'Spice Level']
 
-  var cards = {
+  var filterList = {
     'Meal Types': mealTypes,
     'Cooking Methods': cookingMethods,
     'Dietary Restrictions': dietaryRestrictions,
     'Ethnicities': ethnicities,
   }
 
-  window.location.href = "#Results_Page"
+  const initializeFilters = filters => {
+    var initialFilters = {}
+
+    Object.keys(filters).map(filter => {
+      var temp = {}
+      filters[filter].map(item => {
+        temp[item] = false;
+      })
+      initialFilters[filter] = temp;
+    })
+
+    return (initialFilters)
+  }
+
+  const [filters, setFilters] = useState(initializeFilters(filterList));
+  const handleFilterChange = filter => event => {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    setFilters(prevState => {
+      prevState[filter][name] = value;
+      return (prevState)
+    });
+     console.log(filters)
+  }
+
   return (
     <Container fluid >
       <Row noGutters>
         <Col md={2}>
-          <FiltersSideBar selected={selected} filters={cards} />
+          <FiltersSideBar selected={selected} filters={filters} onChangeFilters={handleFilterChange} />
         </Col>
 
         <Col md={10}>
 
           <Row noGutters className="align-items-center justify-content-center">
             <Col>
-              <SearchBar page="results" />
+              <SearchBar page="results"/>
             </Col>
 
             <Col md={3}>
