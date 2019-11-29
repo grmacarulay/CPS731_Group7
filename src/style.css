@@ -177,6 +177,22 @@ background-color:white;
 padding: 10px;
 }
 
+.carousel{
+  width: 300px;
+ height: 300px;
+ object-fit: cover;
+ text-align: center;
+ padding-bottom: 20px;
+}
+
+.headerStyle{
+    padding: 20px;
+    text-align: center;
+}
+
+.btn{
+  padding: 10px;
+}
 
 
 @font-face {

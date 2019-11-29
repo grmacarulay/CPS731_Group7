@@ -137,6 +137,103 @@ const SignInButton = props => {
   )
 }
 
+const Profile = props => {
+  return (
+    <>
+      <Container>
+        <Jumbotron className="jumbotronInvis">
+          <Row>
+            <Col md={3}></Col>
+            <Col md={6}>
+              <div className="text-center">
+                <h1 className="headerStyle">Welcome Xander !</h1>
+                <img className="carousel" src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/avatar.svg?alt=media&token=4c4c5fee-e27b-4c54-a972-8b8f3f2eb1bd"
+                  alt="Pizza"></img>
+                <p>First Name: Wesley</p>
+                <p>Last Name: Morota</p>
+                <p>Email: wesleymorota@gmail.com</p>
+                <Button>Edit Profile</Button>
+                <br></br>
+                <br></br>
+                <Button className="btn">Manage Recipes</Button>
+              </div>
+            </Col>
+            <Col md={3}></Col>
+          </Row>
+        </Jumbotron>
+      </Container>
+      <Recipes />
+    </>
+  )
+}
+
+const Recipes = props => {
+  return (
+    <>
+      <Container>
+        <Jumbotron className="jumbotronInvis">
+
+          <Row>
+            <Col md={3}></Col>
+            <Col md={6}>
+              <div className="text-center">
+                <h1 className="headerStyle">Xander's Approved Recipes</h1>
+                <Carousel>
+                  <Carousel.Item>
+                    <img
+                      className="carousel"
+                      src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+                      alt="lasagna"
+                    />
+                    <Carousel.Caption>
+                      <h3>Garfield Lasagna</h3>
+                      <p>Mmmm Lasagna!</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="carousel"
+                      src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+                      alt="Pizza"
+                    />
+                    <Carousel.Caption>
+                      <h3>Italian Pizza</h3>
+                      <p>Mama mia.</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="carousel"
+                      src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+                      alt="Hersheys Chocolate Cake.jpg"
+                    />
+                    <Carousel.Caption>
+                      <h3>Hersheys Chocolate Cake</h3>
+                      <p>Yummy and chocolatey!</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                  <Carousel.Item>
+                    <img
+                      className="carousel"
+                      src="https://firebasestorage.googleapis.com/v0/b/ingredientory.appspot.com/o/pancake.png?alt=media&token=7c04eae5-b1d5-4470-899e-0aac21123fba"
+                      alt="adobo.jpg"
+                    />
+                    <Carousel.Caption>
+                      <h3>Filipino Adobo</h3>
+                      <p>Fillipino people food.</p>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                </Carousel>
+              </div>
+            </Col>
+            <Col md={3}></Col>
+          </Row>
+        </Jumbotron>
+      </Container>
+    </>
+  )
+}
+
 const SignUpForm = props => {
 
   // For email text
@@ -290,6 +387,15 @@ const SignInForm = props => {
 
 const SignOutButton = props => {
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  }
+
+  const showProfile = () => {
+    setShow(true);
+  }
+
   const handleSignOut = () => {
     auth.signOut()
       .then(() => {
@@ -303,15 +409,22 @@ const SignOutButton = props => {
       })
   }
 
-  const handleProfile = () => {
-    console.log("handle profile here.");
-  }
-
   return (
     <>
-      <Button variant="link" onClick={handleProfile} className="staatliches">My Account</Button>
+      <Button variant="link" onClick={showProfile} className="staatliches">My Account</Button>
       {' '}
       <Button variant="secondary" onClick={handleSignOut} className="staatliches">Sign Out</Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="staatliches">Account</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <Profile />
+        </Modal.Body>
+      </Modal>
+
     </>
   )
 }
@@ -591,8 +704,19 @@ const RecipeCard = props => {
   const author = props.author;
   const image = props.image;
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  }
+
+
+  const handleClick = event => {
+    setShow(true);
+  }
+
   return (
-    <Card className="results-card-size">
+    <>
+    <Card className="results-card-size" onClick={handleClick}>
       <Card.Img className="responsive-image"
         variant="top"
         src={image}
@@ -607,7 +731,21 @@ const RecipeCard = props => {
       </Card.Body>
       <Card.Footer className="text-muted">Submitted by: {author}</Card.Footer>
 
-    </Card>
+      </Card>
+      
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title className="staatliches">Recipe</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <RecipePage />
+        </Modal.Body>
+      </Modal>
+
+
+  </>
+
   )
 }
 
