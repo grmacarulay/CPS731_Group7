@@ -464,7 +464,7 @@ const FilterCard = props => {
     <>
 
       <Card>
-        <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey}>
+        <Accordion.Toggle as={Card.Header} className="text-center filter-font" eventKey={eventKey}>
           {label}
         </Accordion.Toggle>
 
@@ -500,13 +500,13 @@ const SelectedIngredientsCard = props => {
 
   return (
     <>
-      <Card>
+      <Card className="filter-font">
         <Accordion.Toggle as={Card.Header} className="text-center" eventKey={eventKey} >
           Ingredients
         </Accordion.Toggle>
 
         <Accordion.Collapse eventKey={eventKey}>
-          <Card.Body>
+          <Card.Body className="oswald">
             {
               selected.map(ingredient => {
                 return (
@@ -527,8 +527,8 @@ const SortOptions = props => {
   const handleOnSelect = props.onSelectSort
 
   return (
-    <Dropdown onSelect={handleOnSelect}>
-      <Dropdown.Toggle>
+    <Dropdown onSelect={handleOnSelect} className="staatliches">
+      <Dropdown.Toggle className="sort-btn">
         Sort by
       </Dropdown.Toggle>
 
@@ -681,7 +681,7 @@ const ResultsPage = props => {
   //  })
 
   return (
-    <Container fluid >
+    <Container fluid className="gray">
       <Row noGutters>
         <Col md={2}>
           <FiltersSideBar selected={selected} filters={filters} onChangeFilters={handleFilterChange} />
@@ -689,7 +689,7 @@ const ResultsPage = props => {
 
         <Col md={10}>
 
-          <Row noGutters className="align-items-center justify-content-center">
+          <Row noGutters className="align-items-center justify-content-center ">
             <Col>
               <SearchBar
                 onpage="results"
@@ -697,7 +697,7 @@ const ResultsPage = props => {
                 onIngredientsChange={onIngredientsChange} />
             </Col>
 
-            <Col md={3}>
+            <Col md={3} className="justify-content-end">
               <SortOptions options={sortOptions} onSelectSort={onSelectSort} />
             </Col>
           </Row>

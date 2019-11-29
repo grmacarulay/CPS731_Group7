@@ -112,6 +112,12 @@ position: sticky;
   background-color: #F7F7F7
 }
 
+
+.gray {
+  background-color: gray
+}
+
+
 .blue {
   background-color: blue
 }
@@ -125,6 +131,15 @@ position: sticky;
   height:100%;
   z-index:1;
   overflow:auto;
+}
+
+.sort-btn{
+  font-size: 30px;
+}
+
+.filter-font{
+  font-family: Staatliches;
+  font-size: 25px; 
 }
 
 
