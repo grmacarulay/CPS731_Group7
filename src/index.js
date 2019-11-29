@@ -530,6 +530,28 @@ const FiltersSideBar = props => {
   )
 }
 
+const SortOptions = props => {
+
+  const options = props.options
+
+  return (
+    <Dropdown>
+      <Dropdown.Toggle>
+        Sort by
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        {
+          options.map((option, index) => {
+            return (<Dropdown.Item key={`${option}-sortOption`}>{option}</Dropdown.Item>)
+          })
+        }
+      </Dropdown.Menu>
+
+    </Dropdown>
+  )
+}
+
 const ResultsPage = props => {
 
   // Hard Coded
@@ -539,6 +561,8 @@ const ResultsPage = props => {
   var cookingMethods = ['Grilling', 'Roasting', 'Frying', 'Baking']
   var dietaryRestrictions = ['Vegetarian', 'Halal', 'Lactose-Free', 'Kosher']
   var ethnicities = ['Italian', 'Indian', 'Chinese', 'French', 'Filipino']
+
+  var sortOptions = ['Rating', 'Time', 'Spice Level']
 
   var cards = {
     'Meal Types': mealTypes,
@@ -564,18 +588,7 @@ const ResultsPage = props => {
 
             <Col md={3}>
 
-              <Dropdown>
-                <Dropdown.Toggle>
-                  Sort by
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item>Rating</Dropdown.Item>
-                  <Dropdown.Item>Time</Dropdown.Item>
-                  <Dropdown.Item>Spice Level</Dropdown.Item>
-                </Dropdown.Menu>
-
-              </Dropdown>
+              <SortOptions options={sortOptions}/>
 
             </Col>
           </Row>
